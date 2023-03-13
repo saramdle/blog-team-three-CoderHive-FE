@@ -1,3 +1,10 @@
 @tailwind base;
-@tailwind components;
 @tailwind utilities;
+@tailwind components;
+
+html,
+body,
+#__next,
+main {
+  height: 100%;
+}

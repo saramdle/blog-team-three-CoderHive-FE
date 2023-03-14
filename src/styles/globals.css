@@ -7,4 +7,5 @@ body,
 #__next,
 main {
   height: 100%;
+  overflow-y: auto;
 }

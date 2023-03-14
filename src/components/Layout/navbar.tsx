@@ -14,7 +14,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="bg-slate-50 border-b border-gray-600">
+    <header className=" sticky top-0 bg-gray-100 z-30 border-b border-gray-600">
       <nav
         className="flex items-center justify-between mx-auto max-w-7xl p-6 lg:px-8 h-14 "
         aria-label="Global"
@@ -85,7 +85,7 @@ export default function Navbar() {
       {isMenuOpen && (
         <div className="lg:hidden" role="dialog" aria-modal="true">
           <div className="fixed inset-0 z-10"></div>
-          <div className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
               <Link href="/" className="-m-1.5 p-1.5">
                 <Image

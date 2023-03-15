@@ -1,18 +1,25 @@
-import Layout from "@/components/Layout/layout";
 import "@/styles/globals.css";
-import type { AppProps } from "next/app";
 import Head from "next/head";
+import type { AppProps } from "next/app";
+import { Provider } from "react-redux";
 
-export default function App({ Component, pageProps }: AppProps) {
+import wrapper from "@/store";
+import Layout from "@/components/Layout/layout";
+
+export default function App({ Component, ...rest }: AppProps) {
+  const { store, props } = wrapper.useWrappedStore(rest);
+
   return (
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <Provider store={store}>
+        <Layout>
+          <Component {...props.pageProps} />
+        </Layout>
+      </Provider>
     </>
   );
 }

@@ -1,9 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { useAppDispatch } from "@/store/hooks";
+import { setIsLoginModalOpen } from "@/store/app/appSlice";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
   const onMenuOpenClicked = () => {
     setIsMenuOpen(true);
@@ -11,6 +14,11 @@ export default function Navbar() {
 
   const onMenuCloseClicked = () => {
     setIsMenuOpen(false);
+  };
+
+  const onModalOpenClicked = () => {
+    document.documentElement.style.overflowY = "hidden";
+    dispatch(setIsLoginModalOpen(true));
   };
 
   return (
@@ -48,12 +56,12 @@ export default function Navbar() {
           </Link>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Link
-            href="/login"
+          <button
             className=" text-xs font-semibold leading-6 text-gray-600"
+            onClick={onModalOpenClicked}
           >
             로그인 <span aria-hidden="true">&rarr;</span>
-          </Link>
+          </button>
         </div>
         <div className="lg:hidden flex flex-1 justify-end">
           <button
@@ -135,10 +143,10 @@ export default function Navbar() {
                     프로젝트
                   </Link>
                 </div>
-                <div className="py-6">
+                <div className="space-y-2 py-6">
                   <a
-                    href="/login"
-                    className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    onClick={onModalOpenClicked}
                   >
                     로그인
                   </a>

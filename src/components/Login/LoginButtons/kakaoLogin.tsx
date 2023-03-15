@@ -1,5 +1,3 @@
-import { LoginButtonProps } from "./login";
-
 export default function KakaoLogin({ isLoginMode }: LoginButtonProps) {
   return (
     <button

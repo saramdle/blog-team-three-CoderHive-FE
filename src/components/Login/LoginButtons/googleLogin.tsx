@@ -1,4 +1,4 @@
-import { LoginButtonProps } from "./login";
+import { LoginButtonProps } from "../login";
 
 export default function GoogleLogin({ isLoginMode }: LoginButtonProps) {
   return (

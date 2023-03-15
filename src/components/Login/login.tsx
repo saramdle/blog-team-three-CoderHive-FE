@@ -2,10 +2,10 @@ import { useState } from "react";
 
 import { setIsLoginModalOpen } from "@/store/app/appSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import FacebookLogin from "./facebookLogin";
-import GoogleLogin from "./googleLogin";
-import KakaoLogin from "./kakaoLogin";
-import NaverLogin from "./naverLogin";
+import FacebookLogin from "./LoginButtons/facebookLogin";
+import GoogleLogin from "./LoginButtons/googleLogin";
+import KakaoLogin from "./LoginButtons/kakaoLogin";
+import NaverLogin from "./LoginButtons/naverLogin";
 
 export type LoginButtonProps = {
   isLoginMode: boolean;

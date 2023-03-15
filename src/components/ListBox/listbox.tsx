@@ -22,7 +22,7 @@ export default function ListBox({ title, options }: ListBoxProps) {
   });
 
   return (
-    <div className="relative mt-8 mr-4">
+    <div className="relative mr-4">
       <button
         type="button"
         className="relative w-full min-w-200 rounded-md py-2 pl-10 pr-16 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
@@ -35,6 +35,7 @@ export default function ListBox({ title, options }: ListBoxProps) {
         <span className="flex items-center">
           <span className="ml-3 block truncate">{title}</span>
         </span>
+
         <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
           <svg
             className="h-5 w-5 text-gray-400"

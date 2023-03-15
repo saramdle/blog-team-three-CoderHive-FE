@@ -33,18 +33,14 @@ export default function Login() {
     <div
       className={`${
         isLoginModalOpen ? "visible" : "invisible opacity-0"
-      } relative z-50 transition-all ease-in duration-200`}
+      } relative z-50 max-h-full transition-all ease-in duration-200`}
       aria-labelledby="modal-title"
       role="dialog"
       aria-modal="true"
     >
-      <div
-        className={`${
-          isLoginModalOpen ? "visible" : "invisible opacity-0"
-        } fixed inset-0 bg-gray-500 bg-opacity-75 transition-all ease-in duration-200`}
-      ></div>
+      <div className="fixed inset-0 max-h-full bg-gray-500 bg-opacity-75"></div>
 
-      <div className="fixed inset-0 z-10 overflow-y-auto">
+      <div className="fixed inset-0 z-10">
         <div
           className="flex min-h-full items-center justify-center p-4 text-center 
             sm:items-center sm:p-0"

@@ -1,7 +1,6 @@
 import Head from "next/head";
 import StudyArticle from "@/components/article";
 import ListBox from "@/components/ListBox/listbox";
-import Login from "@/components/Login/login";
 
 export default function Home() {
   const renderArticles = 게시물_테스트_데이터.map((post, index) => {
@@ -33,7 +32,7 @@ export default function Home() {
             <p className="mt-2 text-lg leading-8 text-gray-600">
               함께 공부하고 성장해갈 스터디를 찾아보세요
             </p>
-            <div className="flex">
+            <div className="flex mt-8">
               <ListBox title="지역" options={지역_테스트_데이터} />
               <ListBox title="분야" options={분야_테스트_데이터} />
             </div>

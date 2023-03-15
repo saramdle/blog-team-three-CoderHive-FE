@@ -1,9 +1,36 @@
 import Head from "next/head";
+import { useState } from "react";
 import StudyArticle from "@/components/article";
 import ListBox from "@/components/ListBox/listbox";
+import SelectedCard from "@/components/Study/selectedCard";
 
 export default function Home() {
-  const renderArticles = 게시물_테스트_데이터.map((post, index) => {
+  const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
+  const [selectedFields, setSelectedFields] = useState<string[]>([]);
+
+  const renderSelectedLocations = selectedLocations.map((title, index) => {
+    return (
+      <SelectedCard
+        key={index}
+        title={title}
+        selectedOptions={selectedLocations}
+        setSelectedOption={setSelectedLocations}
+      />
+    );
+  });
+
+  const renderSelectedFields = selectedFields.map((title, index) => {
+    return (
+      <SelectedCard
+        key={index}
+        title={title}
+        selectedOptions={selectedFields}
+        setSelectedOption={setSelectedFields}
+      />
+    );
+  });
+
+  const renderArticles = 빈게시물_테스트_데이터.map((post, index) => {
     return (
       <StudyArticle
         key={index}
@@ -21,9 +48,9 @@ export default function Home() {
     <>
       <Head>
         <title>CoderHive</title>
-        <meta name="description" content="CoderHive : Find your co-coder" />
+        <meta name="description" content="CoderHive : Find your co-coder!" />
       </Head>
-      <div className="bg-white py-24 sm:py-32">
+      <div className="bg-white py-10 sm:py-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:mx-0">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -32,12 +59,29 @@ export default function Home() {
             <p className="mt-2 text-lg leading-8 text-gray-600">
               함께 공부하고 성장해갈 스터디를 찾아보세요
             </p>
-            <div className="flex mt-8">
-              <ListBox title="지역" options={지역_테스트_데이터} />
-              <ListBox title="분야" options={분야_테스트_데이터} />
+            <div className="mt-8 flex">
+              <ListBox
+                title="지역"
+                options={지역_테스트_데이터}
+                selectedOptions={selectedLocations}
+                setSelectedOption={setSelectedLocations}
+              />
+              <ListBox
+                title="분야"
+                options={분야_테스트_데이터}
+                selectedOptions={selectedFields}
+                setSelectedOption={setSelectedFields}
+              />
+            </div>
+            <div className="my-4 min-h-[3rem] flex flex-wrap">
+              {renderSelectedLocations}
+              {renderSelectedFields}
             </div>
           </div>
-          <div className="mx-auto mt-8 grid grid-cols-1 gap-y-16 gap-x-8 border-t border-gray-200 pt-10 sm:mt-8 sm:pt-16 sm:grid-cols-2 md:grid-cols-3 lg:mx-0 lg:max-w-none lg:grid-cols-4">
+          <div
+            className="mx-auto grid grid-cols-1 gap-y-16 gap-x-8 border-t border-gray-200 
+            pt-10 sm:pt-10 sm:grid-cols-2 md:grid-cols-3 lg:mx-0 lg:max-w-none lg:grid-cols-4"
+          >
             {renderArticles}
           </div>
         </div>
@@ -54,6 +98,16 @@ let 지역_테스트_데이터 = [
 ];
 let 분야_테스트_데이터 = ["UI/UX", "웹프론트엔드", "웹서버"];
 
+interface 테스트_게시물_인터페이스 {
+  type: string;
+  field: string;
+  title: string;
+  location: string;
+  skills: string[];
+  likes: number;
+}
+
+let 빈게시물_테스트_데이터: 테스트_게시물_인터페이스[] = [];
 let 게시물_테스트_데이터 = [
   {
     type: "스터디",

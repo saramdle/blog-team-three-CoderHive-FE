@@ -1,12 +1,19 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import Option from "./option";
 
 type ListBoxProps = {
   title: string;
   options: string[];
+  selectedOptions: string[];
+  setSelectedOption: Dispatch<SetStateAction<string[]>>;
 };
 
-export default function ListBox({ title, options }: ListBoxProps) {
+export default function ListBox({
+  title,
+  options,
+  selectedOptions,
+  setSelectedOption,
+}: ListBoxProps) {
   const [isListOpen, setIsListOpen] = useState<boolean>(false);
 
   const onFocus = () => {
@@ -18,7 +25,17 @@ export default function ListBox({ title, options }: ListBoxProps) {
   };
 
   const renderOptions = options.map((option, index) => {
-    return <Option key={index} title={option} />;
+    const isSelected = selectedOptions.includes(option);
+
+    return (
+      <Option
+        key={index}
+        title={option}
+        isSelected={isSelected}
+        selectedOptions={selectedOptions}
+        setSelectedOption={setSelectedOption}
+      />
+    );
   });
 
   return (

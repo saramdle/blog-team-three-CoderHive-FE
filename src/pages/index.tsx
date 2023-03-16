@@ -3,8 +3,8 @@ import { useState } from "react";
 
 import ArticleOptionList from "@/components/OptionList/articleOptionList";
 import SelectedCard from "@/components/Study/selectedCard";
-import StudyArticle from "@/components/article";
 import NotFound from "@/components/notFound";
+import PostCard from "@/components/postCard";
 
 export default function Home() {
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
@@ -32,10 +32,11 @@ export default function Home() {
     );
   });
 
-  const renderArticles = 게시물_테스트_데이터.map((post, index) => {
+  const renderArticles = 게시물_테스트_데이터.map((post) => {
     return (
-      <StudyArticle
-        key={index}
+      <PostCard
+        key={post.postId}
+        postId={post.postId}
         type={post.type}
         field={post.field}
         title={post.title}
@@ -106,6 +107,7 @@ let 지역_테스트_데이터 = [
 let 분야_테스트_데이터 = ["UI/UX", "웹프론트엔드", "웹서버"];
 
 interface 테스트_게시물_인터페이스 {
+  postId: string;
   type: string;
   field: string;
   title: string;
@@ -117,6 +119,7 @@ interface 테스트_게시물_인터페이스 {
 let 빈게시물_테스트_데이터: 테스트_게시물_인터페이스[] = [];
 let 게시물_테스트_데이터 = [
   {
+    postId: "1",
     type: "스터디",
     field: "프론트엔드 개발",
     title: "프론트엔드 개발자 구함!",
@@ -125,6 +128,7 @@ let 게시물_테스트_데이터 = [
     likes: 1,
   },
   {
+    postId: "2",
     type: "스터디",
     field: "프론트엔드 개발",
     title: "자바스크립트 개념부터 다지실분 구함",
@@ -133,6 +137,7 @@ let 게시물_테스트_데이터 = [
     likes: 3,
   },
   {
+    postId: "3",
     type: "스터디",
     field: "디자인&UX 스터디&네트워킹",
     title: "UIUX 포트폴리오 같이 만들어요",
@@ -141,6 +146,7 @@ let 게시물_테스트_데이터 = [
     likes: 12,
   },
   {
+    postId: "4",
     type: "스터디",
     field: "백엔드 개발",
     title: "개발 스터디 모집",
@@ -149,6 +155,7 @@ let 게시물_테스트_데이터 = [
     likes: 100,
   },
   {
+    postId: "5",
     type: "스터디",
     field: "기획 & PO",
     title: "SaaS LMS 기획",

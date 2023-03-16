@@ -1,18 +1,18 @@
 import { Dispatch, SetStateAction, useState } from "react";
 
-type OptionProps = {
+type ArticleOptionProps = {
   title: string;
   isSelected: boolean;
   selectedOptions: string[];
   setSelectedOption: Dispatch<SetStateAction<string[]>>;
 };
 
-export default function Option({
+export default function ArticleOption({
   title,
   isSelected,
   selectedOptions,
   setSelectedOption,
-}: OptionProps) {
+}: ArticleOptionProps) {
   const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
 
   const addOption = () => {

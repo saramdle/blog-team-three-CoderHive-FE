@@ -1,4 +1,21 @@
+import { useRouter } from "next/router";
+import { useState } from "react";
+
+import RegisterOptionList from "@/components/OptionList/registerOptionList";
+
 export default function Register() {
+  const [nickname, setNickname] = useState<string>("");
+  const [field, setField] = useState<string>("미지정");
+  const [subfield, setSubfield] = useState<string>("미지정");
+  const [level, setLevel] = useState<string>("미지정");
+  const [year, setYear] = useState<string>("미지정");
+
+  const router = useRouter();
+
+  const onClickComplete = () => {
+    router.push("/");
+  };
+
   return (
     <div className="isolate bg-white py-20 px-6 sm:py-20 lg:px-8">
       <div className="mx-auto max-w-2xl text-center">
@@ -16,19 +33,16 @@ export default function Register() {
       >
         <div className="grid grid-cols-1 gap-y-6 gap-x-8 sm:grid-cols-2">
           <div className="sm:col-span-2">
-            <label
-              htmlFor="email"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
+            <label className="block text-sm font-semibold leading-6 text-gray-900">
               이메일
             </label>
             <div className="mt-2.5">
-              <input
-                type="text"
-                name="email"
-                id="email"
-                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
+              <div
+                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm sm:text-sm sm:leading-6
+                bg-gray-300 ring-1 ring-inset ring-gray-300"
+              >
+                {"example1234@gmail.com"}
+              </div>
             </div>
           </div>
           <div className="sm:col-span-2">
@@ -40,10 +54,13 @@ export default function Register() {
             </label>
             <div className="mt-2.5">
               <input
-                type="nickname"
+                type="text"
                 name="nickname"
                 id="nickname"
-                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm sm:text-sm sm:leading-6
+                  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
+                  focus:ring-1 focus:ring-inset focus:ring-indigo-600"
+                onChange={(e) => setNickname(e.target.value)}
               />
             </div>
           </div>
@@ -52,25 +69,40 @@ export default function Register() {
               htmlFor="phone-number"
               className="block text-sm font-semibold leading-6 text-gray-900"
             >
-              직무 / 능력치
+              대표 직무 / 능력치
             </label>
-            <div className="relative mt-2.5">
-              <input
-                type="tel"
-                name="phone-number"
-                id="phone-number"
-                className="block w-full rounded-md border-0 py-2 px-3.5 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            <div className="relative mt-2.5 grid grid-cols-4 gap-4 max-md:grid-rows-4 max-md:grid-cols-1">
+              <RegisterOptionList
+                title={field}
+                options={분야_테스트_데이터}
+                setSelectedOption={setField}
+              />
+              <RegisterOptionList
+                title={subfield}
+                options={하위분야_테스트_데이터}
+                setSelectedOption={setSubfield}
+              />
+              <RegisterOptionList
+                title={level}
+                options={숙련도_테스트_데이터}
+                setSelectedOption={setLevel}
+              />
+              <RegisterOptionList
+                title={year}
+                options={년차_테스트_데이터}
+                setSelectedOption={setYear}
               />
             </div>
           </div>
         </div>
         <div className="mt-10">
           <button
-            type="submit"
+            type="button"
             className="px-3.5 py-2.5 block w-full rounded-md bg-indigo-600 text-center text-sm 
               font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline 
               focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600
-              transition-all ease-in delay-100"
+              transition-all ease-in duration-100"
+            onClick={onClickComplete}
           >
             가입 완료
           </button>
@@ -79,3 +111,16 @@ export default function Register() {
     </div>
   );
 }
+
+let 분야_테스트_데이터 = ["미지정", "기획", "디자인", "프론트엔드", "백엔드"];
+let 하위분야_테스트_데이터 = [
+  "미지정",
+  "IOS",
+  "안드로이드",
+  "웹프론트엔드",
+  "웹퍼블리셔",
+  "크로스플랫폼",
+  "임베디드",
+];
+let 숙련도_테스트_데이터 = ["미지정", "초심자", "초보", "중수", "고수", "구루"];
+let 년차_테스트_데이터 = ["미지정", "1-3년", "3-5년", "5-10년", "10년 이상"];

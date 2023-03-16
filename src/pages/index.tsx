@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useState } from "react";
 
-import ListBox from "@/components/ListBox/listbox";
+import ArticleOptionList from "@/components/OptionList/articleOptionList";
 import SelectedCard from "@/components/Study/selectedCard";
 import StudyArticle from "@/components/article";
 import NotFound from "@/components/notFound";
@@ -32,7 +32,7 @@ export default function Home() {
     );
   });
 
-  const renderArticles = 빈게시물_테스트_데이터.map((post, index) => {
+  const renderArticles = 게시물_테스트_데이터.map((post, index) => {
     return (
       <StudyArticle
         key={index}
@@ -62,13 +62,13 @@ export default function Home() {
               함께 공부하고 성장해갈 스터디를 찾아보세요
             </p>
             <div className="mt-8 flex">
-              <ListBox
+              <ArticleOptionList
                 title="지역"
                 options={지역_테스트_데이터}
                 selectedOptions={selectedLocations}
                 setSelectedOption={setSelectedLocations}
               />
-              <ListBox
+              <ArticleOptionList
                 title="분야"
                 options={분야_테스트_데이터}
                 selectedOptions={selectedFields}

@@ -1,19 +1,17 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import Option from "./option";
+import RegisterOption from "./registerOption";
 
-type ListBoxProps = {
+type RegisterOptionListProps = {
   title: string;
   options: string[];
-  selectedOptions: string[];
-  setSelectedOption: Dispatch<SetStateAction<string[]>>;
+  setSelectedOption: Dispatch<SetStateAction<string>>;
 };
 
-export default function ListBox({
+export default function RegisterOptionList({
   title,
   options,
-  selectedOptions,
   setSelectedOption,
-}: ListBoxProps) {
+}: RegisterOptionListProps) {
   const [isListOpen, setIsListOpen] = useState<boolean>(false);
 
   const onFocus = () => {
@@ -25,31 +23,32 @@ export default function ListBox({
   };
 
   const renderOptions = options.map((option, index) => {
-    const isSelected = selectedOptions.includes(option);
+    const isSelected = option === title;
 
     return (
-      <Option
+      <RegisterOption
         key={index}
         title={option}
         isSelected={isSelected}
-        selectedOptions={selectedOptions}
         setSelectedOption={setSelectedOption}
       />
     );
   });
 
   return (
-    <div className="relative mr-4">
+    <div className="relative min-w-full">
       <button
         type="button"
-        className="relative w-full min-w-200 rounded-md py-2 pl-10 pr-16 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+        className="relative min-w-full rounded-md py-2 text-center text-gray-900 shadow-sm 
+          ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 
+          sm:text-sm sm:leading-6"
         aria-haspopup="listbox"
         aria-expanded="true"
         aria-labelledby="listbox-label"
         onFocus={onFocus}
         onBlur={onBlur}
       >
-        <span className="flex items-center">
+        <span className="w-full flex items-center">
           <span className="ml-3 block truncate">{title}</span>
         </span>
 

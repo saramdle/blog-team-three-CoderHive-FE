@@ -1,6 +1,8 @@
+import Link from "next/link";
 import Skill from "./Study/skill";
 
-type StudyArticleProps = {
+type PostCardProps = {
+  postId: string;
   type: string;
   field: string;
   title: string;
@@ -9,14 +11,15 @@ type StudyArticleProps = {
   likes: number;
 };
 
-export default function StudyArticle({
+export default function PostCard({
+  postId,
   type,
   field,
   title,
   location,
   skills,
   likes,
-}: StudyArticleProps) {
+}: PostCardProps) {
   const renderSkills = skills.map((skill, index) => {
     return <Skill key={index} title={skill} />;
   });
@@ -45,10 +48,15 @@ export default function StudyArticle({
       <div className="group relative">
         <h5 className="mt-5 text-sm leading-6 text-gray-600">{field}</h5>
         <h3 className="mt-1 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-          <a href="#">
+          <Link
+            href={{
+              pathname: "post/[id]",
+              query: { id: postId },
+            }}
+          >
             <span className="absolute inset-0"></span>
             {title}
-          </a>
+          </Link>
         </h3>
         <h5 className="mt-3 text-sm leading-6 text-gray-600">{location}</h5>
       </div>

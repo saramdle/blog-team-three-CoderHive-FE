@@ -1,8 +1,10 @@
 import Head from "next/head";
 import { useState } from "react";
-import StudyArticle from "@/components/article";
+
 import ListBox from "@/components/ListBox/listbox";
 import SelectedCard from "@/components/Study/selectedCard";
+import StudyArticle from "@/components/article";
+import NotFound from "@/components/notFound";
 
 export default function Home() {
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
@@ -78,12 +80,17 @@ export default function Home() {
               {renderSelectedFields}
             </div>
           </div>
-          <div
-            className="mx-auto grid grid-cols-1 gap-y-16 gap-x-8 border-t border-gray-200 
+
+          {renderArticles.length === 0 ? (
+            <NotFound />
+          ) : (
+            <div
+              className="mx-auto grid grid-cols-1 gap-y-16 gap-x-8 border-t border-gray-200 
             pt-10 sm:pt-10 sm:grid-cols-2 md:grid-cols-3 lg:mx-0 lg:max-w-none lg:grid-cols-4"
-          >
-            {renderArticles}
-          </div>
+            >
+              {renderArticles}
+            </div>
+          )}
         </div>
       </div>
     </>

@@ -1,17 +1,19 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import RegisterOption from "./registerOption";
+import MultiSelectOption from "./multiSelectOption";
 
-type RegisterOptionListProps = {
+type MultiSelectListProps = {
   title: string;
   options: string[];
-  setSelectedOption: Dispatch<SetStateAction<string>>;
+  selectedOptions: string[];
+  setSelectedOption: Dispatch<SetStateAction<string[]>>;
 };
 
-export default function RegisterOptionList({
+export default function MultiSelectList({
   title,
   options,
+  selectedOptions,
   setSelectedOption,
-}: RegisterOptionListProps) {
+}: MultiSelectListProps) {
   const [isListOpen, setIsListOpen] = useState<boolean>(false);
 
   const onFocus = () => {
@@ -23,24 +25,25 @@ export default function RegisterOptionList({
   };
 
   const renderOptions = options.map((option, index) => {
-    const isSelected = option === title;
+    const isSelected = selectedOptions.includes(option);
 
     return (
-      <RegisterOption
+      <MultiSelectOption
         key={index}
         title={option}
         isSelected={isSelected}
+        selectedOptions={selectedOptions}
         setSelectedOption={setSelectedOption}
       />
     );
   });
 
   return (
-    <div className="relative min-w-full">
+    <div className="relative mr-4">
       <button
         type="button"
-        className="relative min-w-full rounded-md py-2 text-center text-gray-900 shadow-sm 
-          ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 
+        className="relative w-full min-w-200 rounded-md py-2 pl-10 pr-16 text-left text-gray-900 
+          shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 
           sm:text-sm sm:leading-6"
         aria-haspopup="listbox"
         aria-expanded="true"
@@ -48,7 +51,7 @@ export default function RegisterOptionList({
         onFocus={onFocus}
         onBlur={onBlur}
       >
-        <span className="w-full flex items-center">
+        <span className="flex items-center">
           <span className="ml-3 block truncate">{title}</span>
         </span>
 
@@ -71,7 +74,9 @@ export default function RegisterOptionList({
       <ul
         className={`${
           isListOpen ? "visible" : "invisible opacity-0"
-        } absolute z-10 mt-1 max-h-56 w-full min-w-fit overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm transition-all ease-in duration-200`}
+        } absolute z-10 mt-1 max-h-56 w-full min-w-fit overflow-auto rounded-md bg-white 
+          py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none 
+          sm:text-sm transition-all ease-in duration-200`}
         tabIndex={-1}
         role="listbox"
         aria-labelledby="listbox-label"

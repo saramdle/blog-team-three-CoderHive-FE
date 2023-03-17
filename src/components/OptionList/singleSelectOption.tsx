@@ -1,22 +1,20 @@
 import { Dispatch, SetStateAction, useState } from "react";
 
-type ArticleOptionProps = {
+type SingleSelectOptionProps = {
   title: string;
   isSelected: boolean;
-  selectedOptions: string[];
-  setSelectedOption: Dispatch<SetStateAction<string[]>>;
+  setSelectedOption: Dispatch<SetStateAction<string>>;
 };
 
-export default function ArticleOption({
+export default function SingleSelectOption({
   title,
   isSelected,
-  selectedOptions,
   setSelectedOption,
-}: ArticleOptionProps) {
+}: SingleSelectOptionProps) {
   const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
 
   const addOption = () => {
-    if (!isSelected) setSelectedOption(() => selectedOptions.concat(title));
+    if (!isSelected) setSelectedOption(title);
   };
 
   return (

@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import ArticleOptionList from "@/components/OptionList/articleOptionList";
+import MultiSelectList from "@/components/OptionList/multiSelectList";
 import SelectedCard from "@/components/Study/selectedCard";
 import NotFound from "@/components/notFound";
 import PostCard from "@/components/postCard";
@@ -69,13 +69,13 @@ export default function Home() {
               함께 공부하고 성장해갈 스터디를 찾아보세요
             </p>
             <div className="mt-8 flex">
-              <ArticleOptionList
+              <MultiSelectList
                 title="지역"
                 options={지역_테스트_데이터}
                 selectedOptions={selectedLocations}
                 setSelectedOption={setSelectedLocations}
               />
-              <ArticleOptionList
+              <MultiSelectList
                 title="분야"
                 options={분야_테스트_데이터}
                 selectedOptions={selectedFields}

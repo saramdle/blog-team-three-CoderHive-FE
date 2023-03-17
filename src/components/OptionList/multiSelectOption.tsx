@@ -1,20 +1,22 @@
 import { Dispatch, SetStateAction, useState } from "react";
 
-type RegisterOptionProps = {
+type MultiSelectOption = {
   title: string;
   isSelected: boolean;
-  setSelectedOption: Dispatch<SetStateAction<string>>;
+  selectedOptions: string[];
+  setSelectedOption: Dispatch<SetStateAction<string[]>>;
 };
 
-export default function RegisterOption({
+export default function MultiSelectOption({
   title,
   isSelected,
+  selectedOptions,
   setSelectedOption,
-}: RegisterOptionProps) {
+}: MultiSelectOption) {
   const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
 
   const addOption = () => {
-    if (!isSelected) setSelectedOption(title);
+    if (!isSelected) setSelectedOption(() => selectedOptions.concat(title));
   };
 
   return (

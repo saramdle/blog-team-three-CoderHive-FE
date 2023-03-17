@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-import RegisterOptionList from "@/components/OptionList/registerOptionList";
+import SingleSelectList from "@/components/OptionList/singleSelectList";
 
 export default function Register() {
   const [nickname, setNickname] = useState<string>("");
@@ -72,22 +72,22 @@ export default function Register() {
               대표 직무 / 능력치
             </label>
             <div className="relative mt-2.5 grid grid-cols-4 gap-4 max-md:grid-rows-4 max-md:grid-cols-1">
-              <RegisterOptionList
+              <SingleSelectList
                 title={field}
                 options={분야_테스트_데이터}
                 setSelectedOption={setField}
               />
-              <RegisterOptionList
+              <SingleSelectList
                 title={subfield}
                 options={하위분야_테스트_데이터}
                 setSelectedOption={setSubfield}
               />
-              <RegisterOptionList
+              <SingleSelectList
                 title={level}
                 options={숙련도_테스트_데이터}
                 setSelectedOption={setLevel}
               />
-              <RegisterOptionList
+              <SingleSelectList
                 title={year}
                 options={년차_테스트_데이터}
                 setSelectedOption={setYear}
@@ -99,8 +99,7 @@ export default function Register() {
           <button
             type="button"
             className="px-3.5 py-2.5 block w-full rounded-md bg-indigo-600 text-center text-sm 
-              font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline 
-              focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600
+              font-semibold text-white shadow-sm hover:bg-indigo-500
               transition-all ease-in duration-100"
             onClick={onClickComplete}
           >

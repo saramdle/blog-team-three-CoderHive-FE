@@ -1,105 +1,132 @@
+import { useState, useRef, ReactElement } from "react";
+
+import RecruitInfo from "@/components/CreatPost/recruitInfo";
+
 export default function CreatePost() {
+  const recruitInfo = useRef<string[][] | null>([[]]);
+  const recruitNum = useRef<number | null>(1);
+  const [type, setType] = useState("스터디");
+  const [infoComp, setInfoComp] = useState<ReactElement[]>([
+    <RecruitInfo
+      key={0}
+      index={0}
+      recruitInfo={recruitInfo}
+      recruitNum={recruitNum}
+    />,
+  ]);
+
+  const addInfoComp = () => {
+    if (!recruitInfo.current || !recruitNum.current || recruitNum.current > 9)
+      return;
+
+    recruitInfo.current.push([]);
+    recruitNum.current += 1;
+
+    const index = infoComp.length;
+    setInfoComp(
+      infoComp.concat(
+        <RecruitInfo
+          key={index}
+          index={index}
+          recruitInfo={recruitInfo}
+          recruitNum={recruitNum}
+        />
+      )
+    );
+  };
+
+  const deleteInfoComp = () => {
+    if (!recruitInfo.current || !recruitNum.current || infoComp.length < 2)
+      return;
+
+    const popedInfo = recruitInfo.current.pop();
+    if (popedInfo) recruitNum.current -= parseInt(popedInfo[2]);
+
+    const nextState = [...infoComp];
+    nextState.splice(-1);
+    setInfoComp(nextState);
+  };
+
+  const onSubmit = () => {
+    console.log(recruitInfo.current);
+  };
+
   return (
-    <div className="isolate bg-white py-24 px-6 sm:py-32 lg:px-8">
-      <div className="mx-auto max-w-2xl text-center">
+    <div className="isolate bg-white py-14 px-6 sm:py-20 lg:px-8">
+      <div className="mx-auto pb-8 max-w-2xl text-center border-b border-gray-200">
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-          Contact sales
+          모임 생성
         </h2>
         <p className="mt-2 text-lg leading-8 text-gray-600">
-          Aute magna irure deserunt veniam aliqua magna enim voluptate.
+          만들고 싶은 모임의 정보를 입력해주세요
         </p>
       </div>
-      <form
-        action="#"
-        method="POST"
-        className="mx-auto mt-16 max-w-xl sm:mt-20"
-      >
-        <div className="grid grid-cols-1 gap-y-6 gap-x-8 sm:grid-cols-2">
-          <div>
-            <label
-              htmlFor="first-name"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              First name
-            </label>
-            <div className="mt-2.5">
-              <input
-                type="text"
-                name="first-name"
-                id="first-name"
-                autoComplete="given-name"
-                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div>
-            <label
-              htmlFor="last-name"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              Last name
-            </label>
-            <div className="mt-2.5">
-              <input
-                type="text"
-                name="last-name"
-                id="last-name"
-                autoComplete="family-name"
-                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
+      <div className="mx-auto mt-10 max-w-xl sm:mt-14">
+        <div className="grid grid-cols-1 gap-y-6 gap-x-8">
           <div className="sm:col-span-2">
             <label
               htmlFor="company"
               className="block text-sm font-semibold leading-6 text-gray-900"
             >
-              Company
+              유형 *
             </label>
-            <div className="mt-2.5">
+            <div className="mt-4 flex">
+              <div className="flex items-center mb-4 mr-6">
+                <input
+                  id="study-radio"
+                  type="radio"
+                  value="스터디"
+                  name="type-radio"
+                  className="w-5 h-5 text-indigo-600 border-gray-300"
+                  onChange={(e) => setType(e.target.value)}
+                  checked={type === "스터디"}
+                />
+                <label
+                  htmlFor="study-radio"
+                  className="ml-2 text-sm font-medium text-gray-600"
+                >
+                  스터디
+                </label>
+              </div>
+              <div className="flex items-center mb-4">
+                <input
+                  id="project-radio"
+                  type="radio"
+                  value="프로젝트"
+                  name="type-radio"
+                  className="w-5 h-5 text-indigo-600 border-gray-300"
+                  onChange={(e) => setType(e.target.value)}
+                  checked={type === "프로젝트"}
+                />
+                <label
+                  htmlFor="project-radio"
+                  className="ml-2 text-sm font-medium text-gray-600"
+                >
+                  프로젝트
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div className="sm:col-span-2">
+            <label
+              htmlFor="name"
+              className="block text-sm font-semibold leading-6 text-gray-900"
+            >
+              모임 이름 *
+            </label>
+            <div className="mt-4">
               <input
                 type="text"
-                name="company"
-                id="company"
-                autoComplete="organization"
-                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                name="name"
+                id="name"
+                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm 
+                  ring-1 ring-inset ring-gray-300 focus:ring-1 focus:ring-indigo-600 
+                  sm:text-sm sm:leading-6"
               />
             </div>
           </div>
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="email"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              Email
-            </label>
-            <div className="mt-2.5">
-              <input
-                type="email"
-                name="email"
-                id="email"
-                autoComplete="email"
-                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="phone-number"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              Phone number
-            </label>
-            <div className="relative mt-2.5">
-              <input
-                type="tel"
-                name="phone-number"
-                id="phone-number"
-                autoComplete="tel"
-                className="block w-full rounded-md border-0 py-2 px-3.5 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
+
           <div className="sm:col-span-2">
             <label
               htmlFor="message"
@@ -116,45 +143,71 @@ export default function CreatePost() {
               ></textarea>
             </div>
           </div>
-          <div className="flex gap-x-4 sm:col-span-2">
-            <div className="flex h-6 items-center">
-              {/* <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" --> */}
-              <button
-                type="button"
-                className="bg-gray-200 flex w-8 flex-none cursor-pointer rounded-full p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                role="switch"
-                aria-checked="false"
-                aria-labelledby="switch-1-label"
-              >
-                <span className="sr-only">Agree to policies</span>
-                {/* <!-- Enabled: "translate-x-3.5", Not Enabled: "translate-x-0" --> */}
-                <span
-                  aria-hidden="true"
-                  className="translate-x-0 h-4 w-4 transform rounded-full bg-white shadow-sm ring-1 ring-gray-900/5 transition duration-200 ease-in-out"
-                ></span>
-              </button>
-            </div>
+
+          <div className="sm:col-span-2">
             <label
-              className="text-sm leading-6 text-gray-600"
-              id="switch-1-label"
+              htmlFor="first-name"
+              className="block text-sm font-semibold leading-6 text-gray-900"
             >
-              By selecting this, you agree to our
-              <a href="#" className="font-semibold text-indigo-600">
-                privacy&nbsp;policy
-              </a>
-              .
+              모집 인원 *
+              <span className="ml-2 text-xs font-normal text-gray-600">
+                (최대 10명)
+              </span>
             </label>
+            <div className="mt-2.5">
+              {infoComp}
+              <div className="ml-auto mt-4 w-fit text-sm">
+                <button
+                  className="mr-4 px-4 py-2 rounded-md text-gray-500 border border-gray-500 
+                  hover:text-gray-600 hover:border-gray-600 transition-all ease-in duration-100"
+                  onClick={deleteInfoComp}
+                >
+                  삭제
+                </button>
+                <button
+                  className="px-6 py-2 rounded-md text-white border border-indigo-600 bg-indigo-600
+                  hover:bg-indigo-500 transition-all ease-in duration-100"
+                  onClick={addInfoComp}
+                >
+                  추가
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="sm:col-span-2">
+            <label
+              htmlFor="stack"
+              className="block text-sm font-semibold leading-6 text-gray-900"
+            >
+              기술 스택
+              <span className="ml-2 text-xs font-normal text-gray-600">
+                (최대 10개)
+              </span>
+            </label>
+            <div className="mt-4">
+              <input
+                type="text"
+                name="stack"
+                id="stack"
+                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm 
+                  ring-1 ring-inset ring-gray-300 focus:ring-1 focus:ring-indigo-600 
+                  sm:text-sm sm:leading-6"
+              />
+            </div>
           </div>
         </div>
+
         <div className="mt-10">
           <button
-            type="submit"
-            className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm 
+              font-semibold text-white shadow-sm hover:bg-indigo-500 transition-all ease-in duration-100"
+            onClick={onSubmit}
           >
-            Lets talk
+            작성 완료
           </button>
         </div>
-      </form>
+      </div>
     </div>
   );
 }

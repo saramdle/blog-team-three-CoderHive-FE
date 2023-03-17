@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 import ArticleOptionList from "@/components/OptionList/articleOptionList";
 import SelectedCard from "@/components/Study/selectedCard";
@@ -9,6 +10,11 @@ import PostCard from "@/components/postCard";
 export default function Home() {
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
+  const router = useRouter();
+
+  const onCreatePostClicked = () => {
+    router.push("/createPost");
+  };
 
   const renderSelectedLocations = selectedLocations.map((title, index) => {
     return (
@@ -81,17 +87,25 @@ export default function Home() {
               {renderSelectedFields}
             </div>
           </div>
-
-          {renderArticles.length === 0 ? (
-            <NotFound />
-          ) : (
-            <div
-              className="mx-auto grid grid-cols-1 gap-y-16 gap-x-8 border-t border-gray-200 
-            pt-10 sm:pt-10 sm:grid-cols-2 md:grid-cols-3 lg:mx-0 lg:max-w-none lg:grid-cols-4"
+          <div className="flex flex-col pt-6 border-t border-gray-200 ">
+            <button
+              className="ml-auto px-6 py-2.5 text-sm font-semibold text-white rounded-md bg-indigo-600
+                max-sm:ml-0 hover:bg-indigo-500 transition-all ease-in duration-100"
+              onClick={onCreatePostClicked}
             >
-              {renderArticles}
-            </div>
-          )}
+              새 모임 생성
+            </button>
+            {renderArticles.length === 0 ? (
+              <NotFound />
+            ) : (
+              <div
+                className="mx-auto grid grid-cols-1 gap-y-16 gap-x-8 mt-6
+                  sm:grid-cols-2 md:grid-cols-3 lg:mx-0 lg:max-w-none lg:grid-cols-4"
+              >
+                {renderArticles}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>

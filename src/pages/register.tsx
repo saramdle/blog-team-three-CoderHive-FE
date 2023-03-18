@@ -5,10 +5,10 @@ import SingleSelectList from "@/components/OptionList/singleSelectList";
 
 export default function Register() {
   const [nickname, setNickname] = useState<string>("");
-  const [field, setField] = useState<string>("미지정");
-  const [subfield, setSubfield] = useState<string>("미지정");
-  const [level, setLevel] = useState<string>("미지정");
-  const [year, setYear] = useState<string>("미지정");
+  const [field, setField] = useState<string>("");
+  const [subfield, setSubfield] = useState<string>("");
+  const [level, setLevel] = useState<string>("");
+  const [year, setYear] = useState<string>("");
 
   const router = useRouter();
 

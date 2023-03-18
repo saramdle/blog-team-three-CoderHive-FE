@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 import MultiSelectList from "@/components/OptionList/multiSelectList";
-import SelectedCard from "@/components/Study/selectedCard";
+import SelectedCard from "@/components/selectedCard";
 import NotFound from "@/components/notFound";
 import PostCard from "@/components/postCard";
 
@@ -82,7 +82,7 @@ export default function Home() {
                 setSelectedOption={setSelectedFields}
               />
             </div>
-            <div className="my-4 min-h-[3rem] flex flex-wrap">
+            <div className="my-4 min-h-[2.4rem] flex flex-wrap">
               {renderSelectedLocations}
               {renderSelectedFields}
             </div>

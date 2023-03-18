@@ -49,7 +49,9 @@ export default function SingleSelectList({
         onBlur={onBlur}
       >
         <span className="w-full flex items-center">
-          <span className="ml-3 block truncate">{title}</span>
+          <span className="ml-3 block truncate">
+            {title ? title : "미지정"}
+          </span>
         </span>
 
         <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
@@ -71,7 +73,9 @@ export default function SingleSelectList({
       <ul
         className={`${
           isListOpen ? "visible" : "invisible opacity-0"
-        } absolute z-10 mt-1 max-h-56 w-full min-w-fit overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm transition-all ease-in duration-200`}
+        } absolute z-10 mt-1 max-h-56 w-full min-w-fit overflow-auto rounded-md bg-white py-1 
+          text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none 
+          sm:text-sm transition-all ease-in duration-200`}
         tabIndex={-1}
         role="listbox"
         aria-labelledby="listbox-label"

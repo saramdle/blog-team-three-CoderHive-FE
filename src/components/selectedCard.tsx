@@ -17,7 +17,7 @@ export default function SelectedCard({
 
   return (
     <div
-      className="mr-4 mt-2 py-2 px-5 flex items-center rounded-md text-sm font-normal cursor-pointer
+      className="mr-4 mb-2 py-2 px-4 w-fit flex items-center rounded-md text-sm font-normal cursor-pointer
         text-gray-600 bg-gray-100 hover:bg-gray-200"
       onClick={deleteOption}
     >

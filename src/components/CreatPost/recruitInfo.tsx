@@ -13,8 +13,8 @@ export default function RecruitInfo({
   recruitInfo,
   recruitNum,
 }: RecruitInfoProps) {
-  const [field, setField] = useState<string>("미지정");
-  const [subField, setSubField] = useState<string>("미지정");
+  const [field, setField] = useState<string>("");
+  const [subField, setSubField] = useState<string>("");
   const [count, setCount] = useState<number>(1);
 
   useEffect(() => {
@@ -80,9 +80,8 @@ export default function RecruitInfo({
   );
 }
 
-let 분야_테스트_데이터 = ["미지정", "기획", "디자인", "프론트엔드", "백엔드"];
+let 분야_테스트_데이터 = ["기획", "디자인", "프론트엔드", "백엔드"];
 let 하위분야_테스트_데이터 = [
-  "미지정",
   "IOS",
   "안드로이드",
   "웹프론트엔드",

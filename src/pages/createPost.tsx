@@ -1,11 +1,15 @@
 import { useState, useRef, ReactElement } from "react";
 
 import RecruitInfo from "@/components/CreatPost/recruitInfo";
+import SingleSelectList from "@/components/OptionList/singleSelectList";
+import SearchStack from "@/components/SearchStack/searchStack";
 
 export default function CreatePost() {
   const recruitInfo = useRef<string[][] | null>([[]]);
   const recruitNum = useRef<number | null>(1);
   const [type, setType] = useState("스터디");
+  const [title, setTitle] = useState("");
+  const [location, setLocation] = useState("");
   const [infoComp, setInfoComp] = useState<ReactElement[]>([
     <RecruitInfo
       key={0}
@@ -132,15 +136,14 @@ export default function CreatePost() {
               htmlFor="message"
               className="block text-sm font-semibold leading-6 text-gray-900"
             >
-              Message
+              지역 *
             </label>
             <div className="mt-2.5">
-              <textarea
-                name="message"
-                id="message"
-                rows={4}
-                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              ></textarea>
+              <SingleSelectList
+                title={location}
+                options={지역_테스트_데이터}
+                setSelectedOption={setLocation}
+              />
             </div>
           </div>
 
@@ -186,14 +189,41 @@ export default function CreatePost() {
               </span>
             </label>
             <div className="mt-4">
-              <input
-                type="text"
-                name="stack"
-                id="stack"
-                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm 
-                  ring-1 ring-inset ring-gray-300 focus:ring-1 focus:ring-indigo-600 
-                  sm:text-sm sm:leading-6"
-              />
+              <SearchStack />
+            </div>
+          </div>
+
+          <div className="sm:col-span-2">
+            <label
+              htmlFor="message"
+              className="block text-sm font-semibold leading-6 text-gray-900"
+            >
+              대표 이미지
+            </label>
+            <div className="mt-2.5">
+              <textarea
+                name="message"
+                id="message"
+                rows={4}
+                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              ></textarea>
+            </div>
+          </div>
+
+          <div className="sm:col-span-2">
+            <label
+              htmlFor="message"
+              className="block text-sm font-semibold leading-6 text-gray-900"
+            >
+              프로젝트 설명 *
+            </label>
+            <div className="mt-2.5">
+              <textarea
+                name="message"
+                id="message"
+                rows={4}
+                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              ></textarea>
             </div>
           </div>
         </div>
@@ -211,3 +241,10 @@ export default function CreatePost() {
     </div>
   );
 }
+
+let 지역_테스트_데이터 = [
+  "서울특별시",
+  "인천광역시",
+  "대전광역시",
+  "부산광역시",
+];

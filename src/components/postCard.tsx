@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Skill from "./Study/skill";
 
 type PostCardProps = {
   postId: string;
@@ -21,7 +20,7 @@ export default function PostCard({
   likes,
 }: PostCardProps) {
   const renderSkills = skills.map((skill, index) => {
-    return <Skill key={index} title={skill} />;
+    return <div key={index}>{skill}</div>;
   });
 
   return (
@@ -50,7 +49,7 @@ export default function PostCard({
         <h3 className="mt-1 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
           <Link
             href={{
-              pathname: "post/[id]",
+              pathname: "/post/[id]",
               query: { id: postId },
             }}
           >

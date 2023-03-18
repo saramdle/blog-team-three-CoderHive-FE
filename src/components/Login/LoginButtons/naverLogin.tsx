@@ -1,6 +1,18 @@
+import { useRouter } from "next/router";
+
+import { useAppDispatch } from "@/store/hooks";
+import { setIsLoginModalOpen } from "@/store/app/appSlice";
 import { LoginButtonProps } from "../login";
 
 export default function NaverLogin({ isLoginMode }: LoginButtonProps) {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  const onLoginClicked = () => {
+    router.push("/register");
+    dispatch(setIsLoginModalOpen(false));
+  };
+
   return (
     <button
       type="button"
@@ -8,6 +20,7 @@ export default function NaverLogin({ isLoginMode }: LoginButtonProps) {
       text-sm font-semibold text-white bg-green-600 
       hover:bg-gray-50 hover:text-green-600 hover:border hover:border-green-600
       transition-all ease-in duration-100"
+      onClick={onLoginClicked}
     >
       <svg
         className="mr-auto ml-1 h-5 w-5 text-inherit"
@@ -22,4 +35,7 @@ export default function NaverLogin({ isLoginMode }: LoginButtonProps) {
       </span>
     </button>
   );
+}
+function dispatch(arg0: any) {
+  throw new Error("Function not implemented.");
 }

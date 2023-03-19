@@ -7,7 +7,7 @@ import SelectedCard from "@/components/selectedCard";
 import NotFound from "@/components/notFound";
 import PostCard from "@/components/postCard";
 
-export default function Home() {
+export default function Study() {
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
   const router = useRouter();

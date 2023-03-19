@@ -43,13 +43,13 @@ export default function Navbar() {
 
         <div className="hidden lg:flex lg:gap-x-14">
           <Link
-            href="/"
+            href="/study"
             className="text-sm font-semibold leading-6 text-gray-900"
           >
             스터디
           </Link>
           <Link
-            href="/projects"
+            href="/project"
             className="text-sm font-semibold leading-6 text-gray-900"
           >
             프로젝트

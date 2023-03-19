@@ -7,7 +7,7 @@ import SelectedCard from "@/components/selectedCard";
 import NotFound from "@/components/notFound";
 import PostCard from "@/components/postCard";
 
-export default function Home() {
+export default function Project() {
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
   const router = useRouter();
@@ -65,10 +65,10 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:mx-0">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              스터디
+              프로젝트
             </h2>
             <p className="mt-2 text-lg leading-8 text-gray-600">
-              함께 공부하고 성장해갈 스터디를 찾아보세요
+              사람들과 함께 협업하고 경험을 쌓을 프로젝트를 찾아보세요
             </p>
             <div className="mt-8 flex">
               <MultiSelectList

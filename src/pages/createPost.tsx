@@ -3,6 +3,7 @@ import { useState, useRef, ReactElement } from "react";
 import RecruitInfo from "@/components/CreatPost/recruitInfo";
 import SingleSelectList from "@/components/OptionList/singleSelectList";
 import SearchStack from "@/components/SearchStack/searchStack";
+import UploadImage from "@/components/CreatPost/uploadImage";
 
 export default function CreatePost() {
   const recruitInfo = useRef<string[][] | null>([[]]);
@@ -10,6 +11,8 @@ export default function CreatePost() {
   const [type, setType] = useState("스터디");
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
+  const [stackList, setStackList] = useState<string[]>([]);
+  const [image, setImage] = useState<File | null>(null);
   const [infoComp, setInfoComp] = useState<ReactElement[]>([
     <RecruitInfo
       key={0}
@@ -53,6 +56,7 @@ export default function CreatePost() {
 
   const onSubmit = () => {
     console.log(recruitInfo.current);
+    console.log(stackList);
   };
 
   return (
@@ -68,10 +72,7 @@ export default function CreatePost() {
       <div className="mx-auto mt-10 max-w-xl sm:mt-14">
         <div className="grid grid-cols-1 gap-y-6 gap-x-8">
           <div className="sm:col-span-2">
-            <label
-              htmlFor="company"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
+            <label className="block text-sm font-semibold leading-6 text-gray-900">
               유형 *
             </label>
             <div className="mt-4 flex">
@@ -132,10 +133,7 @@ export default function CreatePost() {
           </div>
 
           <div className="sm:col-span-2">
-            <label
-              htmlFor="message"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
+            <label className="block text-sm font-semibold leading-6 text-gray-900">
               지역 *
             </label>
             <div className="mt-2.5">
@@ -189,24 +187,16 @@ export default function CreatePost() {
               </span>
             </label>
             <div className="mt-4">
-              <SearchStack />
+              <SearchStack stackList={stackList} setStackList={setStackList} />
             </div>
           </div>
 
           <div className="sm:col-span-2">
-            <label
-              htmlFor="message"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
+            <label className="block text-sm font-semibold leading-6 text-gray-900">
               대표 이미지
             </label>
             <div className="mt-2.5">
-              <textarea
-                name="message"
-                id="message"
-                rows={4}
-                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              ></textarea>
+              <UploadImage image={image} setImage={setImage} />
             </div>
           </div>
 

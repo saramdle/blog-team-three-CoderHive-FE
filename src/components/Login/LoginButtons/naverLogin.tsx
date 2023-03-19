@@ -10,6 +10,9 @@ export default function NaverLogin({ isLoginMode }: LoginButtonProps) {
 
   const onLoginClicked = () => {
     router.push("/register");
+
+    document.documentElement.style.overflowY = "auto";
+
     dispatch(setIsLoginModalOpen(false));
   };
 
@@ -17,7 +20,7 @@ export default function NaverLogin({ isLoginMode }: LoginButtonProps) {
     <button
       type="button"
       className="mb-4 p-4 w-full h-12 flex justify-center items-center rounded-md 
-      text-sm font-semibold text-white bg-green-600 
+      text-sm font-semibold text-white bg-green-600
       hover:bg-gray-50 hover:text-green-600 hover:border hover:border-green-600
       transition-all ease-in duration-100"
       onClick={onLoginClicked}
@@ -35,7 +38,4 @@ export default function NaverLogin({ isLoginMode }: LoginButtonProps) {
       </span>
     </button>
   );
-}
-function dispatch(arg0: any) {
-  throw new Error("Function not implemented.");
 }

@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import SelectedCard from "../selectedCard";
 
-export default function SearchStack() {
+type SearchStackProps = {
+  stackList: string[];
+  setStackList: Dispatch<SetStateAction<string[]>>;
+};
+
+export default function SearchStack({
+  stackList,
+  setStackList,
+}: SearchStackProps) {
   const [isOptionOpen, setIsOptionOpen] = useState<boolean>(false);
   const [searchText, setSearchText] = useState<string>("");
-  const [stackList, setStackList] = useState<string[]>([]);
 
   const renderStackList = stackList.map((stack, index) => {
     return (

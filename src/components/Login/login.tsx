@@ -20,7 +20,9 @@ export default function Login() {
 
   const onModalCloseClicked = (e: React.MouseEvent<Element>) => {
     e.stopPropagation();
+
     document.documentElement.style.overflowY = "auto";
+
     dispatch(setIsLoginModalOpen(false));
     setIsLoginMode(true);
   };

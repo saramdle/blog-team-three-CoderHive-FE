@@ -35,7 +35,7 @@ export default function PostCard({
   return (
     <article
       className="relative p-4 flex max-w-xl flex-col items-start rounded-md border border-gray-600 overflow-hidden
-        hover:shadow-lg hover:ease-in duration-200 hover:-translate-y-1"
+        hover:shadow-lg hover:-translate-y-1 ease-in duration-200"
     >
       {hasImg && (
         <div className="absolute inset-0 w-full h-24">

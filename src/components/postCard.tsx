@@ -43,7 +43,9 @@ export default function PostCard({
             src="/test.jpg"
             alt="이미지"
             fill
+            sizes="100%, 100%"
             style={{ objectFit: "cover" }}
+            priority
           />
         </div>
       )}

@@ -62,7 +62,7 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="isolate bg-white py-14 px-6 sm:py-20 lg:px-8">
+    <div className="bg-white py-14 px-6 sm:py-20 lg:px-8">
       <div className="mx-auto pb-8 max-w-4xl text-center border-b border-gray-200">
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           모임 생성

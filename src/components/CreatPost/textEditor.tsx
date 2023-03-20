@@ -18,6 +18,8 @@ export default function TextEditor({ bodyText, setBodyText }: TextEditorProps) {
         value={bodyText}
         onChange={(e) => setBodyText(e!)}
         height={400}
+        overflow={false}
+        style={{ position: "relative", zIndex: 40 }}
       />
     </div>
   );

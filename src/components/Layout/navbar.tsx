@@ -22,7 +22,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 bg-gray-100 z-30 border-b border-gray-600">
+    <header className="sticky top-0 bg-gray-100 z-50 border-b border-gray-600">
       <nav
         className="flex items-center justify-between mx-auto max-w-7xl p-6 lg:px-8 h-14 "
         aria-label="Global"

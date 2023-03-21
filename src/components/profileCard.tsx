@@ -1,6 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 
 type ProfileCardProps = {
+  userId: string;
   imageUrl: string;
   nickname: string;
   field: string;
@@ -9,6 +11,7 @@ type ProfileCardProps = {
 };
 
 export default function ProfileCard({
+  userId,
   imageUrl,
   nickname,
   field,
@@ -16,7 +19,10 @@ export default function ProfileCard({
   resp,
 }: ProfileCardProps) {
   return (
-    <div className="w-fit p-4 rounded-md border border-gray-600">
+    <div
+      className="w-fit p-4 rounded-md border border-gray-600
+        hover:shadow-lg hover:-translate-y-1 ease-in duration-200"
+    >
       <div className="flex items-center">
         <div className="relative w-20 h-20 rounded-md overflow-hidden">
           {imageUrl ? (
@@ -40,7 +46,15 @@ export default function ProfileCard({
           )}
         </div>
         <div className="ml-4 flex flex-col">
-          <h3 className="text-xl">{nickname}</h3>
+          <Link
+            href={{
+              pathname: "/profile/[id]",
+              query: { id: userId },
+            }}
+            className="text-xl"
+          >
+            {nickname}
+          </Link>
           <span className="font-normal text-sm text-gray-600">
             {field} {level}
           </span>

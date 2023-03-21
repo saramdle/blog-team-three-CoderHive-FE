@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import ProfileEdit from "@/components/My/profileEdit";
+import MyPosts from "@/components/My/myPosts";
 
 export default function My() {
   const [isEditMode, setIsEditMode] = useState<boolean>(true);
@@ -42,7 +43,11 @@ export default function My() {
           stack={테스트_유저정보.stack}
         />
       ) : (
-        <></>
+        <MyPosts
+          appliedPosts={테스트_유저정보.appliedPost}
+          inProgressPosts={테스트_유저정보.inProgressPosts}
+          completePosts={테스트_유저정보.completePosts}
+        />
       )}
     </div>
   );
@@ -54,4 +59,120 @@ let 테스트_유저정보 = {
   nickname: "공기밥",
   skill: ["프론트엔드", "웹프론트엔드", "초보", "1-3년"],
   stack: ["React", "NextJS", "SASS", "JavaScript"],
+  appliedPost: [
+    {
+      postId: "1",
+      type: "스터디",
+      status: "모집중",
+      field: "프론트엔드 개발",
+      title: "프론트엔드 개발자 구함!",
+      location: "서울 / 경기",
+      skills: ["HTML5", "Tailwind", "NextJS", "TypeScript", "GitHub"],
+      likes: 1,
+      hasImg: true,
+    },
+    {
+      postId: "2",
+      type: "스터디",
+      status: "모집중",
+      field: "프론트엔드 개발",
+      title: "자바스크립트 개념부터 다지실분 구함",
+      location: "서울 / 경기",
+      skills: ["HTML5", "JavaScript"],
+      likes: 3,
+      hasImg: false,
+    },
+    {
+      postId: "3",
+      type: "스터디",
+      status: "모집완료",
+      field: "디자인&UX 스터디&네트워킹",
+      title: "UIUX 포트폴리오 같이 만들어요",
+      location: "서울",
+      skills: ["Figma"],
+      likes: 12,
+      hasImg: true,
+    },
+    {
+      postId: "4",
+      type: "스터디",
+      status: "모집중",
+      field: "백엔드 개발",
+      title: "개발 스터디 모집",
+      location: "온라인 / 서울",
+      skills: ["Flutter", "Python", "JavaScript", "TypeScript", "Django"],
+      likes: 100,
+      hasImg: false,
+    },
+    {
+      postId: "5",
+      type: "스터디",
+      status: "모집완료",
+      field: "기획 & PO",
+      title: "SaaS LMS 기획",
+      location: "서울 / 경기",
+      skills: ["LMS", "SaaS"],
+      likes: 0,
+      hasImg: true,
+    },
+  ],
+  inProgressPosts: [
+    {
+      postId: "3",
+      type: "스터디",
+      status: "모집완료",
+      field: "디자인&UX 스터디&네트워킹",
+      title: "UIUX 포트폴리오 같이 만들어요",
+      location: "서울",
+      skills: ["Figma"],
+      likes: 12,
+      hasImg: true,
+    },
+    {
+      postId: "4",
+      type: "스터디",
+      status: "모집중",
+      field: "백엔드 개발",
+      title: "개발 스터디 모집",
+      location: "온라인 / 서울",
+      skills: ["Flutter", "Python", "JavaScript", "TypeScript", "Django"],
+      likes: 100,
+      hasImg: false,
+    },
+    {
+      postId: "5",
+      type: "스터디",
+      status: "모집완료",
+      field: "기획 & PO",
+      title: "SaaS LMS 기획",
+      location: "서울 / 경기",
+      skills: ["LMS", "SaaS"],
+      likes: 0,
+      hasImg: true,
+    },
+  ],
+  completePosts: [
+    {
+      postId: "1",
+      type: "스터디",
+      status: "모집중",
+      field: "프론트엔드 개발",
+      title: "프론트엔드 개발자 구함!",
+      location: "서울 / 경기",
+      skills: ["HTML5", "Tailwind", "NextJS", "TypeScript", "GitHub"],
+      likes: 1,
+      hasImg: true,
+    },
+    {
+      postId: "2",
+      type: "스터디",
+      status: "모집중",
+      field: "프론트엔드 개발",
+      title: "자바스크립트 개념부터 다지실분 구함",
+      location: "서울 / 경기",
+      skills: ["HTML5", "JavaScript"],
+      likes: 3,
+      hasImg: false,
+    },
+  ],
 };

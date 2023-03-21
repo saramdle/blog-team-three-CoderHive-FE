@@ -12,6 +12,7 @@ export default function Post() {
     return (
       <ProfileCard
         key={index}
+        userId={user.userId}
         imageUrl={user.imageUrl}
         nickname={user.nickname}
         field={user.field}
@@ -56,6 +57,7 @@ export default function Post() {
             <h3 className="mb-4 font-bold text-lg">리더 정보</h3>
             <div className="mb-4 flex flex-wrap gap-2">
               <ProfileCard
+                userId={테스트_리더정보.userId}
                 imageUrl={테스트_리더정보.imageUrl}
                 nickname={테스트_리더정보.nickname}
                 field={테스트_리더정보.field}
@@ -89,6 +91,7 @@ let 테스트_스킬정보 = [
 let 테스트_플랫폼정보 = ["Android", "IOS", "Web"];
 
 let 테스트_리더정보 = {
+  userId: "1",
   imageUrl: "/test.jpg",
   nickname: "공기밥",
   field: "웹프론트엔드",
@@ -97,6 +100,7 @@ let 테스트_리더정보 = {
 };
 
 interface ProfileCard {
+  userId: string;
   imageUrl: string;
   nickname: string;
   field: string;
@@ -106,6 +110,7 @@ interface ProfileCard {
 
 let 테스트_멤버정보: ProfileCard[] = [
   {
+    userId: "2",
     imageUrl: "",
     nickname: "한샘",
     field: "웹서버",
@@ -113,6 +118,7 @@ let 테스트_멤버정보: ProfileCard[] = [
     resp: "웹백엔드",
   },
   {
+    userId: "3",
     imageUrl: "",
     nickname: "HSM",
     field: "웹서버",

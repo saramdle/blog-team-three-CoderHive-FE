@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-type PostCardProps = {
+export type PostCardProps = {
   postId: string;
   type: string;
   status: string;
@@ -34,8 +34,8 @@ export default function PostCard({
 
   return (
     <article
-      className="relative p-4 flex max-w-xl flex-col items-start rounded-md border border-gray-600 overflow-hidden
-        hover:shadow-lg hover:-translate-y-1 ease-in duration-200"
+      className="relative p-4 flex max-w-xl flex-col items-start rounded-md border border-gray-600 
+       bg-white overflow-hidden hover:shadow-lg hover:-translate-y-1 ease-in duration-200"
     >
       {hasImg && (
         <div className="absolute inset-0 w-full h-24">
@@ -69,8 +69,8 @@ export default function PostCard({
           <svg
             viewBox="0 0 16 16"
             fill="currentColor"
-            stroke={hasImg ? "white" : "none"}
-            className=" h-4 w-4 text-gray-600"
+            stroke={hasImg ? "text-gray-600" : "none"}
+            className={`${hasImg ? "text-white" : "text-gray-600"} h-4 w-4  `}
           >
             <path
               fill="currentColor"
@@ -89,7 +89,6 @@ export default function PostCard({
               query: { id: postId },
             }}
           >
-            <span className="absolute inset-0"></span>
             {title}
           </Link>
         </h3>

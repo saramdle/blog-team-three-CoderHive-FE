@@ -1,5 +1,4 @@
-import { ChangeEvent, Dispatch, ReactNode, SetStateAction } from "react";
-import Image from "next/image";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import ImagePreview from "./imagePreview";
 
 type UploadImageProps = {

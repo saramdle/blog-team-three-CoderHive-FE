@@ -15,13 +15,7 @@ export default function ImagePreview({ image, setImage }: ImagePreviewProps) {
 
   return (
     <div className="relative flex justify-end items-start w-full h-full">
-      <Image
-        key={"image"}
-        src={blobURL}
-        alt="Image"
-        fill
-        style={{ objectFit: "fill" }}
-      />
+      <Image src={blobURL} alt="Image" fill style={{ objectFit: "cover" }} />
       <button
         className="z-10 mr-4 mt-4 px-4 py-2 h-fit text-xs text-white rounded-md 
         bg-gray-600 hover:bg-gray-500"

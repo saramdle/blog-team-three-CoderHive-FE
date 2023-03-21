@@ -10,6 +10,7 @@ import PostCard from "@/components/postCard";
 export default function Study() {
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
+  const [showAvail, setShowAvail] = useState<boolean>(false);
   const router = useRouter();
 
   const onCreatePostClicked = () => {
@@ -83,6 +84,21 @@ export default function Study() {
                 selectedOptions={selectedFields}
                 setSelectedOption={setSelectedFields}
               />
+              <div className="ml-4 flex items-center">
+                <input
+                  id="checkbox"
+                  type="checkbox"
+                  className="w-5 h-5 rounded"
+                  checked={showAvail}
+                  onChange={(e) => setShowAvail(e.target.checked)}
+                />
+                <label
+                  htmlFor="checkbox"
+                  className="ml-2 text-base font-medium text-gray-700"
+                >
+                  모집중
+                </label>
+              </div>
             </div>
             <div className="my-4 min-h-[2.4rem] flex flex-wrap">
               {renderSelectedLocations}

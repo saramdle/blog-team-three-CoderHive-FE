@@ -6,6 +6,7 @@ import FacebookLogin from "./LoginButtons/facebookLogin";
 import GoogleLogin from "./LoginButtons/googleLogin";
 import KakaoLogin from "./LoginButtons/kakaoLogin";
 import NaverLogin from "./LoginButtons/naverLogin";
+import CloseIcon from "@/lib/icons/closeIcon";
 
 export type LoginButtonProps = {
   isLoginMode: boolean;
@@ -72,20 +73,7 @@ export default function Login() {
                 onClick={(e) => onModalCloseClicked(e)}
               >
                 <span className="sr-only">Close login</span>
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                <CloseIcon width={6} height={6} />
               </button>
             </div>
 

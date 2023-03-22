@@ -5,19 +5,15 @@ import { useState } from "react";
 import { useAppDispatch } from "@/store/hooks";
 import { setIsLoginModalOpen } from "@/store/app/appSlice";
 import MenuIcon from "@/lib/icons/menuIcon";
-import CloseIcon from "@/lib/icons/closeIcon";
+import LoginIcon from "@/lib/icons/loginIcon";
+import ProfileIcon from "@/lib/icons/profileIcon";
+import SideBar from "./sidebar";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [user, setUser] = useState<string>(""); // 임시 로그인 확인 변수
+  const [profile, setProfile] = useState<string>("/test.jpg"); // 임시 유저 프로필사진
   const dispatch = useAppDispatch();
-
-  const onMenuOpenClicked = () => {
-    setIsMenuOpen(true);
-  };
-
-  const onMenuCloseClicked = () => {
-    setIsMenuOpen(false);
-  };
 
   const onModalOpenClicked = () => {
     document.documentElement.style.overflowY = "hidden";
@@ -59,78 +55,50 @@ export default function Navbar() {
           </Link>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <button
-            className=" text-xs font-semibold leading-6 text-gray-600"
-            onClick={onModalOpenClicked}
-          >
-            로그인 <span aria-hidden="true">&rarr;</span>
-          </button>
+          {!user ? (
+            <button
+              className="text-xs font-semibold leading-6 text-gray-700"
+              onClick={() => setUser("공기밥")}
+            >
+              <LoginIcon width={6} height={6} />
+            </button>
+          ) : (
+            <button
+              className="relative w-7 h-7 rounded-full overflow-hidden"
+              onClick={() => setIsMenuOpen(true)}
+            >
+              {profile ? (
+                <Image
+                  src={profile}
+                  alt="Image"
+                  fill
+                  sizes="100%, 100%"
+                  style={{ objectFit: "cover" }}
+                  priority
+                />
+              ) : (
+                <ProfileIcon width="full" height="full" color="text-gray-400" />
+              )}
+            </button>
+          )}
         </div>
         <div className="lg:hidden flex flex-1 justify-end">
           <button
             type="button"
             className="-m-2.5 p-2.5 rounded-md text-gray-700"
-            onClick={onMenuOpenClicked}
+            onClick={() => setIsMenuOpen(true)}
           >
             <span className="sr-only">Open menu</span>
             <MenuIcon width={6} height={6} />
           </button>
         </div>
       </nav>
-      {/* <!-- 모바일 메뉴 --> */}
-      {isMenuOpen && (
-        <div className="lg:hidden" role="dialog" aria-modal="true">
-          <div className="fixed inset-0 z-10"></div>
-          <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-            <div className="flex items-center justify-between">
-              <Link href="/" className="-m-1.5 p-1.5">
-                <Image
-                  src="/logo_text.svg"
-                  alt="CoderHive logo"
-                  className="h-10 w-auto"
-                  width="0"
-                  height="0"
-                  sizes="100vw"
-                />
-              </Link>
-              <button
-                type="button"
-                className="-m-2.5 rounded-md p-2.5 text-gray-700"
-                onClick={onMenuCloseClicked}
-              >
-                <span className="sr-only">Close menu</span>
-                <CloseIcon width={6} height={6} />
-              </button>
-            </div>
-            <div className="mt-6 flow-root">
-              <div className="-my-6 divide-y divide-gray-500/10">
-                <div className="space-y-2 py-6">
-                  <Link
-                    href="/study"
-                    className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >
-                    스터디
-                  </Link>
-                  <Link
-                    href="/project"
-                    className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >
-                    프로젝트
-                  </Link>
-                </div>
-                <div className="space-y-2 py-6">
-                  <a
-                    className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                    onClick={onModalOpenClicked}
-                  >
-                    로그인
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <SideBar
+        user={user}
+        setUser={setUser}
+        isMenuOpen={isMenuOpen}
+        setIsMenuOpen={setIsMenuOpen}
+      />
     </header>
   );
 }

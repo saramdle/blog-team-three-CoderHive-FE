@@ -1,4 +1,3 @@
-import CloseIcon from "@/lib/icons/closeIcon";
 import { Dispatch, SetStateAction } from "react";
 
 type SelectedCardProps = {
@@ -23,7 +22,20 @@ export default function SelectedCard({
       onClick={deleteOption}
     >
       <span>{title}</span>
-      <CloseIcon width={4} height={4} style="ml-1 -mr-1" />
+      <svg
+        className="ml-1 -mr-1 h-4 w-4"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth="1.5"
+        stroke="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
     </div>
   );
 }

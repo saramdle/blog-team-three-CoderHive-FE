@@ -1,8 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import HeartIcon from "@/lib/icons/heartIcon";
-
 export type PostCardProps = {
   postId: string;
   type: string;
@@ -68,12 +66,17 @@ export default function PostCard({
         </div>
         <button type="button" className=" z-10 mx-2 rounded-md">
           <span className="sr-only">Like the post</span>
-          <HeartIcon
-            width={4}
-            height={4}
+          <svg
+            viewBox="0 0 16 16"
+            fill="currentColor"
             stroke={hasImg ? "text-gray-600" : "none"}
-            style={hasImg ? "text-white" : "text-gray-600"}
-          />
+            className={`${hasImg ? "text-white" : "text-gray-600"} h-4 w-4  `}
+          >
+            <path
+              fill="currentColor"
+              d="M11.8 1c-1.682 0-3.129 1.368-3.799 2.797C7.33 2.368 5.883 1 4.201 1a4.202 4.202 0 00-4.2 4.2c0 4.716 4.758 5.953 8 10.616 3.065-4.634 8-6.05 8-10.616 0-2.319-1.882-4.2-4.2-4.2z"
+            />
+          </svg>
         </button>
       </div>
 
@@ -101,7 +104,16 @@ export default function PostCard({
 
       <div className="relative mt-auto w-full flex justify-between items-center text-xs text-gray-600 cursor-default">
         <div className="flex items-center">
-          <HeartIcon width={3} height={3} color="text-gray-700" />
+          <svg
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            className=" h-3 w-3 text-gray-700"
+          >
+            <path
+              fill="currentColor"
+              d="M11.8 1c-1.682 0-3.129 1.368-3.799 2.797C7.33 2.368 5.883 1 4.201 1a4.202 4.202 0 00-4.2 4.2c0 4.716 4.758 5.953 8 10.616 3.065-4.634 8-6.05 8-10.616 0-2.319-1.882-4.2-4.2-4.2z"
+            />
+          </svg>
           <span className="ml-1">{likes}</span>
         </div>
         <div>

@@ -1,8 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+
 import { useAppDispatch } from "@/store/hooks";
 import { setIsLoginModalOpen } from "@/store/app/appSlice";
+import MenuIcon from "@/lib/icons/menuIcon";
+import CloseIcon from "@/lib/icons/closeIcon";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -66,26 +69,11 @@ export default function Navbar() {
         <div className="lg:hidden flex flex-1 justify-end">
           <button
             type="button"
-            className="-m-2.5 rounded-md p-2.5 text-gray-700"
+            className="-m-2.5 p-2.5 rounded-md text-gray-700"
             onClick={onMenuOpenClicked}
           >
             <span className="sr-only">Open menu</span>
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 512 512"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeMiterlimit={10}
-                strokeWidth={32}
-                d="M80 160h352M80 256h352M80 352h352"
-              />
-            </svg>
+            <MenuIcon width={6} height={6} />
           </button>
         </div>
       </nav>
@@ -111,20 +99,7 @@ export default function Navbar() {
                 onClick={onMenuCloseClicked}
               >
                 <span className="sr-only">Close menu</span>
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                <CloseIcon width={6} height={6} />
               </button>
             </div>
             <div className="mt-6 flow-root">

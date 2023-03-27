@@ -71,7 +71,7 @@ export default function Project() {
             <p className="mt-2 text-lg leading-8 text-gray-600">
               사람들과 함께 협업하고 경험을 쌓을 프로젝트를 찾아보세요
             </p>
-            <div className="mt-8 flex">
+            <div className="mt-8 flex gap-x-4">
               <MultiSelectList
                 title="지역"
                 options={지역_테스트_데이터}

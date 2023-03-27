@@ -1,10 +1,12 @@
-import { useState, useRef, ReactElement } from "react";
+import { useState, useRef, ReactElement, useEffect } from "react";
 
 import RecruitInfo from "@/components/CreatPost/recruitInfo";
 import SingleSelectList from "@/components/OptionList/singleSelectList";
 import SearchStack from "@/components/SearchStack/searchStack";
 import UploadImage from "@/components/CreatPost/uploadImage";
 import TextEditor from "@/components/CreatPost/textEditor";
+import MultiSelectList from "@/components/OptionList/multiSelectList";
+import SelectedCard from "@/components/selectedCard";
 import initialBodyText from "@/lib/initialBodyText";
 
 export default function CreatePost() {
@@ -14,6 +16,9 @@ export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [stackList, setStackList] = useState<string[]>([]);
+  const [myWork, setMyWork] = useState<string>("");
+  const [workList, setWorkList] = useState<string[]>([]);
+  const [platforms, setPlatforms] = useState<string[]>([]);
   const [image, setImage] = useState<File | null>(null);
   const [bodyText, setBodyText] = useState<string>(initialBodyText);
   const [infoComp, setInfoComp] = useState<ReactElement[]>([
@@ -22,6 +27,7 @@ export default function CreatePost() {
       index={0}
       recruitInfo={recruitInfo}
       recruitNum={recruitNum}
+      setWorkList={setWorkList}
     />,
   ]);
 
@@ -40,6 +46,7 @@ export default function CreatePost() {
           index={index}
           recruitInfo={recruitInfo}
           recruitNum={recruitNum}
+          setWorkList={setWorkList}
         />
       )
     );
@@ -52,13 +59,31 @@ export default function CreatePost() {
     const popedInfo = recruitInfo.current.pop();
     if (popedInfo) recruitNum.current -= parseInt(popedInfo[2]);
 
-    const nextState = [...infoComp];
-    nextState.splice(-1);
-    setInfoComp(nextState);
+    const newCompList = infoComp.slice(0, -1);
+    setInfoComp(newCompList);
+
+    // 내 담당 분야 설정이 삭제될 분야일 경우 설정을 초기화 시킨다.
+    if (workList[workList.length - 1] === myWork) {
+      setMyWork("");
+    }
+
+    const newWorkList = workList.slice(0, -1);
+    setWorkList(newWorkList);
   };
 
+  const renderSelectedPlatforms = platforms.map((title, index) => {
+    return (
+      <SelectedCard
+        key={index}
+        title={title}
+        selectedOptions={platforms}
+        setSelectedOption={setPlatforms}
+      />
+    );
+  });
+
   const onSubmit = () => {
-    console.log(bodyText);
+    console.log(recruitInfo);
   };
 
   return (
@@ -179,6 +204,19 @@ export default function CreatePost() {
           </div>
 
           <div className="sm:col-span-2">
+            <label className="block text-sm font-semibold leading-6 text-gray-900">
+              나의 담당 분야 *
+            </label>
+            <div className="mt-2.5">
+              <SingleSelectList
+                title={myWork}
+                options={workList}
+                setSelectedOption={setMyWork}
+              />
+            </div>
+          </div>
+
+          <div className="sm:col-span-2">
             <label
               htmlFor="stack"
               className="block text-sm font-semibold leading-6 text-gray-900"
@@ -192,6 +230,28 @@ export default function CreatePost() {
               <SearchStack stackList={stackList} setStackList={setStackList} />
             </div>
           </div>
+
+          {type === "프로젝트" && (
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="stack"
+                className="block text-sm font-semibold leading-6 text-gray-900"
+              >
+                출시 플랫폼
+              </label>
+              <div className="mt-4">
+                <MultiSelectList
+                  title="플랫폼을 선택해 주세요"
+                  options={플랫폼_테스트_데이터}
+                  selectedOptions={platforms}
+                  setSelectedOption={setPlatforms}
+                />
+                <div className="mt-4 min-h-[2.4rem] flex flex-wrap">
+                  {renderSelectedPlatforms}
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="sm:col-span-2">
             <label className="block text-sm font-semibold leading-6 text-gray-900">
@@ -232,3 +292,4 @@ let 지역_테스트_데이터 = [
   "대전광역시",
   "부산광역시",
 ];
+let 플랫폼_테스트_데이터 = ["Web", "Andriod", "IOS", "임베디드"];

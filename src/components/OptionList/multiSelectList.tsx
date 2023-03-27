@@ -41,7 +41,7 @@ export default function MultiSelectList({
   });
 
   return (
-    <div className="relative mr-4">
+    <div className="relative">
       <button
         type="button"
         className="relative w-full min-w-200 rounded-md py-2 pl-10 pr-16 text-left text-gray-900 

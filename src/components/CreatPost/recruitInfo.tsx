@@ -1,4 +1,10 @@
-import React, { MutableRefObject, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  MutableRefObject,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 
 import SingleSelectList from "@/components/OptionList/singleSelectList";
 
@@ -6,12 +12,14 @@ type RecruitInfoProps = {
   index: number;
   recruitInfo: MutableRefObject<string[][] | null>;
   recruitNum: MutableRefObject<number | null>;
+  setWorkList: Dispatch<SetStateAction<string[]>>;
 };
 
 export default function RecruitInfo({
   index,
   recruitInfo,
   recruitNum,
+  setWorkList,
 }: RecruitInfoProps) {
   const [field, setField] = useState<string>("");
   const [subField, setSubField] = useState<string>("");
@@ -26,8 +34,10 @@ export default function RecruitInfo({
       else info.push(arr);
     });
 
+    setWorkList(info.map((info) => info[1]).filter((work) => work !== ""));
+
     recruitInfo.current = info;
-  }, [field, subField, count, recruitInfo, index]);
+  }, [field, subField, count, recruitInfo, index, setWorkList]);
 
   const increase = () => {
     if (!recruitNum.current) return;

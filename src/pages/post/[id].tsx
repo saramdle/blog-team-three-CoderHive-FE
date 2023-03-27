@@ -42,6 +42,7 @@ export default function Post() {
             lg:pl-4 lg:border-l"
         >
           <PostSideView
+            postId={"1"}
             recruitInfo={테스트_지원정보}
             skills={테스트_스킬정보}
             platforms={테스트_플랫폼정보}

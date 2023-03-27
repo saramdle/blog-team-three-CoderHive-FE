@@ -1,12 +1,15 @@
+import Link from "next/link";
 import RecruitStatus from "./recruitStatus";
 
 type PostSideViewProps = {
+  postId: string;
   recruitInfo: [string, number, number][];
   skills: string[];
   platforms: string[] | null;
 };
 
 export default function PostSideView({
+  postId,
   recruitInfo,
   skills,
   platforms,
@@ -46,6 +49,16 @@ export default function PostSideView({
 
   return (
     <div>
+      <Link
+        className="block mb-4 py-2 w-full text-center font-semibold rounded-md text-white 
+        bg-indigo-600 hover:bg-indigo-500"
+        href={{
+          pathname: "/postEdit/[id]",
+          query: { id: postId },
+        }}
+      >
+        포스트 수정
+      </Link>
       <h3 className="mb-4 py-4 font-bold text-base border-b border-gray-200">
         모집 현황
       </h3>

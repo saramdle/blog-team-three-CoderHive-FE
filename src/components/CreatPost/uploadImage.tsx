@@ -4,8 +4,8 @@ import ImagePreview from "./imagePreview";
 import AddImageIcon from "@/lib/icons/addImageIcon";
 
 type UploadImageProps = {
-  image: File | null;
-  setImage: Dispatch<SetStateAction<File | null>>;
+  image: File | string | null;
+  setImage: Dispatch<SetStateAction<File | string | null>>;
 };
 
 export default function UploadImage({ image, setImage }: UploadImageProps) {

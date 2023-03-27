@@ -9,27 +9,52 @@ import MultiSelectList from "@/components/OptionList/multiSelectList";
 import SelectedCard from "@/components/selectedCard";
 import initialBodyText from "@/lib/initialBodyText";
 
-export default function CreatePost() {
-  const recruitInfo = useRef<string[][] | null>([[]]);
-  const recruitNum = useRef<number | null>(1);
-  const [type, setType] = useState("스터디");
-  const [title, setTitle] = useState("");
-  const [location, setLocation] = useState("");
-  const [stackList, setStackList] = useState<string[]>([]);
-  const [myWork, setMyWork] = useState<string>("");
+export default function PostEdit() {
+  const recruitInfo = useRef<string[][] | null>(
+    포스트_테스트_데이터.recruitInfo
+  );
+
+  let iRecruitNum = 0;
+  포스트_테스트_데이터.recruitInfo.forEach((info) => {
+    iRecruitNum += Number(info[2]);
+  });
+  const recruitNum = useRef<number | null>(iRecruitNum);
+
+  const [type, setType] = useState(포스트_테스트_데이터.type);
+  const [title, setTitle] = useState(포스트_테스트_데이터.title);
+  const [location, setLocation] = useState(포스트_테스트_데이터.location);
+  const [stackList, setStackList] = useState<string[]>(
+    포스트_테스트_데이터.stackList
+  );
+  const [myWork, setMyWork] = useState<string>(포스트_테스트_데이터.myWork);
   const [workList, setWorkList] = useState<string[]>([]);
-  const [platforms, setPlatforms] = useState<string[]>([]);
-  const [image, setImage] = useState<File | null>(null);
-  const [bodyText, setBodyText] = useState<string>(initialBodyText);
-  const [infoComp, setInfoComp] = useState<ReactElement[]>([
-    <RecruitInfo
-      key={0}
-      index={0}
-      recruitInfo={recruitInfo}
-      recruitNum={recruitNum}
-      setWorkList={setWorkList}
-    />,
-  ]);
+  const [platforms, setPlatforms] = useState<string[]>(
+    포스트_테스트_데이터.platforms
+  );
+  const [image, setImage] = useState<File | string | null>(
+    포스트_테스트_데이터.image
+  );
+  const [bodyText, setBodyText] = useState<string>(
+    포스트_테스트_데이터.bodyText
+  );
+
+  const iInfoComp: ReactElement[] = [];
+  포스트_테스트_데이터.recruitInfo.forEach((info, index) => {
+    iRecruitNum += Number(info[2]);
+    iInfoComp.push(
+      <RecruitInfo
+        key={index}
+        index={index}
+        pField={info[0]}
+        pSubField={info[1]}
+        pCount={Number(info[2])}
+        recruitInfo={recruitInfo}
+        recruitNum={recruitNum}
+        setWorkList={setWorkList}
+      />
+    );
+  });
+  const [infoComp, setInfoComp] = useState<ReactElement[]>(iInfoComp);
 
   const addInfoComp = () => {
     if (!recruitInfo.current || !recruitNum.current || recruitNum.current > 9)
@@ -90,10 +115,10 @@ export default function CreatePost() {
     <div className="bg-white py-14 px-6 sm:py-20 lg:px-8">
       <div className="mx-auto pb-8 max-w-4xl text-center border-b border-gray-200">
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-          모임 생성
+          포스트 수정
         </h2>
         <p className="mt-2 text-lg leading-8 text-gray-600">
-          만들고 싶은 모임의 정보를 입력해주세요
+          포스트의 정보를 수정해 보세요
         </p>
       </div>
       <div className="mx-auto mt-10 max-w-3xl sm:mt-14">
@@ -280,7 +305,7 @@ export default function CreatePost() {
               font-semibold text-white shadow-sm hover:bg-indigo-500 transition-all ease-in duration-100"
             onClick={onSubmit}
           >
-            작성 완료
+            수정 완료
           </button>
         </div>
       </div>
@@ -295,3 +320,20 @@ let 지역_테스트_데이터 = [
   "부산광역시",
 ];
 let 플랫폼_테스트_데이터 = ["Web", "Andriod", "IOS", "임베디드"];
+
+let 포스트_테스트_데이터 = {
+  type: "스터디",
+  title: "프론트엔드 개발자 구함!",
+  location: "서울특별시",
+  stackList: ["React", "JavaScript"],
+  recruitInfo: [
+    ["프론트엔드", "웹프론트엔드", "3"],
+    ["프론트엔드", "IOS", "2"],
+  ],
+  recruitNum: "5",
+  myWork: "웹프론트엔드",
+  workList: ["웹프론트엔드", "IOS"],
+  platforms: ["웹", "IOS"],
+  image: "/test.jpg",
+  bodyText: initialBodyText,
+};

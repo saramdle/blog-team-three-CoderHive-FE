@@ -2,8 +2,6 @@ import { Dispatch, SetStateAction } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import CloseIcon from "@/lib/icons/closeIcon";
-
 type SideBarProps = {
   user: string;
   setUser: Dispatch<SetStateAction<string>>;
@@ -48,7 +46,20 @@ export default function SideBar({
           onClick={() => setIsMenuOpen(false)}
         >
           <span className="sr-only">Close menu</span>
-          <CloseIcon width={6} height={6} />
+          <svg
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
         </button>
       </div>
       <div className="mt-6 flow-root">

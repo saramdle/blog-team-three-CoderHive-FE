@@ -2,12 +2,14 @@ import { Dispatch, SetStateAction } from "react";
 import Image from "next/image";
 
 type ImagePreviewProps = {
-  image: File;
-  setImage: Dispatch<SetStateAction<File | null>>;
+  image: File | string;
+  setImage: Dispatch<SetStateAction<File | string | null>>;
 };
 
 export default function ImagePreview({ image, setImage }: ImagePreviewProps) {
-  const blobURL = URL.createObjectURL(image);
+  let url = "";
+  if (typeof image === "string") url = image;
+  else url = URL.createObjectURL(image);
 
   const onDeleteClicked = () => {
     setImage(null);
@@ -16,7 +18,7 @@ export default function ImagePreview({ image, setImage }: ImagePreviewProps) {
   return (
     <div className="relative flex justify-end items-start w-full h-full">
       <Image
-        src={blobURL}
+        src={url}
         alt="Image"
         fill
         style={{ objectFit: "cover" }}

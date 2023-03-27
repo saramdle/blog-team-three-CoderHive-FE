@@ -12,6 +12,9 @@ type RecruitInfoProps = {
   index: number;
   recruitInfo: MutableRefObject<string[][] | null>;
   recruitNum: MutableRefObject<number | null>;
+  pField?: string;
+  pSubField?: string;
+  pCount?: number;
   setWorkList: Dispatch<SetStateAction<string[]>>;
 };
 
@@ -19,11 +22,14 @@ export default function RecruitInfo({
   index,
   recruitInfo,
   recruitNum,
+  pField = "",
+  pSubField = "",
+  pCount = 1,
   setWorkList,
 }: RecruitInfoProps) {
-  const [field, setField] = useState<string>("");
-  const [subField, setSubField] = useState<string>("");
-  const [count, setCount] = useState<number>(1);
+  const [field, setField] = useState<string>(pField);
+  const [subField, setSubField] = useState<string>(pSubField);
+  const [count, setCount] = useState<number>(pCount);
 
   useEffect(() => {
     if (!recruitInfo.current) return;

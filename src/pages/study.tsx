@@ -71,7 +71,7 @@ export default function Study() {
             <p className="mt-2 text-lg leading-8 text-gray-600">
               함께 공부하고 성장해갈 스터디를 찾아보세요
             </p>
-            <div className="mt-8 flex">
+            <div className="mt-8 flex gap-x-4">
               <MultiSelectList
                 title="지역"
                 options={지역_테스트_데이터}

@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 
+import HeartIcon from "@/lib/icons/heartIcon";
+
 export type MiniPostCardProps = {
   postId: string;
   status: string;

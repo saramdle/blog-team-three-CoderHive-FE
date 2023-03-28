@@ -20,6 +20,10 @@ export default function SideBar({
     setIsMenuOpen(false);
   };
 
+  const onOptionClicked = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <aside
       role="dialog"
@@ -30,7 +34,7 @@ export default function SideBar({
         sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 transition-transform ease-in`}
     >
       <div className="flex items-center justify-between">
-        <Link href="/" className="-m-1.5 p-1.5">
+        <Link href="/" className="-m-1.5 p-1.5" onClick={onOptionClicked}>
           <Image
             src="/logo_text.svg"
             alt="CoderHive logo"
@@ -68,12 +72,14 @@ export default function SideBar({
             <Link
               href="/study"
               className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+              onClick={onOptionClicked}
             >
               스터디
             </Link>
             <Link
               href="/project"
               className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+              onClick={onOptionClicked}
             >
               프로젝트
             </Link>
@@ -83,7 +89,7 @@ export default function SideBar({
               <button
                 className="-mx-3 py-2 px-3 w-full text-left text-base font-semibold leading-7
                     rounded-lg text-gray-900 hover:bg-gray-50"
-                onClick={() => setUser("공기밥")}
+                onClick={onOptionClicked}
               >
                 로그인
               </button>
@@ -92,6 +98,7 @@ export default function SideBar({
                 <Link
                   href={"/my"}
                   className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  onClick={onOptionClicked}
                 >
                   마이페이지
                 </Link>

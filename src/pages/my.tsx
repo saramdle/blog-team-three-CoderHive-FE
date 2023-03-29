@@ -44,9 +44,9 @@ export default function My() {
         />
       ) : (
         <MyPosts
-          appliedPosts={테스트_유저정보.appliedPost}
-          inProgressPosts={테스트_유저정보.inProgressPosts}
-          completePosts={테스트_유저정보.completePosts}
+          hostingPosts={테스트_유저정보.hostingPosts}
+          appliedPosts={테스트_유저정보.appliedPosts}
+          participatedPosts={테스트_유저정보.participatedPosts}
         />
       )}
     </div>
@@ -59,7 +59,7 @@ let 테스트_유저정보 = {
   nickname: "공기밥",
   skill: ["프론트엔드", "웹프론트엔드", "초보", "1-3년"],
   stack: ["React", "NextJS", "SASS", "JavaScript"],
-  appliedPost: [
+  hostingPosts: [
     {
       postId: "1",
       type: "스터디",
@@ -68,8 +68,9 @@ let 테스트_유저정보 = {
       title: "프론트엔드 개발자 구함!",
       location: "서울 / 경기",
       skills: ["HTML5", "Tailwind", "NextJS", "TypeScript", "GitHub"],
+      like: false,
       likes: 1,
-      hasImg: true,
+      imageUrl: "/test.jpg",
     },
     {
       postId: "2",
@@ -79,8 +80,9 @@ let 테스트_유저정보 = {
       title: "자바스크립트 개념부터 다지실분 구함",
       location: "서울 / 경기",
       skills: ["HTML5", "JavaScript"],
+      like: false,
       likes: 3,
-      hasImg: false,
+      imageUrl: "",
     },
     {
       postId: "3",
@@ -90,8 +92,9 @@ let 테스트_유저정보 = {
       title: "UIUX 포트폴리오 같이 만들어요",
       location: "서울",
       skills: ["Figma"],
+      like: false,
       likes: 12,
-      hasImg: true,
+      imageUrl: "/test.jpg",
     },
     {
       postId: "4",
@@ -101,8 +104,9 @@ let 테스트_유저정보 = {
       title: "개발 스터디 모집",
       location: "온라인 / 서울",
       skills: ["Flutter", "Python", "JavaScript", "TypeScript", "Django"],
+      like: false,
       likes: 100,
-      hasImg: false,
+      imageUrl: "",
     },
     {
       postId: "5",
@@ -112,11 +116,12 @@ let 테스트_유저정보 = {
       title: "SaaS LMS 기획",
       location: "서울 / 경기",
       skills: ["LMS", "SaaS"],
+      like: false,
       likes: 0,
-      hasImg: true,
+      imageUrl: "/test.jpg",
     },
   ],
-  inProgressPosts: [
+  appliedPosts: [
     {
       postId: "3",
       type: "스터디",
@@ -125,8 +130,9 @@ let 테스트_유저정보 = {
       title: "UIUX 포트폴리오 같이 만들어요",
       location: "서울",
       skills: ["Figma"],
+      like: false,
       likes: 12,
-      hasImg: true,
+      imageUrl: "/test.jpg",
     },
     {
       postId: "4",
@@ -136,8 +142,9 @@ let 테스트_유저정보 = {
       title: "개발 스터디 모집",
       location: "온라인 / 서울",
       skills: ["Flutter", "Python", "JavaScript", "TypeScript", "Django"],
+      like: false,
       likes: 100,
-      hasImg: false,
+      imageUrl: "",
     },
     {
       postId: "5",
@@ -147,11 +154,12 @@ let 테스트_유저정보 = {
       title: "SaaS LMS 기획",
       location: "서울 / 경기",
       skills: ["LMS", "SaaS"],
+      like: false,
       likes: 0,
-      hasImg: true,
+      imageUrl: "/test.jpg",
     },
   ],
-  completePosts: [
+  participatedPosts: [
     {
       postId: "1",
       type: "스터디",
@@ -160,8 +168,9 @@ let 테스트_유저정보 = {
       title: "프론트엔드 개발자 구함!",
       location: "서울 / 경기",
       skills: ["HTML5", "Tailwind", "NextJS", "TypeScript", "GitHub"],
+      like: false,
       likes: 1,
-      hasImg: true,
+      imageUrl: "/test.jpg",
     },
     {
       postId: "2",
@@ -171,8 +180,9 @@ let 테스트_유저정보 = {
       title: "자바스크립트 개념부터 다지실분 구함",
       location: "서울 / 경기",
       skills: ["HTML5", "JavaScript"],
+      like: false,
       likes: 3,
-      hasImg: false,
+      imageUrl: "",
     },
   ],
 };

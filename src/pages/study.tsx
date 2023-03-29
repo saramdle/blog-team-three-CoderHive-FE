@@ -46,12 +46,12 @@ export default function Study() {
         postId={post.postId}
         status={post.status}
         type={post.type}
-        field={post.field}
         title={post.title}
         location={post.location}
         skills={post.skills}
+        like={post.like}
         likes={post.likes}
-        hasImg={post.hasImg}
+        imageUrl={post.imageUrl}
       />
     );
   });
@@ -155,55 +155,55 @@ let 게시물_테스트_데이터 = [
     postId: "1",
     type: "스터디",
     status: "모집중",
-    field: "프론트엔드 개발",
     title: "프론트엔드 개발자 구함!",
     location: "서울 / 경기",
     skills: ["HTML5", "Tailwind", "NextJS", "TypeScript", "GitHub"],
+    like: false,
     likes: 1,
-    hasImg: true,
+    imageUrl: "",
   },
   {
     postId: "2",
     type: "스터디",
     status: "모집중",
-    field: "프론트엔드 개발",
     title: "자바스크립트 개념부터 다지실분 구함",
     location: "서울 / 경기",
     skills: ["HTML5", "JavaScript"],
+    like: false,
     likes: 3,
-    hasImg: false,
+    imageUrl: "",
   },
   {
     postId: "3",
     type: "스터디",
     status: "모집완료",
-    field: "디자인&UX 스터디&네트워킹",
     title: "UIUX 포트폴리오 같이 만들어요",
     location: "서울",
     skills: ["Figma"],
+    like: true,
     likes: 12,
-    hasImg: true,
+    imageUrl: "/test.jpg",
   },
   {
     postId: "4",
     type: "스터디",
     status: "모집중",
-    field: "백엔드 개발",
     title: "개발 스터디 모집",
     location: "온라인 / 서울",
     skills: ["Flutter", "Python", "JavaScript", "TypeScript", "Django"],
+    like: false,
     likes: 100,
-    hasImg: false,
+    imageUrl: "",
   },
   {
     postId: "5",
     type: "스터디",
     status: "모집완료",
-    field: "기획 & PO",
     title: "SaaS LMS 기획",
     location: "서울 / 경기",
     skills: ["LMS", "SaaS"],
+    like: false,
     likes: 0,
-    hasImg: true,
+    imageUrl: "/test.jpg",
   },
 ];

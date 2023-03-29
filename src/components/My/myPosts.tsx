@@ -2,15 +2,15 @@ import MiniPostCard from "../miniPostCard";
 import { PostCardProps } from "../postCard";
 
 type MyPostsProps = {
+  hostingPosts: PostCardProps[];
   appliedPosts: PostCardProps[];
-  inProgressPosts: PostCardProps[];
-  completePosts: PostCardProps[];
+  participatedPosts: PostCardProps[];
 };
 
 export default function MyPosts({
+  hostingPosts,
   appliedPosts,
-  inProgressPosts,
-  completePosts,
+  participatedPosts,
 }: MyPostsProps) {
   const renderAppliedPost = appliedPosts.map((post) => {
     return (
@@ -18,70 +18,73 @@ export default function MyPosts({
         key={post.postId}
         postId={post.postId}
         status={post.status}
-        field={post.field}
         title={post.title}
         location={post.location}
+        like={post.like}
         likes={post.likes}
-        hasImg={post.hasImg}
+        imageUrl={post.imageUrl}
       />
     );
   });
 
-  const renderInProgressPost = inProgressPosts.map((post) => {
+  const renderParticipatedPosts = participatedPosts.map((post) => {
     return (
       <MiniPostCard
         key={post.postId}
         postId={post.postId}
         status={post.status}
-        field={post.field}
         title={post.title}
         location={post.location}
+        like={post.like}
         likes={post.likes}
-        hasImg={post.hasImg}
+        imageUrl={post.imageUrl}
       />
     );
   });
 
-  const renderCompletePost = completePosts.map((post) => {
+  const renderHostingPosts = hostingPosts.map((post) => {
     return (
       <MiniPostCard
         key={post.postId}
         postId={post.postId}
         status={post.status}
-        field={post.field}
         title={post.title}
         location={post.location}
+        like={post.like}
         likes={post.likes}
-        hasImg={post.hasImg}
+        imageUrl={post.imageUrl}
       />
     );
   });
 
   return (
     <div className="mx-auto mt-10 max-w-3xl sm:mt-14">
-      <h3 className="block text-base font-semibold leading-6 text-gray-900">
+      <h3 className="block mt-8 text-base font-bold leading-6 text-gray-900">
+        내가 만든 모임
+      </h3>
+      <div
+        className={`mt-2 p-4 flex items-center gap-x-4 h-72 overflow-x-scroll rounded-md 
+        bg-gray-100 scrollbar-hide`}
+      >
+        {renderHostingPosts}
+      </div>
+      <h3 className="block mt-8 text-base font-bold leading-6 text-gray-900">
         지원중인 모임
       </h3>
       <div
-        className={`mt-2 p-4 flex items-center gap-x-2 h-72 overflow-x-auto rounded-md bg-gray-100`}
+        className={`mt-2 p-4 flex items-center gap-x-4 h-72 overflow-x-scroll rounded-md 
+        bg-gray-100 scrollbar-hide`}
       >
         {renderAppliedPost}
       </div>
-      <h3 className="block mt-8 text-base font-semibold leading-6 text-gray-900">
-        진행중인 모임
+      <h3 className="block mt-8 text-base font-bold leading-6 text-gray-900">
+        참여한 모임
       </h3>
       <div
-        className={`mt-2 p-4 flex items-center gap-x-2 h-72 overflow-x-auto rounded-md bg-gray-100`}
+        className={`mt-2 p-4 flex items-center gap-x-4 h-72 overflow-x-scroll rounded-md 
+        bg-gray-100 scrollbar-hide`}
       >
-        {renderInProgressPost}
-      </div>
-      <h3 className="block mt-8 text-base font-semibold leading-6 text-gray-900">
-        완료된 모임
-      </h3>
-      <div
-        className={`mt-2 p-4 flex items-center gap-x-2 h-72 overflow-x-auto rounded-md bg-gray-100`}
-      >
-        {renderCompletePost}
+        {renderParticipatedPosts}
       </div>
     </div>
   );

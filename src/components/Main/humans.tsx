@@ -1,15 +1,22 @@
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Humans() {
-  const rand1 = Math.floor(Math.random() * 2) + 1;
-  const rand2 = Math.floor(Math.random() * 2) + 3;
-  const rand3 = Math.floor(Math.random() * 3) + 5;
+  const [imgUrl1, setImgUrl1] = useState("/human1.svg");
+  const [imgUrl2, setImgUrl2] = useState("/human5.svg");
+  const rand1 = Math.floor(Math.random() * 4) + 1;
+  const rand2 = Math.floor(Math.random() * 3) + 5;
+
+  useEffect(() => {
+    setImgUrl1(`/human${rand1}.svg`);
+    setImgUrl2(`/human${rand2}.svg`);
+  }, [rand1, rand2]);
 
   return (
     <>
       <div className="absolute bottom-0 -left-[20%] w-full h-[85%]">
         <Image
-          src={`/human${rand1}.svg`}
+          src={imgUrl1}
           alt="Human"
           fill
           sizes="100%, 100%"
@@ -20,7 +27,7 @@ export default function Humans() {
       </div>
       <div className="absolute bottom-0 w-full h-[78%]">
         <Image
-          src={`/human${rand2}.svg`}
+          src={`/logo.svg`}
           alt="Human"
           fill
           sizes="100%, 100%"
@@ -31,7 +38,7 @@ export default function Humans() {
       </div>
       <div className="absolute bottom-0 left-[20%] w-full h-[80%]">
         <Image
-          src={`/human${rand3}.svg`}
+          src={imgUrl2}
           alt="Human"
           fill
           sizes="100%, 100%"

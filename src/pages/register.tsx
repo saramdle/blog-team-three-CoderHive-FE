@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 import SingleSelectList from "@/components/OptionList/singleSelectList";
+import validateInput from "@/lib/validateInput";
 
 export default function Register() {
   const [nickname, setNickname] = useState<string>("");
@@ -10,9 +11,20 @@ export default function Register() {
   const [level, setLevel] = useState<string>("");
   const [year, setYear] = useState<string>("");
 
+  const [nickNameError, setNickNameError] = useState<string>("");
+  const [validationError, setValidationError] = useState<string>("");
+
   const router = useRouter();
 
-  const onClickComplete = () => {
+  const onSubmit = () => {
+    const validate = validateInput(nickname, setNickNameError);
+
+    if (!validate) {
+      setValidationError("필수 항목들을 모두 입력해 주세요");
+      return;
+    }
+
+    setValidationError("");
     router.push("/");
   };
 
@@ -26,11 +38,7 @@ export default function Register() {
           아래 정보들을 입력하면 회원가입이 완료됩니다
         </p>
       </div>
-      <form
-        action="#"
-        method="POST"
-        className="mx-auto mt-16 max-w-xl sm:mt-20"
-      >
+      <div className="mx-auto mt-16 max-w-xl sm:mt-20">
         <div className="grid grid-cols-1 gap-y-6 gap-x-8 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <label className="block text-sm font-semibold leading-6 text-gray-900">
@@ -46,20 +54,26 @@ export default function Register() {
             </div>
           </div>
           <div className="sm:col-span-2">
-            <label
-              htmlFor="nickname"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              닉네임
-            </label>
+            <div className="flex justify-between items-center">
+              <label
+                htmlFor="nickname"
+                className="block text-sm font-semibold leading-6 text-gray-900"
+              >
+                닉네임 *
+              </label>
+              <span className="text-xs text-red-500">{nickNameError}</span>
+            </div>
             <div className="mt-2.5">
               <input
                 type="text"
                 name="nickname"
                 id="nickname"
-                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm sm:text-sm sm:leading-6
-                  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
-                  focus:ring-1 focus:ring-inset focus:ring-indigo-600"
+                className={`${
+                  nickNameError && "!outline !outline-red-500 !ring-0"
+                } block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm 
+                  ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6 
+                  `}
+                value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
               />
             </div>
@@ -95,18 +109,20 @@ export default function Register() {
             </div>
           </div>
         </div>
-        <div className="mt-10">
+
+        <div className="mt-20 flex flex-col items-center">
           <button
-            type="button"
-            className="px-3.5 py-2.5 block w-full rounded-md bg-indigo-600 text-center text-sm 
-              font-semibold text-white shadow-sm hover:bg-indigo-500
-              transition-all ease-in duration-100"
-            onClick={onClickComplete}
+            className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm 
+          font-semibold text-white shadow-sm hover:bg-indigo-500 transition-all ease-in duration-100"
+            onClick={onSubmit}
           >
             가입 완료
           </button>
+          <span className="mt-6 text-xs font-semibold text-red-500">
+            {validationError}
+          </span>
         </div>
-      </form>
+      </div>
     </div>
   );
 }

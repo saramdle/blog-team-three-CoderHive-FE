@@ -10,6 +10,16 @@ export default function Post() {
   const [bodyText, setBodyText] = useState<string>(initialBodyText);
   const [comment, setComment] = useState<string>("");
 
+  const onCommentSubmit = () => {
+    if (comment.trim().length <= 0) {
+      console.log("nothing");
+      return;
+    } else if (comment.length > 1000) {
+      return;
+    }
+    console.log("request sent");
+  };
+
   const renderProfileCards = 테스트_멤버정보.map((user, index) => {
     return (
       <ProfileCard
@@ -108,9 +118,17 @@ export default function Post() {
                 ></textarea>
                 <div className="mt-3 pb-3 w-full flex justify-between items-center border-b border-gray-300">
                   <div className="text-sm leading-6 text-gray-600">
-                    <strong>{comment.length}</strong> / 1000
+                    <strong
+                      className={`${comment.length > 1000 && "text-red-600"}`}
+                    >
+                      {comment.length}
+                    </strong>{" "}
+                    / 1000
                   </div>
-                  <button className="px-6 py-2 text-sm text-white rounded-md bg-indigo-600 hover:bg-indigo-500">
+                  <button
+                    className="px-6 py-2 text-sm text-white rounded-md bg-indigo-600 hover:bg-indigo-500"
+                    onClick={onCommentSubmit}
+                  >
                     등록
                   </button>
                 </div>

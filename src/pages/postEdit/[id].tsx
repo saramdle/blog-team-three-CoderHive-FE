@@ -1,6 +1,6 @@
 import { useState, useRef, ReactElement } from "react";
 
-import RecruitInfo from "@/components/CreatPost/recruitInfo";
+import RecruitInfo from "@/components/CreatPost/recruitCard";
 import SingleSelectList from "@/components/OptionList/singleSelectList";
 import SearchStack from "@/components/SearchStack/searchStack";
 import UploadImage from "@/components/CreatPost/uploadImage";

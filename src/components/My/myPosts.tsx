@@ -64,7 +64,7 @@ export default function MyPosts({
       </h3>
       <div
         className={`mt-2 p-4 flex items-center gap-x-4 h-72 overflow-x-scroll rounded-md 
-        bg-gray-100 scrollbar-hide`}
+        bg-gray-100`}
       >
         {renderHostingPosts}
       </div>
@@ -73,7 +73,7 @@ export default function MyPosts({
       </h3>
       <div
         className={`mt-2 p-4 flex items-center gap-x-4 h-72 overflow-x-scroll rounded-md 
-        bg-gray-100 scrollbar-hide`}
+        bg-gray-100`}
       >
         {renderAppliedPost}
       </div>
@@ -82,7 +82,7 @@ export default function MyPosts({
       </h3>
       <div
         className={`mt-2 p-4 flex items-center gap-x-4 h-72 overflow-x-scroll rounded-md 
-        bg-gray-100 scrollbar-hide`}
+        bg-gray-100`}
       >
         {renderParticipatedPosts}
       </div>

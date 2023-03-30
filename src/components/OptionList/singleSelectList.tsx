@@ -1,26 +1,26 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import SingleSelectOption from "./singleSelectOption";
 
 type SingleSelectListProps = {
   title: string;
   options: string[];
   setSelectedOption: Dispatch<SetStateAction<string>>;
+  isValidate?: string;
+  validate?: () => boolean;
 };
 
 export default function SingleSelectList({
   title,
   options,
   setSelectedOption,
+  isValidate = "",
+  validate,
 }: SingleSelectListProps) {
   const [isListOpen, setIsListOpen] = useState<boolean>(false);
 
-  const onFocus = () => {
-    setIsListOpen(true);
-  };
-
-  const onBlur = () => {
-    setIsListOpen(false);
-  };
+  useEffect(() => {
+    if (validate && title) validate();
+  }, [title, validate]);
 
   const renderOptions = options.map((option, index) => {
     const isSelected = option === title;
@@ -39,14 +39,16 @@ export default function SingleSelectList({
     <div className="relative min-w-full">
       <button
         type="button"
-        className="relative min-w-full rounded-md py-2 text-center text-gray-900 shadow-sm 
-          ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 
-          sm:text-sm sm:leading-6"
+        className={`${
+          isValidate && "!outline !outline-red-500 !ring-0"
+        } relative min-w-full rounded-md py-2 text-center text-gray-900 shadow-sm
+          ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6
+          focus:ring-2 focus:ring-indigo-500`}
         aria-haspopup="listbox"
         aria-expanded="true"
         aria-labelledby="listbox-label"
-        onFocus={onFocus}
-        onBlur={onBlur}
+        onFocus={() => setIsListOpen(true)}
+        onBlur={() => setIsListOpen(false)}
       >
         <span className="w-full flex items-center">
           <span className="ml-3 block truncate">

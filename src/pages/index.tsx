@@ -35,7 +35,7 @@ export default function Home() {
               모임 보러가기 <span aria-hidden="true">→</span>
             </Link>
           </div>
-          <div className="relative mt-16 w-full h-full">
+          <div className="relative w-full h-full">
             <Humans />
           </div>
         </div>

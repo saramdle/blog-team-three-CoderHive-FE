@@ -30,6 +30,17 @@ export default function Comment({
   const [comment, setComment] = useState<string>("");
   const [isReplyOpen, setIsReplyOpen] = useState<boolean>(false);
 
+  const onSubmit = () => {
+    if (comment.trim().length <= 0) {
+      console.log("nothing");
+      return;
+    } else if (comment.length > 1000) {
+      return;
+    }
+
+    console.log("request sent");
+  };
+
   const renderReplies = replies.map((reply) => {
     return (
       <div key={reply.commentId} className="mt-4">
@@ -143,7 +154,12 @@ export default function Comment({
                 ></textarea>
                 <div className="mt-3 pb-3 w-full flex justify-between items-center text-xs">
                   <div className=" leading-6 text-gray-600">
-                    <strong>{comment.length}</strong> / 1000
+                    <strong
+                      className={`${comment.length > 1000 && "text-red-600"}`}
+                    >
+                      {comment.length}
+                    </strong>{" "}
+                    / 1000
                   </div>
                   <div>
                     <button
@@ -155,7 +171,10 @@ export default function Comment({
                     >
                       취소
                     </button>
-                    <button className="ml-4 px-4 py-1.5 text-white rounded-md bg-indigo-600 hover:bg-indigo-500">
+                    <button
+                      className="ml-4 px-4 py-1.5 text-white rounded-md bg-indigo-600 hover:bg-indigo-500"
+                      onClick={onSubmit}
+                    >
                       등록
                     </button>
                   </div>

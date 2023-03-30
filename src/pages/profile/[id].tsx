@@ -21,11 +21,11 @@ export default function Profile() {
           key={post.postId}
           postId={post.postId}
           status={post.status}
-          field={post.field}
           title={post.title}
           location={post.location}
+          like={post.like}
           likes={post.likes}
-          hasImg={post.hasImg}
+          imageUrl={post.imageUrl}
         />
       );
     }
@@ -125,8 +125,9 @@ let 테스트_프로필_데이터 = {
       title: "UIUX 포트폴리오 같이 만들어요",
       location: "서울",
       skills: ["Figma"],
+      like: false,
       likes: 12,
-      hasImg: true,
+      imageUrl: "",
     },
     {
       postId: "4",
@@ -136,8 +137,9 @@ let 테스트_프로필_데이터 = {
       title: "개발 스터디 모집",
       location: "온라인 / 서울",
       skills: ["Flutter", "Python", "JavaScript", "TypeScript", "Django"],
+      like: true,
       likes: 100,
-      hasImg: false,
+      imageUrl: "/test.jpg",
     },
     {
       postId: "5",
@@ -147,8 +149,9 @@ let 테스트_프로필_데이터 = {
       title: "SaaS LMS 기획",
       location: "서울 / 경기",
       skills: ["LMS", "SaaS"],
+      like: false,
       likes: 0,
-      hasImg: true,
+      imageUrl: "",
     },
   ],
 };

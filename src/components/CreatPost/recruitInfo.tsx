@@ -1,107 +1,97 @@
-import React, {
+import {
   Dispatch,
   MutableRefObject,
+  ReactElement,
   SetStateAction,
-  useEffect,
   useState,
 } from "react";
 
-import SingleSelectList from "@/components/OptionList/singleSelectList";
+import RecruitCard from "./recruitCard";
 
 type RecruitInfoProps = {
-  index: number;
   recruitInfo: MutableRefObject<string[][] | null>;
   recruitNum: MutableRefObject<number | null>;
-  pField?: string;
-  pSubField?: string;
-  pCount?: number;
+  myWork: string;
+  setMyWork: Dispatch<SetStateAction<string>>;
+  workList: string[];
   setWorkList: Dispatch<SetStateAction<string[]>>;
 };
-
 export default function RecruitInfo({
-  index,
   recruitInfo,
   recruitNum,
-  pField = "",
-  pSubField = "",
-  pCount = 1,
+  myWork,
+  setMyWork,
+  workList,
   setWorkList,
 }: RecruitInfoProps) {
-  const [field, setField] = useState<string>(pField);
-  const [subField, setSubField] = useState<string>(pSubField);
-  const [count, setCount] = useState<number>(pCount);
+  const [infoComp, setInfoComp] = useState<ReactElement[]>([
+    <RecruitCard
+      key={0}
+      index={0}
+      recruitInfo={recruitInfo}
+      recruitNum={recruitNum}
+      setWorkList={setWorkList}
+    />,
+  ]);
 
-  useEffect(() => {
-    if (!recruitInfo.current) return;
+  const addInfoComp = () => {
+    if (!recruitInfo.current || !recruitNum.current || recruitNum.current > 9)
+      return;
 
-    const info: string[][] = [];
-    recruitInfo.current.forEach((arr, idx) => {
-      if (idx === index) info.push([field, subField, count.toString()]);
-      else info.push(arr);
-    });
+    recruitInfo.current.push([]);
+    recruitNum.current += 1;
 
-    setWorkList(info.map((info) => info[1]).filter((work) => work !== ""));
-
-    recruitInfo.current = info;
-  }, [field, subField, count, recruitInfo, index, setWorkList]);
-
-  const increase = () => {
-    if (!recruitNum.current) return;
-
-    if (recruitNum.current < 10) {
-      recruitNum.current += 1;
-      setCount(count + 1);
-    }
+    const index = infoComp.length;
+    setInfoComp(
+      infoComp.concat(
+        <RecruitCard
+          key={index}
+          index={index}
+          recruitInfo={recruitInfo}
+          recruitNum={recruitNum}
+          setWorkList={setWorkList}
+        />
+      )
+    );
   };
 
-  const decrease = () => {
-    if (!recruitNum.current) return;
+  const deleteInfoComp = () => {
+    if (!recruitInfo.current || !recruitNum.current || infoComp.length < 2)
+      return;
 
-    if (count > 1) {
-      recruitNum.current -= 1;
-      setCount(count - 1);
+    const popedInfo = recruitInfo.current.pop();
+    if (popedInfo) recruitNum.current -= parseInt(popedInfo[2]);
+
+    const newCompList = infoComp.slice(0, -1);
+    setInfoComp(newCompList);
+
+    // 내 담당 분야 설정이 삭제될 분야일 경우 설정을 초기화 시킨다.
+    if (workList[workList.length - 1] === myWork) {
+      setMyWork("");
     }
-  };
 
+    const newWorkList = workList.slice(0, -1);
+    setWorkList(newWorkList);
+  };
   return (
-    <div className="mb-4 flex">
-      <div className="flex-grow grid grid-cols-2 gap-x-4">
-        <SingleSelectList
-          title={field}
-          options={분야_테스트_데이터}
-          setSelectedOption={setField}
-        />
-        <SingleSelectList
-          title={subField}
-          options={하위분야_테스트_데이터}
-          setSelectedOption={setSubField}
-        />
-      </div>
-      <div className="px-2 min-w-[8rem] flex justify-between items-center font-normal text-lg">
+    <>
+      {infoComp}
+      <div className="ml-auto mt-4 w-fit text-sm">
         <button
-          className="px-3 font-light text-xl rounded-full hover:bg-gray-50"
-          onClick={decrease}
+          className="mr-4 px-4 py-2 rounded-md text-gray-500 border border-gray-500 
+      hover:text-gray-600 hover:border-gray-600 transition-all ease-in duration-100"
+          onClick={deleteInfoComp}
         >
-          -
+          삭제
         </button>
-        <span className="text-indigo-600">{count}</span>
         <button
-          className="px-3 font-light text-xl rounded-full hover:bg-gray-50"
-          onClick={increase}
+          className="px-6 py-2 rounded-md text-white border border-indigo-600 bg-indigo-600
+      hover:bg-indigo-500 transition-all ease-in duration-100"
+          onClick={addInfoComp}
         >
-          +
+          추가
         </button>
       </div>
-    </div>
+    </>
   );
 }
-
-let 분야_테스트_데이터 = ["기획", "디자인", "프론트엔드", "백엔드"];
-let 하위분야_테스트_데이터 = [
-  "IOS",
-  "안드로이드",
-  "웹프론트엔드",
-  "웹퍼블리셔",
-  "크로스플랫폼",
-  "임베디드",
-];

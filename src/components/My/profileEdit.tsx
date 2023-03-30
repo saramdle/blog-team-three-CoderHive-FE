@@ -3,6 +3,7 @@ import { useState } from "react";
 import SearchStack from "@/components/SearchStack/searchStack";
 import SingleSelectList from "../OptionList/singleSelectList";
 import ProfileImage from "./profileImage";
+import validateInput from "@/lib/validateInput";
 
 type ProfileEditProps = {
   imageUrl: string;
@@ -20,14 +21,30 @@ export default function ProfileEdit({
   stack,
 }: ProfileEditProps) {
   const [image, setImage] = useState<File | null>(null);
-  const [nicName, setNicName] = useState<string>(nickname);
+  const [nickName, setNickName] = useState<string>(nickname);
   const [field, setField] = useState<string>(skill[0]);
   const [subfield, setSubfield] = useState<string>(skill[1]);
   const [level, setLevel] = useState<string>(skill[2]);
   const [year, setYear] = useState<string>(skill[3]);
   const [stackList, setStackList] = useState<string[]>(stack);
+  const [intro, setIntro] = useState<string>("");
 
-  const onSubmit = () => {};
+  const [nickNameError, setNickNameError] = useState<string>("");
+  const [validationError, setValidationError] = useState<string>("");
+
+  const onSubmit = () => {
+    const validate = validateInput(nickName, setNickNameError);
+
+    if (!validate) {
+      setValidationError("필수 항목들을 모두 입력해 주세요");
+      return;
+    } else if (intro.length > 500) {
+      setValidationError("자기소개 글자 갯수 제한을 초과하였습니다");
+      return;
+    }
+
+    setValidationError("");
+  };
 
   return (
     <div className="mx-auto mt-10 max-w-3xl sm:mt-14">
@@ -53,22 +70,28 @@ export default function ProfileEdit({
         </div>
 
         <div className="sm:col-span-2">
-          <label
-            htmlFor="nickname"
-            className="block text-sm font-semibold leading-6 text-gray-900"
-          >
-            닉네임
-          </label>
+          <div className="flex justify-between items-center">
+            <label
+              htmlFor="nickname"
+              className="block text-sm font-semibold leading-6 text-gray-900"
+            >
+              닉네임 *
+            </label>
+            <span className="text-xs text-red-500">{nickNameError}</span>
+          </div>
+
           <div className="mt-4">
             <input
               type="text"
               name="nickname"
               id="nickname"
-              className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm 
-              ring-1 ring-inset ring-gray-300 focus:ring-1 focus:ring-indigo-600 
-              sm:text-sm sm:leading-6"
-              value={nicName}
-              onChange={(e) => setNicName(e.target.value)}
+              className={`${
+                nickNameError && "!outline !outline-red-500 !ring-0"
+              } block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm 
+                ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6 
+                `}
+              value={nickName}
+              onChange={(e) => setNickName(e.target.value)}
             />
           </div>
         </div>
@@ -118,9 +141,35 @@ export default function ProfileEdit({
             <SearchStack stackList={stackList} setStackList={setStackList} />
           </div>
         </div>
+
+        <div className="sm:col-span-2">
+          <label
+            htmlFor="comment"
+            className="block text-sm font-semibold leading-6 text-gray-900"
+          >
+            자기 소개
+          </label>
+          <div className="mt-4">
+            <textarea
+              id="comment"
+              name="comment"
+              rows={3}
+              className="block px-3 py-2 w-full text-sm leading-6 text-gray-900 
+                    rounded-md border border-gray-300 shadow-sm !outline-none"
+              onChange={(e) => setIntro(e.target.value)}
+              value={intro}
+            ></textarea>
+            <div className="mt-2 leading-6 text-xs text-gray-600">
+              <strong className={`${intro.length > 500 && "text-red-600"}`}>
+                {intro.length}
+              </strong>{" "}
+              / 500
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="mt-10">
+      <div className="mt-20 flex flex-col items-center">
         <button
           className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm 
           font-semibold text-white shadow-sm hover:bg-indigo-500 transition-all ease-in duration-100"
@@ -128,6 +177,9 @@ export default function ProfileEdit({
         >
           업데이트
         </button>
+        <span className="mt-6 text-xs font-semibold text-red-500">
+          {validationError}
+        </span>
       </div>
     </div>
   );

@@ -1,13 +1,15 @@
-import { useState, useRef, ReactElement } from "react";
+import { useState, useRef } from "react";
 
-import RecruitInfo from "@/components/CreatPost/recruitInfo";
 import SingleSelectList from "@/components/OptionList/singleSelectList";
 import SearchStack from "@/components/SearchStack/searchStack";
 import UploadImage from "@/components/CreatPost/uploadImage";
 import TextEditor from "@/components/CreatPost/textEditor";
 import MultiSelectList from "@/components/OptionList/multiSelectList";
 import SelectedCard from "@/components/selectedCard";
+import RecruitInfo from "@/components/CreatPost/recruitInfo";
 import initialBodyText from "@/lib/initialBodyText";
+import validateInput from "@/lib/validateInput";
+import validateRecruitInfo from "@/lib/validateRecruitInfo";
 
 export default function CreatePost() {
   const recruitInfo = useRef<string[][] | null>([[]]);
@@ -19,57 +21,15 @@ export default function CreatePost() {
   const [myWork, setMyWork] = useState<string>("");
   const [workList, setWorkList] = useState<string[]>([]);
   const [platforms, setPlatforms] = useState<string[]>([]);
-  const [image, setImage] = useState<File | null>(null);
+  const [image, setImage] = useState<string | File | null>(null);
   const [bodyText, setBodyText] = useState<string>(initialBodyText);
-  const [infoComp, setInfoComp] = useState<ReactElement[]>([
-    <RecruitInfo
-      key={0}
-      index={0}
-      recruitInfo={recruitInfo}
-      recruitNum={recruitNum}
-      setWorkList={setWorkList}
-    />,
-  ]);
 
-  const addInfoComp = () => {
-    if (!recruitInfo.current || !recruitNum.current || recruitNum.current > 9)
-      return;
-
-    recruitInfo.current.push([]);
-    recruitNum.current += 1;
-
-    const index = infoComp.length;
-    setInfoComp(
-      infoComp.concat(
-        <RecruitInfo
-          key={index}
-          index={index}
-          recruitInfo={recruitInfo}
-          recruitNum={recruitNum}
-          setWorkList={setWorkList}
-        />
-      )
-    );
-  };
-
-  const deleteInfoComp = () => {
-    if (!recruitInfo.current || !recruitNum.current || infoComp.length < 2)
-      return;
-
-    const popedInfo = recruitInfo.current.pop();
-    if (popedInfo) recruitNum.current -= parseInt(popedInfo[2]);
-
-    const newCompList = infoComp.slice(0, -1);
-    setInfoComp(newCompList);
-
-    // 내 담당 분야 설정이 삭제될 분야일 경우 설정을 초기화 시킨다.
-    if (workList[workList.length - 1] === myWork) {
-      setMyWork("");
-    }
-
-    const newWorkList = workList.slice(0, -1);
-    setWorkList(newWorkList);
-  };
+  const [titleError, setTitleError] = useState<string>("");
+  const [locationError, setLocationError] = useState<string>("");
+  const [recruitInfoError, setRecruitInfoError] = useState<string>("");
+  const [myWorkError, setMyWorkError] = useState<string>("");
+  const [bodyTextError, setBodyTextError] = useState<string>("");
+  const [validationError, setValidationError] = useState<string>("");
 
   const renderSelectedPlatforms = platforms.map((title, index) => {
     return (
@@ -82,8 +42,24 @@ export default function CreatePost() {
     );
   });
 
+  const validateAll = () => {
+    const v1 = validateInput(title, setTitleError);
+    const v2 = validateInput(location, setLocationError);
+    const v3 = validateRecruitInfo(recruitInfo.current, setRecruitInfoError);
+    const v4 = validateInput(myWork, setMyWorkError);
+    const v5 = validateInput(bodyText, setBodyTextError);
+
+    return v1 && v2 && v3 && v4 && v5;
+  };
+
   const onSubmit = () => {
-    console.log(recruitInfo);
+    if (!validateAll()) {
+      setValidationError("필수 항목들을 모두 입력해 주세요");
+      return;
+    }
+
+    setValidationError("");
+    console.log("all validated!");
   };
 
   return (
@@ -141,79 +117,93 @@ export default function CreatePost() {
           </div>
 
           <div className="sm:col-span-2">
-            <label
-              htmlFor="name"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              모임 이름 *
-            </label>
+            <div className="flex justify-between items-center">
+              <label
+                htmlFor="name"
+                className="block text-sm font-semibold leading-6 text-gray-900"
+              >
+                모임 이름 *
+              </label>
+              <span className="text-xs text-red-500">{titleError}</span>
+            </div>
+
             <div className="mt-4">
               <input
                 type="text"
                 name="name"
                 id="name"
-                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm 
-                  ring-1 ring-inset ring-gray-300 focus:ring-1 focus:ring-indigo-600 
-                  sm:text-sm sm:leading-6"
+                className={`${
+                  titleError && "!outline !outline-red-500 !ring-0"
+                } block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm 
+                  ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6 
+                  `}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                onBlur={() => validateInput(title, setTitleError)}
               />
             </div>
           </div>
 
           <div className="sm:col-span-2">
-            <label className="block text-sm font-semibold leading-6 text-gray-900">
-              지역 *
-            </label>
+            <div className="flex justify-between items-center">
+              <label className="block text-sm font-semibold leading-6 text-gray-900">
+                지역 *
+              </label>
+              <span className="text-xs text-red-500">{locationError}</span>
+            </div>
+
             <div className="mt-2.5">
               <SingleSelectList
                 title={location}
                 options={지역_테스트_데이터}
                 setSelectedOption={setLocation}
+                isValidate={locationError}
+                validate={() => validateInput(location, setLocationError)}
               />
             </div>
           </div>
 
           <div className="sm:col-span-2">
-            <label
-              htmlFor="first-name"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              모집 인원 *
-              <span className="ml-2 text-xs font-normal text-gray-600">
-                (최대 10명)
-              </span>
-            </label>
+            <div className="flex justify-between items-center">
+              <label
+                htmlFor="first-name"
+                className="block text-sm font-semibold leading-6 text-gray-900"
+              >
+                모집 인원 *
+                <span className="ml-2 text-xs font-normal text-gray-600">
+                  (최대 10명)
+                </span>
+              </label>
+              <span className="text-xs text-red-500">{recruitInfoError}</span>
+            </div>
+
             <div className="mt-2.5">
-              {infoComp}
-              <div className="ml-auto mt-4 w-fit text-sm">
-                <button
-                  className="mr-4 px-4 py-2 rounded-md text-gray-500 border border-gray-500 
-                  hover:text-gray-600 hover:border-gray-600 transition-all ease-in duration-100"
-                  onClick={deleteInfoComp}
-                >
-                  삭제
-                </button>
-                <button
-                  className="px-6 py-2 rounded-md text-white border border-indigo-600 bg-indigo-600
-                  hover:bg-indigo-500 transition-all ease-in duration-100"
-                  onClick={addInfoComp}
-                >
-                  추가
-                </button>
-              </div>
+              <RecruitInfo
+                recruitInfo={recruitInfo}
+                recruitNum={recruitNum}
+                myWork={myWork}
+                setMyWork={setMyWork}
+                workList={workList}
+                setWorkList={setWorkList}
+              />
             </div>
           </div>
 
           <div className="sm:col-span-2">
-            <label className="block text-sm font-semibold leading-6 text-gray-900">
-              나의 담당 분야 *
-            </label>
+            <div className="flex justify-between items-center">
+              <label className="block text-sm font-semibold leading-6 text-gray-900">
+                나의 담당 분야 *
+              </label>
+              <span className="text-xs text-red-500">{myWorkError}</span>
+            </div>
+
             <div className="mt-2.5">
               <SingleSelectList
                 title={myWork}
                 options={workList}
                 setSelectedOption={setMyWork}
+                isValidate={myWorkError}
+                validate={() => validateInput(myWork, setMyWorkError)}
               />
             </div>
           </div>
@@ -243,7 +233,7 @@ export default function CreatePost() {
               </label>
               <div className="mt-4">
                 <MultiSelectList
-                  title="플랫폼을 선택해 주세요"
+                  title="플랫폼 선택"
                   options={플랫폼_테스트_데이터}
                   selectedOptions={platforms}
                   setSelectedOption={setPlatforms}
@@ -265,16 +255,20 @@ export default function CreatePost() {
           </div>
 
           <div className="sm:col-span-2">
-            <label className="block text-sm font-semibold leading-6 text-gray-900">
-              프로젝트 설명 *
-            </label>
+            <div className="flex justify-between items-center">
+              <label className="block text-sm font-semibold leading-6 text-gray-900">
+                프로젝트 설명 *
+              </label>
+              <span className="text-xs text-red-500">{bodyTextError}</span>
+            </div>
+
             <div className="mt-2.5">
               <TextEditor bodyText={bodyText} setBodyText={setBodyText} />
             </div>
           </div>
         </div>
 
-        <div className="mt-10">
+        <div className="mt-20 flex flex-col items-center">
           <button
             className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm 
               font-semibold text-white shadow-sm hover:bg-indigo-500 transition-all ease-in duration-100"
@@ -282,6 +276,9 @@ export default function CreatePost() {
           >
             작성 완료
           </button>
+          <span className="mt-6 text-xs font-semibold text-red-500">
+            {validationError}
+          </span>
         </div>
       </div>
     </div>

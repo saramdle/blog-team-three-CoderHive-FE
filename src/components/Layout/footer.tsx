@@ -16,7 +16,7 @@ export default function Footer() {
         </div>
         <div>
           <h3>
-            Copyright ⓒ 2023 Team 허무한 샘, from Saramdle. All rights reserved.
+            Copyright ⓒ 2023 Team 공허한 샘, from Saramdle. All rights reserved.
           </h3>
         </div>
       </div>

@@ -15,6 +15,7 @@ type RecruitInfoProps = {
   setMyWork: Dispatch<SetStateAction<string>>;
   workList: string[];
   setWorkList: Dispatch<SetStateAction<string[]>>;
+  setRecruitInfoError: Dispatch<SetStateAction<string>>;
 };
 export default function RecruitInfo({
   recruitInfo,
@@ -23,6 +24,7 @@ export default function RecruitInfo({
   setMyWork,
   workList,
   setWorkList,
+  setRecruitInfoError,
 }: RecruitInfoProps) {
   const [infoComp, setInfoComp] = useState<ReactElement[]>([
     <RecruitCard
@@ -31,12 +33,22 @@ export default function RecruitInfo({
       recruitInfo={recruitInfo}
       recruitNum={recruitNum}
       setWorkList={setWorkList}
+      setRecruitInfoError={setRecruitInfoError}
     />,
   ]);
 
   const addInfoComp = () => {
-    if (!recruitInfo.current || !recruitNum.current || recruitNum.current > 9)
+    if (!recruitInfo.current || !recruitNum.current) return;
+
+    if (recruitNum.current >= 10) {
+      setRecruitInfoError("인원을 10명 이상 추가할 수 없습니다!");
+
+      setTimeout(() => {
+        setRecruitInfoError("");
+      }, 2000);
+
       return;
+    }
 
     recruitInfo.current.push([]);
     recruitNum.current += 1;
@@ -50,6 +62,7 @@ export default function RecruitInfo({
           recruitInfo={recruitInfo}
           recruitNum={recruitNum}
           setWorkList={setWorkList}
+          setRecruitInfoError={setRecruitInfoError}
         />
       )
     );

@@ -185,6 +185,7 @@ export default function CreatePost() {
                 setMyWork={setMyWork}
                 workList={workList}
                 setWorkList={setWorkList}
+                setRecruitInfoError={setRecruitInfoError}
               />
             </div>
           </div>

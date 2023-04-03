@@ -15,7 +15,9 @@ type RecruitCardProps = {
   pField?: string;
   pSubField?: string;
   pCount?: number;
+  isModifiable?: boolean;
   setWorkList: Dispatch<SetStateAction<string[]>>;
+  setRecruitInfoError: Dispatch<SetStateAction<string>>;
 };
 
 export default function RecruitCard({
@@ -25,7 +27,9 @@ export default function RecruitCard({
   pField = "",
   pSubField = "",
   pCount = 1,
+  isModifiable = true,
   setWorkList,
+  setRecruitInfoError,
 }: RecruitCardProps) {
   const [field, setField] = useState<string>(pField);
   const [subField, setSubField] = useState<string>(pSubField);
@@ -48,16 +52,24 @@ export default function RecruitCard({
   const increase = () => {
     if (!recruitNum.current) return;
 
-    if (recruitNum.current < 10) {
-      recruitNum.current += 1;
-      setCount(count + 1);
+    if (recruitNum.current >= 10) {
+      setRecruitInfoError("인원을 10명 이상 추가할 수 없습니다!");
+
+      setTimeout(() => {
+        setRecruitInfoError("");
+      }, 2000);
+
+      return;
     }
+
+    recruitNum.current += 1;
+    setCount(count + 1);
   };
 
   const decrease = () => {
     if (!recruitNum.current) return;
 
-    if (count > 1) {
+    if (count > pCount) {
       recruitNum.current -= 1;
       setCount(count - 1);
     }
@@ -70,11 +82,13 @@ export default function RecruitCard({
           title={field}
           options={분야_테스트_데이터}
           setSelectedOption={setField}
+          isModifiable={isModifiable}
         />
         <SingleSelectList
           title={subField}
           options={하위분야_테스트_데이터}
           setSelectedOption={setSubField}
+          isModifiable={isModifiable}
         />
       </div>
       <div
@@ -82,11 +96,14 @@ export default function RecruitCard({
           max-sm:min-w-[6rem]"
       >
         <button
-          className="px-3 font-light text-xl rounded-full hover:bg-gray-50"
+          className={`${
+            count <= pCount && "invisible"
+          } px-3 font-light text-xl rounded-full hover:bg-gray-50 `}
           onClick={decrease}
         >
           -
         </button>
+
         <span className="text-indigo-600">{count}</span>
         <button
           className="px-3 font-light text-xl rounded-full hover:bg-gray-50"

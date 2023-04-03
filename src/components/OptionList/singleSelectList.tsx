@@ -7,6 +7,7 @@ type SingleSelectListProps = {
   setSelectedOption: Dispatch<SetStateAction<string>>;
   isValidate?: string;
   validate?: () => boolean;
+  isModifiable?: boolean;
 };
 
 export default function SingleSelectList({
@@ -15,6 +16,7 @@ export default function SingleSelectList({
   setSelectedOption,
   isValidate = "",
   validate,
+  isModifiable = true,
 }: SingleSelectListProps) {
   const [isListOpen, setIsListOpen] = useState<boolean>(false);
 
@@ -39,8 +41,8 @@ export default function SingleSelectList({
     <div className="relative min-w-full">
       <button
         type="button"
-        className={`${
-          isValidate && "!outline !outline-red-500 !ring-0"
+        className={`${isValidate && "!outline !outline-red-500 !ring-0"} ${
+          !isModifiable && "bg-gray-200"
         } relative min-w-full rounded-md py-2 text-center text-gray-900 shadow-sm
           ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6
           focus:ring-2 focus:ring-indigo-500`}
@@ -49,6 +51,7 @@ export default function SingleSelectList({
         aria-labelledby="listbox-label"
         onFocus={() => setIsListOpen(true)}
         onBlur={() => setIsListOpen(false)}
+        disabled={!isModifiable}
       >
         <span className="w-full flex items-center">
           <span className="ml-3 block truncate">

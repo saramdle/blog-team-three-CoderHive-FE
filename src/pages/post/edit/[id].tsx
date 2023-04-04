@@ -1,4 +1,4 @@
-import { useState, useRef, ReactElement, SetStateAction } from "react";
+import { useState, useRef, ReactElement } from "react";
 
 import RecruitInfo from "@/components/CreatPost/recruitCard";
 import SingleSelectList from "@/components/OptionList/singleSelectList";
@@ -74,9 +74,11 @@ export default function PostEdit() {
     if (recruitNum.current >= 10) {
       setRecruitInfoError("인원을 10명 이상 추가할 수 없습니다!");
 
-      setTimeout(() => {
+      let timer = setTimeout(() => {
         setRecruitInfoError("");
       }, 2000);
+
+      if (recruitInfoError) clearTimeout(timer);
 
       return;
     }

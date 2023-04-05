@@ -6,28 +6,38 @@ import ProfileImage from "./profileImage";
 import validateInput from "@/lib/validateInput";
 
 type ProfileEditProps = {
+  memberId: number;
   imageUrl: string;
   email: string;
   nickname: string;
-  skill: string[];
+  job: string;
+  subJob: string;
+  career: string;
+  jobLevel: string;
   stack: string[];
+  introduction: string;
 };
 
 export default function ProfileEdit({
+  memberId,
   imageUrl,
   email,
   nickname,
-  skill,
+  job,
+  subJob,
+  career,
+  jobLevel,
   stack,
+  introduction,
 }: ProfileEditProps) {
   const [image, setImage] = useState<File | null>(null);
   const [nickName, setNickName] = useState<string>(nickname);
-  const [field, setField] = useState<string>(skill[0]);
-  const [subfield, setSubfield] = useState<string>(skill[1]);
-  const [level, setLevel] = useState<string>(skill[2]);
-  const [year, setYear] = useState<string>(skill[3]);
+  const [field, setField] = useState<string>(job);
+  const [subfield, setSubfield] = useState<string>(subJob);
+  const [level, setLevel] = useState<string>(jobLevel);
+  const [year, setYear] = useState<string>(career);
   const [stackList, setStackList] = useState<string[]>(stack);
-  const [intro, setIntro] = useState<string>("");
+  const [intro, setIntro] = useState<string>(introduction);
 
   const [nickNameError, setNickNameError] = useState<string>("");
   const [validationError, setValidationError] = useState<string>("");
@@ -44,6 +54,25 @@ export default function ProfileEdit({
     }
 
     setValidationError("");
+
+    // 서버에 정보 수정 요청
+    const formData = new FormData();
+    formData.append(
+      "json",
+      JSON.stringify({
+        memberId: memberId,
+        nickname: nickName,
+        job: field,
+        subJob: subfield,
+        career: year,
+        level: level,
+        skills: stackList,
+        introduction: intro,
+      })
+    );
+    if (image) formData.append("file", image);
+
+    // MemberAPI.patchEditProfile(formData);
   };
 
   return (

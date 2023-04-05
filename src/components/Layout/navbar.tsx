@@ -55,7 +55,7 @@ export default function Navbar() {
           {!user ? (
             <button
               className="text-xs font-semibold leading-6 text-gray-700"
-              onClick={() => setUser("공기밥")}
+              onClick={onModalOpenClicked}
             >
               <svg
                 className="w-6 h-6"
@@ -129,6 +129,7 @@ export default function Navbar() {
         setUser={setUser}
         isMenuOpen={isMenuOpen}
         setIsMenuOpen={setIsMenuOpen}
+        onModalOpenClicked={onModalOpenClicked}
       />
     </header>
   );

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 export type MiniPostCardProps = {
-  postId: string;
+  postId: number | string;
   status: string;
   title: string;
   location: string;

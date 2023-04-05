@@ -1,10 +1,22 @@
 import { useState } from "react";
 
+import useSWR from "swr";
+import { Fetcher } from "swr";
+import { MemberAPI, MyProfileData } from "@/lib/api/memberAPI";
+
+import Loading from "@/components/loading";
 import ProfileEdit from "@/components/My/profileEdit";
 import MyPosts from "@/components/My/myPosts";
 
 export default function My() {
+  const tempId = 3;
+  const fetcher: Fetcher<MyProfileData, string> = (url) =>
+    MemberAPI.getMyProfile(url);
+  const { data } = useSWR(`/members/my?memberId=${tempId}`, fetcher);
+
   const [isEditMode, setIsEditMode] = useState<boolean>(true);
+
+  if (!data) return <Loading />;
 
   return (
     <div className="bg-white py-14 px-6 sm:py-20 lg:px-8">
@@ -36,153 +48,24 @@ export default function My() {
       </div>
       {isEditMode ? (
         <ProfileEdit
-          imageUrl={테스트_유저정보.imgUrl}
-          email={테스트_유저정보.email}
-          nickname={테스트_유저정보.nickname}
-          skill={테스트_유저정보.skill}
-          stack={테스트_유저정보.stack}
+          memberId={tempId}
+          imageUrl={data.profileImageUrl}
+          email={data.email}
+          nickname={data.nickname}
+          job={data.job.main}
+          subJob={data.job.detail}
+          career={data.career}
+          jobLevel={data.level}
+          stack={data.skills}
+          introduction={data.introduction}
         />
       ) : (
         <MyPosts
-          hostingPosts={테스트_유저정보.hostingPosts}
-          appliedPosts={테스트_유저정보.appliedPosts}
-          participatedPosts={테스트_유저정보.participatedPosts}
+          hostingPosts={data.hostingPosts}
+          appliedPosts={data.appliedPosts}
+          participatedPosts={data.participatedPosts}
         />
       )}
     </div>
   );
 }
-
-let 테스트_유저정보 = {
-  imgUrl: "",
-  email: "example@gmail.com",
-  nickname: "공기밥",
-  skill: ["프론트엔드", "웹프론트엔드", "초보", "1-3년"],
-  stack: ["React", "NextJS", "SASS", "JavaScript"],
-  hostingPosts: [
-    {
-      postId: "1",
-      type: "스터디",
-      status: "모집중",
-      field: "프론트엔드 개발",
-      title: "프론트엔드 개발자 구함!",
-      location: "서울 / 경기",
-      skills: ["HTML5", "Tailwind", "NextJS", "TypeScript", "GitHub"],
-      like: false,
-      likes: 1,
-      imageUrl: "/test.jpg",
-    },
-    {
-      postId: "2",
-      type: "스터디",
-      status: "모집중",
-      field: "프론트엔드 개발",
-      title: "자바스크립트 개념부터 다지실분 구함",
-      location: "서울 / 경기",
-      skills: ["HTML5", "JavaScript"],
-      like: false,
-      likes: 3,
-      imageUrl: "",
-    },
-    {
-      postId: "3",
-      type: "스터디",
-      status: "모집완료",
-      field: "디자인&UX 스터디&네트워킹",
-      title: "UIUX 포트폴리오 같이 만들어요",
-      location: "서울",
-      skills: ["Figma"],
-      like: false,
-      likes: 12,
-      imageUrl: "/test.jpg",
-    },
-    {
-      postId: "4",
-      type: "스터디",
-      status: "모집중",
-      field: "백엔드 개발",
-      title: "개발 스터디 모집",
-      location: "온라인 / 서울",
-      skills: ["Flutter", "Python", "JavaScript", "TypeScript", "Django"],
-      like: false,
-      likes: 100,
-      imageUrl: "",
-    },
-    {
-      postId: "5",
-      type: "스터디",
-      status: "모집완료",
-      field: "기획 & PO",
-      title: "SaaS LMS 기획",
-      location: "서울 / 경기",
-      skills: ["LMS", "SaaS"],
-      like: false,
-      likes: 0,
-      imageUrl: "/test.jpg",
-    },
-  ],
-  appliedPosts: [
-    {
-      postId: "3",
-      type: "스터디",
-      status: "모집완료",
-      field: "디자인&UX 스터디&네트워킹",
-      title: "UIUX 포트폴리오 같이 만들어요",
-      location: "서울",
-      skills: ["Figma"],
-      like: false,
-      likes: 12,
-      imageUrl: "/test.jpg",
-    },
-    {
-      postId: "4",
-      type: "스터디",
-      status: "모집중",
-      field: "백엔드 개발",
-      title: "개발 스터디 모집",
-      location: "온라인 / 서울",
-      skills: ["Flutter", "Python", "JavaScript", "TypeScript", "Django"],
-      like: false,
-      likes: 100,
-      imageUrl: "",
-    },
-    {
-      postId: "5",
-      type: "스터디",
-      status: "모집완료",
-      field: "기획 & PO",
-      title: "SaaS LMS 기획",
-      location: "서울 / 경기",
-      skills: ["LMS", "SaaS"],
-      like: false,
-      likes: 0,
-      imageUrl: "/test.jpg",
-    },
-  ],
-  participatedPosts: [
-    {
-      postId: "1",
-      type: "스터디",
-      status: "모집중",
-      field: "프론트엔드 개발",
-      title: "프론트엔드 개발자 구함!",
-      location: "서울 / 경기",
-      skills: ["HTML5", "Tailwind", "NextJS", "TypeScript", "GitHub"],
-      like: false,
-      likes: 1,
-      imageUrl: "/test.jpg",
-    },
-    {
-      postId: "2",
-      type: "스터디",
-      status: "모집중",
-      field: "프론트엔드 개발",
-      title: "자바스크립트 개념부터 다지실분 구함",
-      location: "서울 / 경기",
-      skills: ["HTML5", "JavaScript"],
-      like: false,
-      likes: 3,
-      imageUrl: "",
-    },
-  ],
-};

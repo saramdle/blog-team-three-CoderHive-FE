@@ -11,3 +11,8 @@ main {
     Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   word-break: keep-all;
 }
+
+th,
+td {
+  padding: 0.5rem;
+}

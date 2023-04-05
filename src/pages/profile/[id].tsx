@@ -1,9 +1,24 @@
 import Image from "next/image";
 
+import useSWR from "swr";
+import { Fetcher } from "swr";
+import { MemberAPI, MemberData } from "@/lib/api/memberAPI";
+
 import MiniPostCard from "@/components/miniPostCard";
+import Loading from "@/components/loading";
 
 export default function Profile() {
-  const renderStackList = 테스트_프로필_데이터.stacks.map((skill, index) => {
+  const tempId = 3;
+  const fetcher: Fetcher<MemberData, string> = (url) =>
+    MemberAPI.getMember(url);
+  const { data, error } = useSWR(
+    `/members?memberId=${tempId}&searchMemberId=${tempId}`,
+    fetcher
+  );
+
+  if (!data) return <Loading />;
+
+  const renderStackList = data.skills.map((skill, index) => {
     return (
       <div
         key={index}
@@ -14,22 +29,20 @@ export default function Profile() {
     );
   });
 
-  const renderInProgressPost = 테스트_프로필_데이터.inProgressPosts.map(
-    (post) => {
-      return (
-        <MiniPostCard
-          key={post.postId}
-          postId={post.postId}
-          status={post.status}
-          title={post.title}
-          location={post.location}
-          like={post.like}
-          likes={post.likes}
-          imageUrl={post.imageUrl}
-        />
-      );
-    }
-  );
+  const renderInProgressPost = data.participatedPosts?.map((post) => {
+    return (
+      <MiniPostCard
+        key={post.postId}
+        postId={post.postId}
+        status={post.status}
+        title={post.title}
+        location={post.location}
+        like={post.likeBoolean}
+        likes={post.likes}
+        imageUrl={post.thumbImageUrl}
+      />
+    );
+  });
 
   const onSubmit = () => {};
 
@@ -38,9 +51,9 @@ export default function Profile() {
       <div className="mx-auto pb-8 max-w-4xl flex justify-center items-center border-b border-gray-200">
         <div className="relative w-44 h-44">
           <div className="relative w-full h-full rounded-full overflow-hidden">
-            {테스트_프로필_데이터.imageUrl ? (
+            {data.profileImageUrl ? (
               <Image
-                src={테스트_프로필_데이터.imageUrl}
+                src={data.profileImageUrl}
                 alt="Image"
                 fill
                 sizes="100%, 100%"
@@ -61,13 +74,13 @@ export default function Profile() {
         </div>
         <div className="ml-8 mt-4 flex flex-col justify-end">
           <h2 className="text-6xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            {테스트_프로필_데이터.nickname}
+            {data.nickname}
           </h2>
           <h3 className="mt-6 text-base font-semibold text-gray-700">
-            {테스트_프로필_데이터.field}
+            {data.job.main}
           </h3>
           <h3 className="mt-2 text-sm font-normal text-gray-700">
-            {테스트_프로필_데이터.level} / {테스트_프로필_데이터.year}
+            {data.level} / {data.career}
           </h3>
         </div>
       </div>
@@ -86,9 +99,7 @@ export default function Profile() {
               소개
             </h3>
             <p className="mt-4 text-sm">
-              {테스트_프로필_데이터.intro
-                ? 테스트_프로필_데이터.intro
-                : "내용이 없습니다."}
+              {data.introduction ? data.introduction : "내용이 없습니다."}
             </p>
           </div>
         </div>
@@ -107,51 +118,3 @@ export default function Profile() {
     </div>
   );
 }
-
-let 테스트_프로필_데이터 = {
-  imageUrl: "/test.jpg",
-  nickname: "공기밥",
-  field: "프론트엔드",
-  level: "초보",
-  year: "1-3년차",
-  stacks: ["SASS", "JavaScript", "React", "NextJS"],
-  intro: "",
-  inProgressPosts: [
-    {
-      postId: "3",
-      type: "스터디",
-      status: "모집완료",
-      field: "디자인&UX 스터디&네트워킹",
-      title: "UIUX 포트폴리오 같이 만들어요",
-      location: "서울",
-      skills: ["Figma"],
-      like: false,
-      likes: 12,
-      imageUrl: "",
-    },
-    {
-      postId: "4",
-      type: "스터디",
-      status: "모집중",
-      field: "백엔드 개발",
-      title: "개발 스터디 모집",
-      location: "온라인 / 서울",
-      skills: ["Flutter", "Python", "JavaScript", "TypeScript", "Django"],
-      like: true,
-      likes: 100,
-      imageUrl: "/test.jpg",
-    },
-    {
-      postId: "5",
-      type: "스터디",
-      status: "모집완료",
-      field: "기획 & PO",
-      title: "SaaS LMS 기획",
-      location: "서울 / 경기",
-      skills: ["LMS", "SaaS"],
-      like: false,
-      likes: 0,
-      imageUrl: "",
-    },
-  ],
-};

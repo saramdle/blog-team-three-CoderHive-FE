@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 export type PostCardProps = {
-  postId: string;
+  postId: number | string;
   type: string;
   status: string;
   title: string;

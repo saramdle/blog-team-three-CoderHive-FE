@@ -9,11 +9,15 @@ export default function NaverLogin({ isLoginMode }: LoginButtonProps) {
   const dispatch = useAppDispatch();
 
   const onLoginClicked = () => {
-    router.push("/register");
+    if (isLoginMode) {
+      dispatch(setIsLoginModalOpen(false));
+    } else {
+      router.push("/register");
 
-    document.documentElement.style.overflowY = "auto";
+      document.documentElement.style.overflowY = "auto";
 
-    dispatch(setIsLoginModalOpen(false));
+      dispatch(setIsLoginModalOpen(false));
+    }
   };
 
   return (

@@ -3,12 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 type ProfileCardProps = {
-  userId: string;
+  userId: string | number;
   imageUrl: string;
   nickname: string;
   field: string;
   level: string;
-  resp: string;
 };
 
 export default function ProfileCard({
@@ -17,15 +16,14 @@ export default function ProfileCard({
   nickname,
   field,
   level,
-  resp,
 }: ProfileCardProps) {
   return (
     <div
-      className="w-fit p-4 rounded-md border border-gray-600
+      className="w-48 p-3 rounded-md border border-gray-600
         hover:shadow-lg hover:-translate-y-1 ease-in duration-200"
     >
       <div className="flex items-center">
-        <div className="relative w-20 h-20 rounded-md overflow-hidden">
+        <div className="relative w-12 h-12 rounded-md overflow-hidden">
           {imageUrl ? (
             <Image
               src={imageUrl}
@@ -39,22 +37,18 @@ export default function ProfileCard({
             <ProfileIcon width="full" height="full" color="text-gray-700" />
           )}
         </div>
-        <div className="ml-4 flex flex-col">
+        <div className="ml-4 flex flex-col gap-y-1">
           <Link
             href={{
               pathname: "/profile/[id]",
               query: { id: userId },
             }}
-            className="text-xl"
+            className="text-lg"
           >
             {nickname}
           </Link>
-          <span className="font-normal text-sm text-gray-600">
+          <span className="font-normal text-xs text-gray-600">
             {field} {level}
-          </span>
-          <span className="mt-2 font-normal text-sm">
-            <strong>담당 분야 : </strong>
-            {resp}
           </span>
         </div>
       </div>

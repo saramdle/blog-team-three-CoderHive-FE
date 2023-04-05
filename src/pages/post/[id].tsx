@@ -29,7 +29,6 @@ export default function Post() {
         nickname={user.nickname}
         field={user.field}
         level={user.level}
-        resp={user.resp}
       />
     );
   });
@@ -91,7 +90,6 @@ export default function Post() {
                   nickname={테스트_리더정보.nickname}
                   field={테스트_리더정보.field}
                   level={테스트_리더정보.level}
-                  resp={테스트_리더정보.resp}
                 />
               </div>
 
@@ -164,7 +162,6 @@ let 테스트_리더정보 = {
   nickname: "공기밥",
   field: "웹프론트엔드",
   level: "초보",
-  resp: "웹프론트엔드",
 };
 
 interface ProfileCard {
@@ -173,7 +170,6 @@ interface ProfileCard {
   nickname: string;
   field: string;
   level: string;
-  resp: string;
 }
 
 let 테스트_멤버정보: ProfileCard[] = [
@@ -183,7 +179,6 @@ let 테스트_멤버정보: ProfileCard[] = [
     nickname: "한샘",
     field: "웹서버",
     level: "고수",
-    resp: "웹백엔드",
   },
   {
     userId: "3",
@@ -191,7 +186,6 @@ let 테스트_멤버정보: ProfileCard[] = [
     nickname: "HSM",
     field: "웹서버",
     level: "고수",
-    resp: "웹백엔드",
   },
 ];
 

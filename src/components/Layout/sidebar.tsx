@@ -7,6 +7,7 @@ type SideBarProps = {
   setUser: Dispatch<SetStateAction<string>>;
   isMenuOpen: boolean;
   setIsMenuOpen: Dispatch<SetStateAction<boolean>>;
+  onModalOpenClicked: () => void;
 };
 
 export default function SideBar({
@@ -14,7 +15,13 @@ export default function SideBar({
   setUser,
   isMenuOpen,
   setIsMenuOpen,
+  onModalOpenClicked,
 }: SideBarProps) {
+  const onLoginClicked = () => {
+    onModalOpenClicked();
+    setIsMenuOpen(false);
+  };
+
   const onLogoutClicked = () => {
     setUser("");
     setIsMenuOpen(false);
@@ -89,7 +96,7 @@ export default function SideBar({
               <button
                 className="-mx-3 py-2 px-3 w-full text-left text-base font-semibold leading-7
                     rounded-lg text-gray-900 hover:bg-gray-50"
-                onClick={onOptionClicked}
+                onClick={onLoginClicked}
               >
                 로그인
               </button>

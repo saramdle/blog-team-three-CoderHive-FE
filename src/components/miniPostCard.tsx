@@ -5,7 +5,7 @@ import { useState } from "react";
 import HeartIcon from "@/lib/icons/heartIcon";
 
 export type MiniPostCardProps = {
-  postId: string;
+  postId: number | string;
   status: string;
   title: string;
   location: string;

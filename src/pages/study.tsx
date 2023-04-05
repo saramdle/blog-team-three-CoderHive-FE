@@ -2,12 +2,21 @@ import Head from "next/head";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
+import useSWR, { Fetcher } from "swr";
+import { PostAPI, PostCardData } from "@/lib/api/postAPI";
+
 import MultiSelectList from "@/components/OptionList/multiSelectList";
 import SelectedCard from "@/components/selectedCard";
 import NotFound from "@/components/notFound";
 import PostCard from "@/components/postCard";
 
 export default function Study() {
+  const fetcher: Fetcher<PostCardData, string> = (url) => PostAPI.getPosts(url);
+  const { data } = useSWR(
+    `/posts?memberId=3&category=project&region=2,3&jobs=1,2&status=모집중`,
+    fetcher
+  );
+
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
   const [showAvail, setShowAvail] = useState<boolean>(false);

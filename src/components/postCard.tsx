@@ -5,7 +5,7 @@ import { useState } from "react";
 import HeartIcon from "@/lib/icons/heartIcon";
 
 export type PostCardProps = {
-  postId: string;
+  postId: number | string;
   type: string;
   status: string;
   title: string;

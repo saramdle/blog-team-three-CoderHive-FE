@@ -62,6 +62,7 @@ export default function RecruitInfo({
           recruitInfo={recruitInfo}
           recruitNum={recruitNum}
           setWorkList={setWorkList}
+          recruitInfoError={recruitInfoError}
           setRecruitInfoError={setRecruitInfoError}
         />
       )

@@ -1,10 +1,11 @@
 import MiniPostCard from "../miniPostCard";
-import { PostCardProps } from "../postCard";
+
+import { PostCardData } from "@/lib/fetcher/postFetcher";
 
 type MyPostsProps = {
-  hostingPosts: PostCardProps[];
-  appliedPosts: PostCardProps[];
-  participatedPosts: PostCardProps[];
+  hostingPosts: PostCardData[];
+  appliedPosts: PostCardData[];
+  participatedPosts: PostCardData[];
 };
 
 export default function MyPosts({
@@ -20,9 +21,9 @@ export default function MyPosts({
         status={post.status}
         title={post.title}
         location={post.location}
-        like={post.like}
+        like={post.likeBoolean}
         likes={post.likes}
-        imageUrl={post.imageUrl}
+        imageUrl={post.thumbImageUrl}
       />
     );
   });
@@ -35,9 +36,9 @@ export default function MyPosts({
         status={post.status}
         title={post.title}
         location={post.location}
-        like={post.like}
+        like={post.likeBoolean}
         likes={post.likes}
-        imageUrl={post.imageUrl}
+        imageUrl={post.thumbImageUrl}
       />
     );
   });
@@ -50,9 +51,9 @@ export default function MyPosts({
         status={post.status}
         title={post.title}
         location={post.location}
-        like={post.like}
+        like={post.likeBoolean}
         likes={post.likes}
-        imageUrl={post.imageUrl}
+        imageUrl={post.thumbImageUrl}
       />
     );
   });

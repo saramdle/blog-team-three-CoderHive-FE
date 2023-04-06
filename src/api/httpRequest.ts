@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const HttpRequest = axios.create({
-  baseURL: "http://3.37.242.238:8080",
+  baseURL: "https://6f89-3-37-242-238.jp.ngrok.io",
 });
 
 export default HttpRequest;

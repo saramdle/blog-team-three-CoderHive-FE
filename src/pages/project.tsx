@@ -2,16 +2,42 @@ import Head from "next/head";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
+import useSWR, { Fetcher } from "swr";
+import { GetPostData, PostAPI } from "@/api/postAPI";
+
 import MultiSelectList from "@/components/OptionList/multiSelectList";
-import SelectedCard from "@/components/selectedCard";
-import NotFound from "@/components/notFound";
-import PostCard from "@/components/postCard";
+import SelectedCard from "@/components/common/selectedCard";
+import NotFound from "@/components/common/notFound";
+import PostCard from "@/components/common/postCard";
+import Loading from "@/components/common/loading";
+import ServerError from "@/components/common/serverError";
 
 export default function Project() {
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
-  const [showAvail, setShowAvail] = useState<boolean>(false);
+  const [showOnlyHiring, setShowOnlyHiring] = useState<boolean>(false);
   const router = useRouter();
+
+  const tempMemberId = 3;
+  const tempLoactionIds = [2, 3];
+  const tempRegionsIds = [1, 2];
+  const fetcher: Fetcher<GetPostData, string> = (url) => PostAPI.getPosts(url);
+  const { data, error } = useSWR<GetPostData, Error>(
+    `/posts?memberId=${tempMemberId}&postCategory=PROJECT${
+      selectedLocations && `&regions=${tempLoactionIds.join(",")}`
+    }${selectedFields && `&jobs=${tempRegionsIds.join(",")}`}&postStatus=${
+      showOnlyHiring ? "HIRING" : "CLOSED"
+    }`,
+    fetcher
+  );
+
+  if (error) {
+    return <ServerError />;
+  }
+
+  if (!data) {
+    return <Loading />;
+  }
 
   const onCreatePostClicked = () => {
     router.push("/createPost");
@@ -39,19 +65,19 @@ export default function Project() {
     );
   });
 
-  const renderArticles = 게시물_테스트_데이터.map((post) => {
+  const renderArticles = data?.content.map((post) => {
     return (
       <PostCard
-        key={post.postId}
-        postId={post.postId}
-        status={post.status}
-        type={post.type}
+        key={post.id}
+        postId={post.id}
+        status={post.postStatus}
+        type={post.postCategory}
         title={post.title}
         location={post.location}
         skills={post.skills}
-        like={post.like}
+        like={post.memberLike}
         likes={post.likes}
-        imageUrl={post.imageUrl}
+        imageUrl={post.thumbImageUrl}
       />
     );
   });
@@ -89,8 +115,8 @@ export default function Project() {
                   id="checkbox"
                   type="checkbox"
                   className="w-5 h-5 rounded"
-                  checked={showAvail}
-                  onChange={(e) => setShowAvail(e.target.checked)}
+                  checked={showOnlyHiring}
+                  onChange={(e) => setShowOnlyHiring(e.target.checked)}
                 />
                 <label
                   htmlFor="checkbox"
@@ -113,7 +139,7 @@ export default function Project() {
             >
               새 모임 생성
             </button>
-            {renderArticles.length === 0 ? (
+            {renderArticles?.length === 0 ? (
               <NotFound />
             ) : (
               <div
@@ -137,72 +163,3 @@ let 지역_테스트_데이터 = [
   "부산광역시",
 ];
 let 분야_테스트_데이터 = ["UI/UX", "웹프론트엔드", "웹서버"];
-
-interface 테스트_게시물_인터페이스 {
-  postId: string;
-  type: string;
-  status: string;
-  field: string;
-  title: string;
-  location: string;
-  skills: string[];
-  likes: number;
-}
-
-let 게시물_테스트_데이터 = [
-  {
-    postId: "1",
-    type: "스터디",
-    status: "모집중",
-    title: "프론트엔드 개발자 구함!",
-    location: "서울 / 경기",
-    skills: ["HTML5", "Tailwind", "NextJS", "TypeScript", "GitHub"],
-    like: false,
-    likes: 1,
-    imageUrl: "",
-  },
-  {
-    postId: "2",
-    type: "스터디",
-    status: "모집중",
-    title: "자바스크립트 개념부터 다지실분 구함",
-    location: "서울 / 경기",
-    skills: ["HTML5", "JavaScript"],
-    like: false,
-    likes: 3,
-    imageUrl: "",
-  },
-  {
-    postId: "3",
-    type: "스터디",
-    status: "모집완료",
-    title: "UIUX 포트폴리오 같이 만들어요",
-    location: "서울",
-    skills: ["Figma"],
-    like: true,
-    likes: 12,
-    imageUrl: "/test.jpg",
-  },
-  {
-    postId: "4",
-    type: "스터디",
-    status: "모집중",
-    title: "개발 스터디 모집",
-    location: "온라인 / 서울",
-    skills: ["Flutter", "Python", "JavaScript", "TypeScript", "Django"],
-    like: false,
-    likes: 100,
-    imageUrl: "",
-  },
-  {
-    postId: "5",
-    type: "스터디",
-    status: "모집완료",
-    title: "SaaS LMS 기획",
-    location: "서울 / 경기",
-    skills: ["LMS", "SaaS"],
-    like: false,
-    likes: 0,
-    imageUrl: "/test.jpg",
-  },
-];

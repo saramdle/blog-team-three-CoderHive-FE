@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 import SingleSelectList from "@/components/OptionList/singleSelectList";
-import validateInput from "@/lib/validateInput";
+import validateInput from "@/lib/util/validateInput";
 
 export default function Register() {
   const [nickname, setNickname] = useState<string>("");

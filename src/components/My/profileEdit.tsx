@@ -3,7 +3,7 @@ import { useState } from "react";
 import SearchStack from "@/components/SearchStack/searchStack";
 import SingleSelectList from "../OptionList/singleSelectList";
 import ProfileImage from "./profileImage";
-import validateInput from "@/lib/validateInput";
+import validateInput from "@/lib/util/validateInput";
 
 type ProfileEditProps = {
   memberId: number;

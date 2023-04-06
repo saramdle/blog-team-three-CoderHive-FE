@@ -2,9 +2,9 @@ import { useState } from "react";
 
 import useSWR from "swr";
 import { Fetcher } from "swr";
-import { MemberAPI, MyProfileData } from "@/lib/api/memberAPI";
+import { MemberAPI, MyProfileData } from "@/api/memberAPI";
 
-import Loading from "@/components/loading";
+import Loading from "@/components/common/loading";
 import ProfileEdit from "@/components/My/profileEdit";
 import MyPosts from "@/components/My/myPosts";
 

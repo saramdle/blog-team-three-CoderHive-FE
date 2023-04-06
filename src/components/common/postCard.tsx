@@ -82,7 +82,7 @@ export default function PostCard({
         >
           <span className="sr-only">Like post</span>
           <svg
-            viewBox="0 0 18 18"
+            viewBox="-1 -1 18 18"
             fill="currentColor"
             stroke="currentColor"
             className={`${
@@ -108,6 +108,7 @@ export default function PostCard({
               pathname: "/post/[id]",
               query: { id: postId },
             }}
+            className="line-clamp-3"
           >
             {title}
           </Link>

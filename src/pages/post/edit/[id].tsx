@@ -9,8 +9,8 @@ import MultiSelectList from "@/components/OptionList/multiSelectList";
 import SelectedCard from "@/components/selectedCard";
 
 import initialBodyText from "@/lib/initialBodyText";
-import validateInput from "@/lib/validateInput";
-import validateRecruitInfo from "@/lib/validateRecruitInfo";
+import validateInput from "@/lib/util/validateInput";
+import validateRecruitInfo from "@/lib/util/validateRecruitInfo";
 
 export default function PostEdit() {
   const recruitInfo = useRef<string[][] | null>(

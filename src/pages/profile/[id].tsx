@@ -2,10 +2,10 @@ import Image from "next/image";
 
 import useSWR from "swr";
 import { Fetcher } from "swr";
-import { MemberAPI, MemberData } from "@/lib/api/memberAPI";
+import { MemberAPI, MemberData } from "@/api/memberAPI";
 
 import MiniPostCard from "@/components/miniPostCard";
-import Loading from "@/components/loading";
+import Loading from "@/components/common/loading";
 
 export default function Profile() {
   const tempId = 3;

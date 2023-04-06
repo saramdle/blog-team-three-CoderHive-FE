@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { Fetcher } from "swr";
 import { MemberAPI, MemberData } from "@/api/memberAPI";
 
-import MiniPostCard from "@/components/miniPostCard";
+import MiniPostCard from "@/components/common/miniPostCard";
 import Loading from "@/components/common/loading";
 
 export default function Profile() {

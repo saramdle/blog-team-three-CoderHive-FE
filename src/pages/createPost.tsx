@@ -5,7 +5,7 @@ import SearchStack from "@/components/common/SearchStack/searchStack";
 import UploadImage from "@/components/CreatPost/uploadImage";
 import TextEditor from "@/components/CreatPost/textEditor";
 import MultiSelectList from "@/components/common/OptionList/multiSelectList";
-import SelectedCard from "@/components/selectedCard";
+import SelectedCard from "@/components/common/selectedCard";
 import RecruitInfo from "@/components/CreatPost/recruitInfo";
 import initialBodyText from "@/lib/initialBodyText";
 import validateInput from "@/lib/util/validateInput";

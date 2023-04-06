@@ -1,11 +1,11 @@
-import MiniPostCard from "../miniPostCard";
+import MiniPostCard from "../common/miniPostCard";
 
-import { PostCardData } from "@/lib/fetcher/postFetcher";
+import { MyPostData } from "@/api/memberAPI";
 
 type MyPostsProps = {
-  hostingPosts: PostCardData[];
-  appliedPosts: PostCardData[];
-  participatedPosts: PostCardData[];
+  hostingPosts: MyPostData[];
+  appliedPosts: MyPostData[];
+  participatedPosts: MyPostData[];
 };
 
 export default function MyPosts({
@@ -13,12 +13,12 @@ export default function MyPosts({
   appliedPosts,
   participatedPosts,
 }: MyPostsProps) {
-  const renderAppliedPost = appliedPosts.map((post) => {
+  const renderAppliedPost = appliedPosts?.map((post) => {
     return (
       <MiniPostCard
-        key={post.postId}
-        postId={post.postId}
-        status={post.status}
+        key={post.id}
+        postId={post.id}
+        status={post.postStatus}
         title={post.title}
         location={post.location}
         like={post.likeBoolean}
@@ -28,12 +28,12 @@ export default function MyPosts({
     );
   });
 
-  const renderParticipatedPosts = participatedPosts.map((post) => {
+  const renderParticipatedPosts = participatedPosts?.map((post) => {
     return (
       <MiniPostCard
-        key={post.postId}
-        postId={post.postId}
-        status={post.status}
+        key={post.id}
+        postId={post.id}
+        status={post.postStatus}
         title={post.title}
         location={post.location}
         like={post.likeBoolean}
@@ -43,12 +43,12 @@ export default function MyPosts({
     );
   });
 
-  const renderHostingPosts = hostingPosts.map((post) => {
+  const renderHostingPosts = hostingPosts?.map((post) => {
     return (
       <MiniPostCard
-        key={post.postId}
-        postId={post.postId}
-        status={post.status}
+        key={post.id}
+        postId={post.id}
+        status={post.postStatus}
         title={post.title}
         location={post.location}
         like={post.likeBoolean}

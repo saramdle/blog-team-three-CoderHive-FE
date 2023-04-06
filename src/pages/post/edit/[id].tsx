@@ -1,12 +1,12 @@
 import { useState, useRef, ReactElement } from "react";
 
 import RecruitInfo from "@/components/CreatPost/recruitCard";
-import SingleSelectList from "@/components/OptionList/singleSelectList";
-import SearchStack from "@/components/SearchStack/searchStack";
+import SingleSelectList from "@/components/common/OptionList/singleSelectList";
+import SearchStack from "@/components/common/SearchStack/searchStack";
 import UploadImage from "@/components/CreatPost/uploadImage";
 import TextEditor from "@/components/CreatPost/textEditor";
-import MultiSelectList from "@/components/OptionList/multiSelectList";
-import SelectedCard from "@/components/selectedCard";
+import MultiSelectList from "@/components/common/OptionList/multiSelectList";
+import SelectedCard from "@/components/common/selectedCard";
 
 import initialBodyText from "@/lib/initialBodyText";
 import validateInput from "@/lib/util/validateInput";

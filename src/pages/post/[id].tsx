@@ -3,7 +3,7 @@ import { useState } from "react";
 import TextViewer from "@/components/Post/textViewer";
 import initialBodyText from "@/lib/initialBodyText";
 import PostSideView from "@/components/Post/postSideView";
-import ProfileCard from "@/components/profileCard";
+import ProfileCard from "@/components/common/profileCard";
 import Comment from "@/components/Post/comment";
 
 export default function Post() {

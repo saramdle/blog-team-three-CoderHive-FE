@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import useSWR, { Fetcher } from "swr";
 import { GetPostData, PostAPI } from "@/api/postAPI";
 
-import MultiSelectList from "@/components/OptionList/multiSelectList";
+import MultiSelectList from "@/components/common/OptionList/multiSelectList";
 import SelectedCard from "@/components/common/selectedCard";
 import NotFound from "@/components/common/notFound";
 import PostCard from "@/components/common/postCard";
@@ -24,9 +24,9 @@ export default function Project() {
   const fetcher: Fetcher<GetPostData, string> = (url) => PostAPI.getPosts(url);
   const { data, error } = useSWR<GetPostData, Error>(
     `/posts?memberId=${tempMemberId}&postCategory=PROJECT${
-      selectedLocations && `&regions=${tempLoactionIds.join(",")}`
-    }${selectedFields && `&jobs=${tempRegionsIds.join(",")}`}&postStatus=${
-      showOnlyHiring ? "HIRING" : "CLOSED"
+      selectedLocations ? `&regions=${tempLoactionIds.join(",")}` : ""
+    }${selectedFields ? `&jobs=${tempRegionsIds.join(",")}` : ""}${
+      showOnlyHiring ? "&postStatus=HIRING" : ""
     }`,
     fetcher
   );

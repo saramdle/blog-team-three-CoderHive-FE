@@ -16,6 +16,8 @@ export default function My() {
 
   const [isEditMode, setIsEditMode] = useState<boolean>(true);
 
+  console.log(data);
+
   if (!data) return <Loading />;
 
   return (

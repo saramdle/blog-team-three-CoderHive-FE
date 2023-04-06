@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import SearchStack from "@/components/SearchStack/searchStack";
-import SingleSelectList from "../OptionList/singleSelectList";
+import SearchStack from "@/components/common/SearchStack/searchStack";
+import SingleSelectList from "../common/OptionList/singleSelectList";
 import ProfileImage from "./profileImage";
 import validateInput from "@/lib/util/validateInput";
 

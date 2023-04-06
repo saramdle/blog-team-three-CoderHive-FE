@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 
-import SingleSelectList from "@/components/OptionList/singleSelectList";
+import SingleSelectList from "@/components/common/OptionList/singleSelectList";
 
 type RecruitCardProps = {
   index: number;

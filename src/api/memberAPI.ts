@@ -1,6 +1,19 @@
 import HttpRequest from "./httpRequest";
 
-import { PostCardData } from "./postAPI";
+export type MyPostData = {
+  id: number;
+  content: string;
+  job: { main: string; detail: string };
+  likeBoolean: true;
+  likes: 11;
+  location: string;
+  platforms: string;
+  postCategory: string;
+  postStatus: string;
+  skills: string[];
+  thumbImageUrl: string;
+  title: string;
+};
 
 export type MyProfileData = {
   memberId: number;
@@ -15,9 +28,9 @@ export type MyProfileData = {
   skills: string[];
   introduction: string;
   profileImageUrl: string;
-  appliedPosts: PostCardData[];
-  hostingPosts: PostCardData[];
-  participatedPosts: PostCardData[];
+  appliedPosts: MyPostData[];
+  hostingPosts: MyPostData[];
+  participatedPosts: MyPostData[];
 };
 
 export type MemberData = {
@@ -33,7 +46,7 @@ export type MemberData = {
   skills: string[];
   introduction: string;
   profileImageUrl: string;
-  participatedPosts: PostCardData[];
+  participatedPosts: MyPostData[];
 };
 
 export const MemberAPI = {

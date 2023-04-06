@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-import SingleSelectList from "@/components/OptionList/singleSelectList";
+import SingleSelectList from "@/components/common/OptionList/singleSelectList";
 import validateInput from "@/lib/util/validateInput";
 
 export default function Register() {

@@ -20,7 +20,7 @@ export type GetPostData = {
   totalPages: number;
 };
 
-type PostData = {
+export type PostData = {
   id: number;
   likes: number;
   location: string;

@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import useSWR, { Fetcher } from "swr";
 import { PostAPI, GetPostData } from "@/api/postAPI";
 
-import MultiSelectList from "@/components/OptionList/multiSelectList";
+import MultiSelectList from "@/components/common/OptionList/multiSelectList";
 import SelectedCard from "@/components/common/selectedCard";
 import NotFound from "@/components/common/notFound";
 import PostCard from "@/components/common/postCard";

@@ -119,8 +119,10 @@ export default function ProfileEdit({
               } block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm 
                 ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6 
                 `}
+              placeholder="닉네임은 최대 8자 입니다."
               value={nickName}
               onChange={(e) => setNickName(e.target.value)}
+              onBlur={() => validateInput(nickName, setNickNameError)}
             />
           </div>
         </div>

@@ -56,7 +56,8 @@ export default function PostCard({
             fill
             sizes="100%, 100%"
             style={{ objectFit: "cover" }}
-            priority
+            placeholder="blur"
+            blurDataURL={"/logo.svg"}
           />
         </div>
       )}

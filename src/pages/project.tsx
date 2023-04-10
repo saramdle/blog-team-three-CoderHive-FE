@@ -97,20 +97,22 @@ export default function Project() {
             <p className="mt-2 text-lg leading-8 text-gray-600">
               사람들과 함께 협업하고 경험을 쌓을 프로젝트를 찾아보세요
             </p>
-            <div className="mt-8 flex gap-x-4">
-              <MultiSelectList
-                title="지역"
-                options={지역_테스트_데이터}
-                selectedOptions={selectedLocations}
-                setSelectedOption={setSelectedLocations}
-              />
-              <MultiSelectList
-                title="분야"
-                options={분야_테스트_데이터}
-                selectedOptions={selectedFields}
-                setSelectedOption={setSelectedFields}
-              />
-              <div className="ml-4 flex items-center">
+            <div className="mt-8 flex max-sm:flex-col-reverse">
+              <div className="flex gap-x-4">
+                <MultiSelectList
+                  title="지역"
+                  options={지역_테스트_데이터}
+                  selectedOptions={selectedLocations}
+                  setSelectedOption={setSelectedLocations}
+                />
+                <MultiSelectList
+                  title="분야"
+                  options={분야_테스트_데이터}
+                  selectedOptions={selectedFields}
+                  setSelectedOption={setSelectedFields}
+                />
+              </div>
+              <div className="ml-8 flex items-center max-sm:ml-0 max-sm:mb-4">
                 <input
                   id="checkbox"
                   type="checkbox"

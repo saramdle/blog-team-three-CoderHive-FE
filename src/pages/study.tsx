@@ -15,13 +15,19 @@ import ServerError from "@/components/common/serverError";
 export default function Study() {
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
-  const [showAvail, setShowAvail] = useState<boolean>(false);
+  const [showOnlyHiring, setShowOnlyHiring] = useState<boolean>(false);
   const router = useRouter();
 
   const tempMemberId = 3;
+  const tempLoactionIds = [2, 3];
+  const tempRegionsIds = [1, 2];
   const fetcher: Fetcher<GetPostData, string> = (url) => PostAPI.getPosts(url);
   const { data, error } = useSWR<GetPostData, Error>(
-    `/posts?memberId=${tempMemberId}&postCategory=STUDY&regions=2,3&jobs=1,2&postStatus=HIRING`,
+    `/posts?memberId=${tempMemberId}&postCategory=STUDY${
+      selectedLocations ? `&regions=${tempLoactionIds.join(",")}` : ""
+    }${selectedFields ? `&jobs=${tempRegionsIds.join(",")}` : ""}${
+      showOnlyHiring ? "&postStatus=HIRING" : ""
+    }`,
     fetcher
   );
 
@@ -91,26 +97,28 @@ export default function Study() {
             <p className="mt-2 text-lg leading-8 text-gray-600">
               함께 공부하고 성장해갈 스터디를 찾아보세요
             </p>
-            <div className="mt-8 flex gap-x-4">
-              <MultiSelectList
-                title="지역"
-                options={지역_테스트_데이터}
-                selectedOptions={selectedLocations}
-                setSelectedOption={setSelectedLocations}
-              />
-              <MultiSelectList
-                title="분야"
-                options={분야_테스트_데이터}
-                selectedOptions={selectedFields}
-                setSelectedOption={setSelectedFields}
-              />
-              <div className="ml-4 flex items-center">
+            <div className="mt-8 flex max-sm:flex-col-reverse">
+              <div className="flex gap-x-4">
+                <MultiSelectList
+                  title="지역"
+                  options={지역_테스트_데이터}
+                  selectedOptions={selectedLocations}
+                  setSelectedOption={setSelectedLocations}
+                />
+                <MultiSelectList
+                  title="분야"
+                  options={분야_테스트_데이터}
+                  selectedOptions={selectedFields}
+                  setSelectedOption={setSelectedFields}
+                />
+              </div>
+              <div className="ml-8 flex items-center max-sm:ml-0 max-sm:mb-4">
                 <input
                   id="checkbox"
                   type="checkbox"
                   className="w-5 h-5 rounded"
-                  checked={showAvail}
-                  onChange={(e) => setShowAvail(e.target.checked)}
+                  checked={showOnlyHiring}
+                  onChange={(e) => setShowOnlyHiring(e.target.checked)}
                 />
                 <label
                   htmlFor="checkbox"

@@ -25,7 +25,7 @@ export default function Register() {
     }
 
     setValidationError("");
-    router.push("/");
+    // router.push("/");
   };
 
   return (
@@ -71,10 +71,13 @@ export default function Register() {
                 className={`${
                   nickNameError && "!outline !outline-red-500 !ring-0"
                 } block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm 
-                  ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6 
+                  ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6 placeholder:text-xs
                   `}
+                placeholder="닉네임은 최대 8자 입니다."
+                maxLength={8}
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
+                onBlur={() => validateInput(nickname, setNickNameError)}
               />
             </div>
           </div>

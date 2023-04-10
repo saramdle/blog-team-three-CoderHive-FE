@@ -11,7 +11,7 @@ export default function Home() {
         <meta name="description" content="CoderHive : Find your co-coder!" />
       </Head>
       <div className="bg-white overflow-hidden">
-        <div className="p-20 pb-40 w-full h-[calc(100vh-1rem)] flex items-center max-lg:p-10 max-lg:flex-col max-lg:pb-0">
+        <div className="mx-auto p-20 pb-40 h-[calc(100vh-1rem)] max-w-7xl flex items-center max-lg:p-10 max-lg:flex-col max-lg:pb-0">
           <div className="mx-auto min-w-fit text-left lg:mx-0 lg:flex-auto lg:py-32">
             <h2
               className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl 

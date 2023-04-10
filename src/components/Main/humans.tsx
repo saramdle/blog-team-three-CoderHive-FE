@@ -14,7 +14,7 @@ export default function Humans() {
 
   return (
     <>
-      <div className="absolute bottom-0 -left-[20%] w-full h-[85%]">
+      <div className="absolute bottom-0 -left-[24%] w-full h-[85%]">
         <Image
           src={imgUrl1}
           alt="Human"
@@ -25,7 +25,7 @@ export default function Humans() {
           className="opacity-0 animation-fill-forwards animate-appear-from-bottom animation-delay-300"
         />
       </div>
-      <div className="absolute bottom-0 w-full h-[78%]">
+      <div className="absolute bottom-0 w-full h-[78%] z-10">
         <Image
           src={`/logo.svg`}
           alt="Human"
@@ -36,7 +36,7 @@ export default function Humans() {
           className="opacity-0 animation-fill-forwards animate-appear-from-bottom animation-delay-100"
         />
       </div>
-      <div className="absolute bottom-0 left-[20%] w-full h-[80%]">
+      <div className="absolute bottom-0 left-[24%] w-full h-[80%]">
         <Image
           src={imgUrl2}
           alt="Human"

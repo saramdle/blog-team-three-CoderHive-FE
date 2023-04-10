@@ -49,7 +49,7 @@ export default function Profile() {
   return (
     <div className="bg-white py-14 px-6 sm:py-20 lg:px-8">
       <div className="mx-auto pb-8 max-w-4xl flex justify-center items-center border-b border-gray-200">
-        <div className="relative w-44 h-44">
+        <div className="relative w-44 h-44 max-sm:w-24 max-sm:h-24">
           <div className="relative w-full h-full rounded-full overflow-hidden">
             {data.profileImageUrl ? (
               <Image
@@ -72,14 +72,14 @@ export default function Profile() {
             )}
           </div>
         </div>
-        <div className="ml-8 mt-4 flex flex-col justify-end">
-          <h2 className="text-6xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        <div className="ml-8 mt-4 flex flex-col justify-end max-sm:mt-0">
+          <h2 className="text-4xl font-bold tracking-tight text-gray-900 max-sm:text-2xl">
             {data.nickname}
           </h2>
-          <h3 className="mt-6 text-base font-semibold text-gray-700">
+          <h3 className="mt-6 text-base font-semibold text-gray-700 max-sm:mt-2">
             {data.job.main}
           </h3>
-          <h3 className="mt-2 text-sm font-normal text-gray-700">
+          <h3 className="mt-2 text-sm font-normal text-gray-700 max-sm:mt-1">
             {data.level} / {data.career}
           </h3>
         </div>

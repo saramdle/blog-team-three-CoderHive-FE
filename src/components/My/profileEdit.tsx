@@ -120,6 +120,7 @@ export default function ProfileEdit({
                 ring-1 ring-inset ring-gray-300 sm:text-sm sm:leading-6 
                 `}
               placeholder="닉네임은 최대 8자 입니다."
+              maxLength={8}
               value={nickName}
               onChange={(e) => setNickName(e.target.value)}
               onBlur={() => validateInput(nickName, setNickNameError)}

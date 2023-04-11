@@ -1,11 +1,18 @@
 import { useState, useRef } from "react";
 
+import useSWR from "swr";
+import { InfoAPI, JobData, LocationData } from "@/api/infoAPI";
+
+import ServerError from "@/components/common/serverError";
+import Loading from "@/components/common/loading";
 import SingleSelectList from "@/components/common/OptionList/singleSelectList";
 import SearchStack from "@/components/common/SearchStack/searchStack";
 import UploadImage from "@/components/CreatPost/uploadImage";
 import TextEditor from "@/components/CreatPost/textEditor";
 import MultiSelectList from "@/components/common/OptionList/multiSelectList";
-import SelectedCard from "@/components/common/selectedCard";
+import SelectedCard, {
+  OptionType,
+} from "@/components/common/OptionList/selectedCard";
 import RecruitInfo from "@/components/CreatPost/recruitInfo";
 import initialBodyText from "@/lib/initialBodyText";
 import validateInput from "@/lib/util/validateInput";
@@ -19,8 +26,8 @@ export default function CreatePost() {
   const [location, setLocation] = useState("");
   const [stackList, setStackList] = useState<string[]>([]);
   const [myWork, setMyWork] = useState<string>("");
-  const [workList, setWorkList] = useState<string[]>([]);
-  const [platforms, setPlatforms] = useState<string[]>([]);
+  const [workList, setWorkList] = useState<(OptionType | undefined)[]>([]);
+  const [platforms, setPlatforms] = useState<OptionType[]>([]);
   const [image, setImage] = useState<string | File | null>(null);
   const [bodyText, setBodyText] = useState<string>(initialBodyText);
 
@@ -31,11 +38,27 @@ export default function CreatePost() {
   const [bodyTextError, setBodyTextError] = useState<string>("");
   const [validationError, setValidationError] = useState<string>("");
 
-  const renderSelectedPlatforms = platforms.map((title, index) => {
+  const locationData = useSWR<LocationData, Error>(InfoAPI.getLocationURL);
+  const jobData = useSWR<JobData, Error>(InfoAPI.getJobURL);
+  const platformData = useSWR<{ platforms: string[] }, Error>(
+    InfoAPI.getPlatformURL
+  );
+  platformData.data;
+
+  if (locationData.error || jobData.error || platformData.error) {
+    return <ServerError />;
+  }
+
+  if (!locationData.data || !jobData.data || !platformData.data) {
+    return <Loading />;
+  }
+
+  const renderSelectedPlatforms = platforms.map((option) => {
     return (
       <SelectedCard
-        key={index}
-        title={title}
+        key={option.id}
+        id={option.id}
+        title={option.title}
         selectedOptions={platforms}
         setSelectedOption={setPlatforms}
       />
@@ -60,6 +83,7 @@ export default function CreatePost() {
 
     setValidationError("");
     console.log("all validated!");
+    console.log(recruitInfo.current);
   };
 
   return (
@@ -155,7 +179,9 @@ export default function CreatePost() {
             <div className="mt-2.5">
               <SingleSelectList
                 title={location}
-                options={지역_테스트_데이터}
+                options={locationData.data.locations.map((data) => {
+                  return { id: data.id, title: data.region };
+                })}
                 setSelectedOption={setLocation}
                 isValidate={locationError}
                 validate={() => validateInput(location, setLocationError)}
@@ -181,6 +207,7 @@ export default function CreatePost() {
               <RecruitInfo
                 recruitInfo={recruitInfo}
                 recruitNum={recruitNum}
+                jobOptions={jobData.data}
                 myWork={myWork}
                 setMyWork={setMyWork}
                 workList={workList}
@@ -234,8 +261,10 @@ export default function CreatePost() {
               </label>
               <div className="mt-4">
                 <MultiSelectList
-                  title="플랫폼 선택"
-                  options={플랫폼_테스트_데이터}
+                  title="플랫폼을 선택해 주세요"
+                  options={platformData.data.platforms.map((title, index) => {
+                    return { id: index, title: title };
+                  })}
                   selectedOptions={platforms}
                   setSelectedOption={setPlatforms}
                 />
@@ -285,11 +314,3 @@ export default function CreatePost() {
     </div>
   );
 }
-
-let 지역_테스트_데이터 = [
-  "서울특별시",
-  "인천광역시",
-  "대전광역시",
-  "부산광역시",
-];
-let 플랫폼_테스트_데이터 = ["Web", "Andriod", "IOS", "임베디드"];

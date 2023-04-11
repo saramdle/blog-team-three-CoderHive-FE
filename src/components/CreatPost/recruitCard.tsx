@@ -6,22 +6,27 @@ import React, {
   useState,
 } from "react";
 
+import { JobData } from "@/api/infoAPI";
+
 import SingleSelectList from "@/components/common/OptionList/singleSelectList";
+import { OptionType } from "../common/OptionList/selectedCard";
 
 type RecruitCardProps = {
   index: number;
+  jobOptions: JobData;
   recruitInfo: MutableRefObject<string[][] | null>;
   recruitNum: MutableRefObject<number | null>;
   pField?: string;
   pSubField?: string;
   pCount?: number;
   isModifiable?: boolean;
-  setWorkList: Dispatch<SetStateAction<string[]>>;
+  setWorkList: Dispatch<SetStateAction<(OptionType | undefined)[]>>;
   setRecruitInfoError: Dispatch<SetStateAction<string>>;
 };
 
 export default function RecruitCard({
   index,
+  jobOptions,
   recruitInfo,
   recruitNum,
   pField = "",
@@ -44,7 +49,16 @@ export default function RecruitCard({
       else info.push(arr);
     });
 
-    setWorkList(info.map((info) => info[1]).filter((work) => work !== ""));
+    // console.log(
+    //   info.map((info, index) => {
+    //     if (info[1] !== "") return { id: index, title: info[1] };
+    //   })
+    // );
+    setWorkList(
+      info.map((info, index) => {
+        if (info[1] !== "") return { id: index, title: info[1] };
+      })
+    );
 
     recruitInfo.current = info;
   }, [field, subField, count, recruitInfo, index, setWorkList]);
@@ -80,13 +94,23 @@ export default function RecruitCard({
       <div className="flex-grow grid grid-cols-2 gap-x-4 max-sm:gap-x-2">
         <SingleSelectList
           title={field}
-          options={분야_테스트_데이터}
+          placeholder="상위분야"
+          options={jobOptions.jobs.map((job, index) => {
+            return { id: index, title: job.main };
+          })}
           setSelectedOption={setField}
+          setSubOption={setSubField}
           isModifiable={isModifiable}
         />
         <SingleSelectList
           title={subField}
-          options={하위분야_테스트_데이터}
+          placeholder="하위분야"
+          options={jobOptions.jobs.flatMap((job) =>
+            job.details.map((subJob) => {
+              if (job.main === field)
+                return { id: subJob.jobId, title: subJob.field };
+            })
+          )}
           setSelectedOption={setSubField}
           isModifiable={isModifiable}
         />
@@ -115,13 +139,3 @@ export default function RecruitCard({
     </div>
   );
 }
-
-let 분야_테스트_데이터 = ["기획", "디자인", "프론트엔드", "백엔드"];
-let 하위분야_테스트_데이터 = [
-  "IOS",
-  "안드로이드",
-  "웹프론트엔드",
-  "웹퍼블리셔",
-  "크로스플랫폼",
-  "임베디드",
-];

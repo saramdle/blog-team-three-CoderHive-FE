@@ -6,20 +6,24 @@ import {
   useState,
 } from "react";
 
+import { JobData } from "@/api/infoAPI";
+import { OptionType } from "../common/OptionList/selectedCard";
 import RecruitCard from "./recruitCard";
 
 type RecruitInfoProps = {
   recruitInfo: MutableRefObject<string[][] | null>;
   recruitNum: MutableRefObject<number | null>;
+  jobOptions: JobData;
   myWork: string;
   setMyWork: Dispatch<SetStateAction<string>>;
-  workList: string[];
-  setWorkList: Dispatch<SetStateAction<string[]>>;
+  workList: (OptionType | undefined)[];
+  setWorkList: Dispatch<SetStateAction<(OptionType | undefined)[]>>;
   setRecruitInfoError: Dispatch<SetStateAction<string>>;
 };
 export default function RecruitInfo({
   recruitInfo,
   recruitNum,
+  jobOptions,
   myWork,
   setMyWork,
   workList,
@@ -29,6 +33,7 @@ export default function RecruitInfo({
   const [infoComp, setInfoComp] = useState<ReactElement[]>([
     <RecruitCard
       key={0}
+      jobOptions={jobOptions}
       index={0}
       recruitInfo={recruitInfo}
       recruitNum={recruitNum}
@@ -58,6 +63,7 @@ export default function RecruitInfo({
       infoComp.concat(
         <RecruitCard
           key={index}
+          jobOptions={jobOptions}
           index={index}
           recruitInfo={recruitInfo}
           recruitNum={recruitNum}
@@ -78,10 +84,10 @@ export default function RecruitInfo({
     const newCompList = infoComp.slice(0, -1);
     setInfoComp(newCompList);
 
-    // 내 담당 분야 설정이 삭제될 분야일 경우 설정을 초기화 시킨다.
-    if (workList[workList.length - 1] === myWork) {
-      setMyWork("");
-    }
+    // // 내 담당 분야 설정이 삭제될 분야일 경우 설정을 초기화 시킨다.
+    // if (workList[workList.length - 1] === myWork) {
+    //   setMyWork("");
+    // }
 
     const newWorkList = workList.slice(0, -1);
     setWorkList(newWorkList);

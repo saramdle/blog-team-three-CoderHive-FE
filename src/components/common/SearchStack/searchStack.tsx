@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import SelectedCard from "../selectedCard";
+import SelectedCard from "../OptionList/selectedCard";
 
 type SearchStackProps = {
   stackList: string[];

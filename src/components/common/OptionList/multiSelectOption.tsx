@@ -1,13 +1,17 @@
 import { Dispatch, SetStateAction, useState } from "react";
 
+import { OptionType } from "./selectedCard";
+
 type MultiSelectOption = {
+  id: number;
   title: string;
   isSelected: boolean;
-  selectedOptions: string[];
-  setSelectedOption: Dispatch<SetStateAction<string[]>>;
+  selectedOptions: OptionType[];
+  setSelectedOption: Dispatch<SetStateAction<OptionType[]>>;
 };
 
 export default function MultiSelectOption({
+  id,
   title,
   isSelected,
   selectedOptions,
@@ -16,7 +20,8 @@ export default function MultiSelectOption({
   const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
 
   const addOption = () => {
-    if (!isSelected) setSelectedOption(() => selectedOptions.concat(title));
+    if (!isSelected)
+      setSelectedOption(() => selectedOptions.concat({ id: id, title: title }));
   };
 
   return (
@@ -32,7 +37,7 @@ export default function MultiSelectOption({
       onClick={addOption}
     >
       <div className="flex items-center">
-        <span className="font-normal mx-3 block truncate">{title}</span>
+        <span className="font-normal mx-3 block truncate text-xs">{title}</span>
       </div>
 
       {isSelected && (

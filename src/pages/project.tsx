@@ -2,40 +2,44 @@ import Head from "next/head";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import useSWR, { Fetcher } from "swr";
+import useSWR from "swr";
+import { InfoAPI, JobData, LocationData } from "@/api/infoAPI";
 import { GetPostData, PostAPI } from "@/api/postAPI";
 
 import MultiSelectList from "@/components/common/OptionList/multiSelectList";
-import SelectedCard from "@/components/common/selectedCard";
+import SelectedCard, {
+  OptionType,
+} from "@/components/common/OptionList/selectedCard";
 import NotFound from "@/components/common/notFound";
 import PostCard from "@/components/common/postCard";
 import Loading from "@/components/common/loading";
 import ServerError from "@/components/common/serverError";
 
 export default function Project() {
-  const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
-  const [selectedFields, setSelectedFields] = useState<string[]>([]);
+  const [selectedLocations, setSelectedLocations] = useState<OptionType[]>([]);
+  const [selectedFields, setSelectedFields] = useState<OptionType[]>([]);
   const [showOnlyHiring, setShowOnlyHiring] = useState<boolean>(false);
   const router = useRouter();
 
   const tempMemberId = 3;
-  const tempLoactionIds = [2, 3];
-  const tempRegionsIds = [1, 2];
-  const fetcher: Fetcher<GetPostData, string> = (url) => PostAPI.getPosts(url);
-  const { data, error } = useSWR<GetPostData, Error>(
-    `/posts?memberId=${tempMemberId}&postCategory=PROJECT${
-      selectedLocations ? `&regions=${tempLoactionIds.join(",")}` : ""
-    }${selectedFields ? `&jobs=${tempRegionsIds.join(",")}` : ""}${
-      showOnlyHiring ? "&postStatus=HIRING" : ""
-    }`,
-    fetcher
+  const postData = useSWR<GetPostData, Error>(
+    PostAPI.getPostURL(
+      tempMemberId,
+      false,
+      selectedLocations.map((data) => data.id),
+      selectedFields.map((data) => data.id),
+      showOnlyHiring
+    )
   );
+  const locationData = useSWR<LocationData, Error>(InfoAPI.getLocationURL);
+  const jobData = useSWR<JobData, Error>(InfoAPI.getJobURL);
+  jobData.data;
 
-  if (error) {
+  if (postData.error || locationData.error || jobData.error) {
     return <ServerError />;
   }
 
-  if (!data) {
+  if (!postData.data || !locationData.data || !jobData.data) {
     return <Loading />;
   }
 
@@ -43,29 +47,31 @@ export default function Project() {
     router.push("/createPost");
   };
 
-  const renderSelectedLocations = selectedLocations.map((title, index) => {
+  const renderSelectedLocations = selectedLocations.map((option) => {
     return (
       <SelectedCard
-        key={index}
-        title={title}
+        key={option.id}
+        id={option.id}
+        title={option.title}
         selectedOptions={selectedLocations}
         setSelectedOption={setSelectedLocations}
       />
     );
   });
 
-  const renderSelectedFields = selectedFields.map((title, index) => {
+  const renderSelectedFields = selectedFields.map((option) => {
     return (
       <SelectedCard
-        key={index}
-        title={title}
+        key={option.id}
+        id={option.id}
+        title={option.title}
         selectedOptions={selectedFields}
         setSelectedOption={setSelectedFields}
       />
     );
   });
 
-  const renderArticles = data?.content.map((post) => {
+  const renderArticles = postData.data.content.map((post) => {
     return (
       <PostCard
         key={post.id}
@@ -101,13 +107,19 @@ export default function Project() {
               <div className="flex gap-x-4">
                 <MultiSelectList
                   title="지역"
-                  options={지역_테스트_데이터}
+                  options={locationData.data.locations.map((data) => {
+                    return { id: data.id, title: data.region };
+                  })}
                   selectedOptions={selectedLocations}
                   setSelectedOption={setSelectedLocations}
                 />
                 <MultiSelectList
                   title="분야"
-                  options={분야_테스트_데이터}
+                  options={jobData.data.jobs.flatMap((job) =>
+                    job.details.map((subJob) => {
+                      return { id: subJob.jobId, title: subJob.field };
+                    })
+                  )}
                   selectedOptions={selectedFields}
                   setSelectedOption={setSelectedFields}
                 />
@@ -157,11 +169,3 @@ export default function Project() {
     </>
   );
 }
-
-let 지역_테스트_데이터 = [
-  "서울특별시",
-  "인천광역시",
-  "대전광역시",
-  "부산광역시",
-];
-let 분야_테스트_데이터 = ["UI/UX", "웹프론트엔드", "웹서버"];

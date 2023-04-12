@@ -28,6 +28,8 @@ export type SkillData = {
 
 export const InfoAPI = {
   getLocationURL: "/info/locations",
-  getJobURL: "/info/jobs",
   getPlatformURL: "/info/platforms",
+  getJobURL: "/info/jobs",
+  getLevelURL: "/info/levels",
+  getCareerURL: "/info/careers",
 };

@@ -1,20 +1,23 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 import useSWR from "swr";
-import { Fetcher } from "swr";
 import { MemberAPI, MemberData } from "@/api/memberAPI";
 
-import MiniPostCard from "@/components/common/miniPostCard";
+import ServerError from "@/components/common/serverError";
 import Loading from "@/components/common/loading";
+import MiniPostCard from "@/components/common/miniPostCard";
 
 export default function Profile() {
   const tempId = 3;
-  const fetcher: Fetcher<MemberData, string> = (url) =>
-    MemberAPI.getMember(url);
-  const { data, error } = useSWR(
-    `/members?memberId=${tempId}&searchMemberId=${tempId}`,
-    fetcher
+  const router = useRouter();
+  const { id } = router.query;
+
+  const { data, error } = useSWR<MemberData, Error>(
+    router.isReady && MemberAPI.getMember(tempId, Number(id))
   );
+
+  if (error) return <ServerError />;
 
   if (!data) return <Loading />;
 

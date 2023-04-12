@@ -4,17 +4,23 @@ type SingleSelectOptionProps = {
   title: string | undefined;
   isSelected: boolean;
   setSelectedOption: Dispatch<SetStateAction<string>>;
+  setSubOption?: Dispatch<SetStateAction<string>>;
 };
 
 export default function SingleSelectOption({
   title,
   isSelected,
   setSelectedOption,
+  setSubOption,
 }: SingleSelectOptionProps) {
   const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
 
   const addOption = () => {
-    if (!isSelected && title) setSelectedOption(title);
+    if (!isSelected && title) {
+      setSelectedOption(title);
+
+      if (setSubOption) setSubOption("");
+    }
   };
 
   return (

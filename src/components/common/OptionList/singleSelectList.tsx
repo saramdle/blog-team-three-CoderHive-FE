@@ -26,11 +26,6 @@ export default function SingleSelectList({
 }: SingleSelectListProps) {
   const [isListOpen, setIsListOpen] = useState<boolean>(false);
 
-  // 하위 분야가 있을경우, 상위 분야가 변경되면 하위분야도 초기화 된다.
-  useEffect(() => {
-    if (setSubOption) setSubOption("");
-  }, [setSubOption, title]);
-
   useEffect(() => {
     if (validate && title) validate();
   }, [title, validate]);
@@ -45,6 +40,7 @@ export default function SingleSelectList({
           title={option.title}
           isSelected={isSelected}
           setSelectedOption={setSelectedOption}
+          setSubOption={setSubOption}
         />
       );
     }

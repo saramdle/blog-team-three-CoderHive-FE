@@ -49,11 +49,6 @@ export default function RecruitCard({
       else info.push(arr);
     });
 
-    // console.log(
-    //   info.map((info, index) => {
-    //     if (info[1] !== "") return { id: index, title: info[1] };
-    //   })
-    // );
     setWorkList(
       info.map((info, index) => {
         if (info[1] !== "") return { id: index, title: info[1] };

@@ -19,7 +19,9 @@ export default function SelectedCard({
   setSelectedOption,
 }: SelectedCardProps) {
   const deleteOption = () => {
-    setSelectedOption(selectedOptions.filter((option) => option.id !== id));
+    setSelectedOption(
+      selectedOptions.filter((option) => option.title !== title)
+    );
   };
 
   return (

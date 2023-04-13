@@ -9,6 +9,7 @@ import ProfileImage from "./profileImage";
 import validateInput from "@/lib/util/validateInput";
 import ServerError from "../common/serverError";
 import Loading from "../common/loading";
+import { OptionType } from "../common/OptionList/selectedCard";
 
 type ProfileEditProps = {
   memberId: number;
@@ -19,7 +20,7 @@ type ProfileEditProps = {
   subJob: string;
   career: string;
   jobLevel: string;
-  stack: string[];
+  stack: OptionType[];
   introduction: string;
 };
 
@@ -41,7 +42,7 @@ export default function ProfileEdit({
   const [subfield, setSubfield] = useState<string>(subJob);
   const [level, setLevel] = useState<string>(jobLevel);
   const [year, setYear] = useState<string>(career);
-  const [stackList, setStackList] = useState<string[]>(stack);
+  const [stackList, setStackList] = useState<OptionType[]>(stack);
   const [intro, setIntro] = useState<string>(introduction);
 
   const [nickNameError, setNickNameError] = useState<string>("");

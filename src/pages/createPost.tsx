@@ -24,7 +24,7 @@ export default function CreatePost() {
   const [type, setType] = useState("스터디");
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
-  const [stackList, setStackList] = useState<string[]>([]);
+  const [stackList, setStackList] = useState<OptionType[]>([]);
   const [myWork, setMyWork] = useState<string>("");
   const [workList, setWorkList] = useState<(OptionType | undefined)[]>([]);
   const [platforms, setPlatforms] = useState<OptionType[]>([]);

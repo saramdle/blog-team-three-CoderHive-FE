@@ -33,7 +33,7 @@ export default function PostEdit() {
   const [type, setType] = useState(포스트_테스트_데이터.type);
   const [title, setTitle] = useState(포스트_테스트_데이터.title);
   const [location, setLocation] = useState(포스트_테스트_데이터.location);
-  const [stackList, setStackList] = useState<string[]>(
+  const [stackList, setStackList] = useState<OptionType[]>(
     포스트_테스트_데이터.stackList
   );
   const [myWork, setMyWork] = useState<string>(포스트_테스트_데이터.myWork);
@@ -336,7 +336,10 @@ let 포스트_테스트_데이터 = {
   type: "프로젝트",
   title: "프론트엔드 개발자 구함!",
   location: "서울특별시",
-  stackList: ["React", "JavaScript"],
+  stackList: [
+    { id: 1, title: "React" },
+    { id: 2, title: "JavaScript" },
+  ],
   recruitInfo: [
     ["프론트엔드", "웹프론트엔드", "3"],
     ["프론트엔드", "IOS", "2"],

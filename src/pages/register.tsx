@@ -99,10 +99,7 @@ export default function Register() {
             </div>
           </div>
           <div className="sm:col-span-2">
-            <label
-              htmlFor="phone-number"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
+            <label className="block text-sm font-semibold leading-6 text-gray-900">
               대표 직무 / 능력치
             </label>
             <div className="relative mt-2.5 grid grid-cols-4 gap-4 max-md:grid-rows-4 max-md:grid-cols-1">

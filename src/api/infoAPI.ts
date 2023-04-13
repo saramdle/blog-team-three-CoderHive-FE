@@ -1,3 +1,5 @@
+import HttpRequest from "./httpRequest";
+
 export type LocationData = {
   locations: [
     {
@@ -22,8 +24,12 @@ export type JobData = {
 };
 
 export type SkillData = {
-  id: number;
-  detail: string;
+  skills: [
+    {
+      id: number;
+      detail: string;
+    }
+  ];
 };
 
 export const InfoAPI = {
@@ -32,4 +38,14 @@ export const InfoAPI = {
   getJobURL: "/info/jobs",
   getLevelURL: "/info/levels",
   getCareerURL: "/info/careers",
+  getSkills: (query: string) => {
+    return HttpRequest.get(`/info/skills?keyword=${query}`).then((res) => {
+      if (res.status !== 200) {
+        const error = new Error("서버와의 통신 중에 오류가 발생했습니다.");
+        throw error;
+      }
+
+      return res.data;
+    });
+  },
 };

@@ -58,7 +58,9 @@ export default function My() {
           subJob={data.job.detail}
           career={data.career}
           jobLevel={data.level}
-          stack={data.skills}
+          stack={data.skills.map((skill, index) => {
+            return { id: index, title: skill };
+          })}
           introduction={data.introduction}
         />
       ) : (

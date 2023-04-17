@@ -1,13 +1,27 @@
+import { MemberAPI } from "@/api/memberAPI";
+import { setIsLoginModalOpen } from "@/store/app/appSlice";
+import { useAppDispatch } from "@/store/hooks";
+
 import { LoginButtonProps } from "../login";
 
 export default function KakaoLogin({ isLoginMode }: LoginButtonProps) {
+  const dispatch = useAppDispatch();
+
+  const onLoginClicked = async () => {
+    MemberAPI.login("kakao");
+
+    // console.log(res);
+    dispatch(setIsLoginModalOpen(false));
+  };
+
   return (
     <button
       type="button"
       className="mb-4 p-4 w-full h-12 flex justify-center items-center rounded-md 
-      text-sm font-semibold text-white bg-yellow-400 
-      hover:bg-gray-50 hover:text-yellow-400 hover:border hover:border-yellow-400 
+      text-sm font-semibold text-yellow-400 bg-white border border-yellow-400 
+      hover:bg-yellow-400 hover:text-white
       transition-all ease-in duration-100"
+      onClick={onLoginClicked}
     >
       <svg
         className="mr-auto h-7 w-7 text-inherit"

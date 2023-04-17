@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { setIsLoginModalOpen } from "@/store/app/appSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import FacebookLogin from "./LoginButtons/facebookLogin";
 import GoogleLogin from "./LoginButtons/googleLogin";
 import KakaoLogin from "./LoginButtons/kakaoLogin";
 import NaverLogin from "./LoginButtons/naverLogin";
@@ -94,7 +93,6 @@ export default function Login() {
                 <div className="mt-2 ">
                   <NaverLogin isLoginMode={isLoginMode} />
                   <KakaoLogin isLoginMode={isLoginMode} />
-                  <FacebookLogin isLoginMode={isLoginMode} />
                   <GoogleLogin isLoginMode={isLoginMode} />
                 </div>
                 <button

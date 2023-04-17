@@ -50,6 +50,16 @@ export type MemberData = {
 };
 
 export const MemberAPI = {
+  login: (type: string) => {
+    return HttpRequest.get(`/oauth2/authorization/${type}`).then((res) => {
+      if (res.status !== 200) {
+        const error = new Error("서버와의 통신 중에 오류가 발생했습니다.");
+        throw error;
+      }
+
+      return res.data;
+    });
+  },
   getMyProfile: (memberId: number) => `/members/my?memberId=${memberId}`,
   getMember: (memberId: number, searchId: number) =>
     `/members?memberId=${memberId}&searchMemberId=${searchId}`,
@@ -64,7 +74,7 @@ export const MemberAPI = {
         throw error;
       }
 
-      return res.status;
+      return res.data;
     });
   },
 };

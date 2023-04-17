@@ -50,8 +50,8 @@ export type MemberData = {
 };
 
 export const MemberAPI = {
-  getMember: (url: string) => {
-    return HttpRequest.get(url).then((res) => {
+  login: (type: string) => {
+    return HttpRequest.get(`/oauth2/authorization/${type}`).then((res) => {
       if (res.status !== 200) {
         const error = new Error("서버와의 통신 중에 오류가 발생했습니다.");
         throw error;
@@ -60,17 +60,10 @@ export const MemberAPI = {
       return res.data;
     });
   },
-  getMyProfile: (url: string) => {
-    return HttpRequest.get(url).then((res) => {
-      if (res.status !== 200) {
-        const error = new Error("서버와의 통신 중에 오류가 발생했습니다.");
-        throw error;
-      }
-
-      return res.data;
-    });
-  },
-  patchEditProfile: (data: FormData) => {
+  getMyProfile: (memberId: number) => `/members/my?memberId=${memberId}`,
+  getMember: (memberId: number, searchId: number) =>
+    `/members?memberId=${memberId}&searchMemberId=${searchId}`,
+  editProfile: (data: FormData) => {
     return HttpRequest.patch("/members/my", data, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -81,7 +74,7 @@ export const MemberAPI = {
         throw error;
       }
 
-      return res.status;
+      return res.data;
     });
   },
 };

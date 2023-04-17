@@ -1,22 +1,22 @@
 import { useState } from "react";
 
 import useSWR from "swr";
-import { Fetcher } from "swr";
 import { MemberAPI, MyProfileData } from "@/api/memberAPI";
 
+import ServerError from "@/components/common/serverError";
 import Loading from "@/components/common/loading";
 import ProfileEdit from "@/components/My/profileEdit";
 import MyPosts from "@/components/My/myPosts";
 
 export default function My() {
-  const tempId = 3;
-  const fetcher: Fetcher<MyProfileData, string> = (url) =>
-    MemberAPI.getMyProfile(url);
-  const { data } = useSWR(`/members/my?memberId=${tempId}`, fetcher);
-
   const [isEditMode, setIsEditMode] = useState<boolean>(true);
 
-  console.log(data);
+  const tempId = 3;
+  const { data, error } = useSWR<MyProfileData, Error>(
+    MemberAPI.getMyProfile(tempId)
+  );
+
+  if (error) return <ServerError />;
 
   if (!data) return <Loading />;
 
@@ -58,7 +58,9 @@ export default function My() {
           subJob={data.job.detail}
           career={data.career}
           jobLevel={data.level}
-          stack={data.skills}
+          stack={data.skills.map((skill, index) => {
+            return { id: index, title: skill };
+          })}
           introduction={data.introduction}
         />
       ) : (

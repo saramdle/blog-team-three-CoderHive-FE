@@ -1,9 +1,15 @@
 import { useState } from "react";
 
+import useSWR from "swr";
+import { InfoAPI, JobData } from "@/api/infoAPI";
+
 import SearchStack from "@/components/common/SearchStack/searchStack";
 import SingleSelectList from "../common/OptionList/singleSelectList";
 import ProfileImage from "./profileImage";
 import validateInput from "@/lib/util/validateInput";
+import ServerError from "../common/serverError";
+import Loading from "../common/loading";
+import { OptionType } from "../common/OptionList/selectedCard";
 
 type ProfileEditProps = {
   memberId: number;
@@ -14,7 +20,7 @@ type ProfileEditProps = {
   subJob: string;
   career: string;
   jobLevel: string;
-  stack: string[];
+  stack: OptionType[];
   introduction: string;
 };
 
@@ -36,11 +42,24 @@ export default function ProfileEdit({
   const [subfield, setSubfield] = useState<string>(subJob);
   const [level, setLevel] = useState<string>(jobLevel);
   const [year, setYear] = useState<string>(career);
-  const [stackList, setStackList] = useState<string[]>(stack);
+  const [stackList, setStackList] = useState<OptionType[]>(stack);
   const [intro, setIntro] = useState<string>(introduction);
 
   const [nickNameError, setNickNameError] = useState<string>("");
   const [validationError, setValidationError] = useState<string>("");
+
+  const jobData = useSWR<JobData, Error>(InfoAPI.getJobURL);
+  const levelData = useSWR<{ levels: string[] }, Error>(InfoAPI.getLevelURL);
+  const careerData = useSWR<{ careers: string[] }, Error>(InfoAPI.getCareerURL);
+  careerData.data;
+
+  if (jobData.error || levelData.error || careerData.error) {
+    return <ServerError />;
+  }
+
+  if (!levelData.data || !jobData.data || !careerData.data) {
+    return <Loading />;
+  }
 
   const onSubmit = () => {
     const validate = validateInput(nickName, setNickNameError);
@@ -138,22 +157,38 @@ export default function ProfileEdit({
           <div className="relative mt-2.5 grid grid-cols-4 gap-4 max-md:grid-rows-4 max-md:grid-cols-1">
             <SingleSelectList
               title={field}
-              options={분야_테스트_데이터}
+              placeholder="상위분야"
+              options={jobData.data.jobs.map((job, index) => {
+                return { id: index, title: job.main };
+              })}
               setSelectedOption={setField}
+              setSubOption={setSubfield}
             />
             <SingleSelectList
               title={subfield}
-              options={하위분야_테스트_데이터}
+              placeholder="하위분야"
+              options={jobData.data.jobs.flatMap((job) =>
+                job.details.map((subJob) => {
+                  if (job.main === field)
+                    return { id: subJob.jobId, title: subJob.field };
+                })
+              )}
               setSelectedOption={setSubfield}
             />
             <SingleSelectList
               title={level}
-              options={숙련도_테스트_데이터}
+              placeholder="숙련도"
+              options={levelData.data.levels.map((level, index) => {
+                return { id: index, title: level };
+              })}
               setSelectedOption={setLevel}
             />
             <SingleSelectList
               title={year}
-              options={년차_테스트_데이터}
+              placeholder="년차"
+              options={careerData.data.careers.map((career, index) => {
+                return { id: index, title: career };
+              })}
               setSelectedOption={setYear}
             />
           </div>
@@ -216,16 +251,3 @@ export default function ProfileEdit({
     </div>
   );
 }
-
-let 분야_테스트_데이터 = ["미지정", "기획", "디자인", "프론트엔드", "백엔드"];
-let 하위분야_테스트_데이터 = [
-  "미지정",
-  "IOS",
-  "안드로이드",
-  "웹프론트엔드",
-  "웹퍼블리셔",
-  "크로스플랫폼",
-  "임베디드",
-];
-let 숙련도_테스트_데이터 = ["미지정", "초심자", "초보", "중수", "고수", "구루"];
-let 년차_테스트_데이터 = ["미지정", "1-3년", "3-5년", "5-10년", "10년 이상"];

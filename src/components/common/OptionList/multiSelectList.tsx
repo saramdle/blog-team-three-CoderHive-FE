@@ -1,12 +1,13 @@
 import { Dispatch, SetStateAction, useState } from "react";
 
 import MultiSelectOption from "./multiSelectOption";
+import { OptionType } from "./selectedCard";
 
 type MultiSelectListProps = {
   title: string;
-  options: string[];
-  selectedOptions: string[];
-  setSelectedOption: Dispatch<SetStateAction<string[]>>;
+  options: OptionType[];
+  selectedOptions: OptionType[];
+  setSelectedOption: Dispatch<SetStateAction<OptionType[]>>;
 };
 
 export default function MultiSelectList({
@@ -25,13 +26,16 @@ export default function MultiSelectList({
     setIsListOpen(false);
   };
 
-  const renderOptions = options.map((option, index) => {
-    const isSelected = selectedOptions.includes(option);
+  const renderOptions = options.map((option) => {
+    const isSelected = selectedOptions.some(
+      (selected) => selected.id === option.id
+    );
 
     return (
       <MultiSelectOption
-        key={index}
-        title={option}
+        key={option.id}
+        id={option.id}
+        title={option.title}
         isSelected={isSelected}
         selectedOptions={selectedOptions}
         setSelectedOption={setSelectedOption}
@@ -75,7 +79,7 @@ export default function MultiSelectList({
       <ul
         className={`${
           isListOpen ? "visible" : "invisible opacity-0"
-        } absolute z-10 mt-1 max-h-56 w-full min-w-fit overflow-auto rounded-md bg-white 
+        } absolute z-20 mt-1 max-h-56 w-full min-w-fit overflow-auto rounded-md bg-white 
           py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none 
           sm:text-sm transition-all ease-in duration-200`}
         tabIndex={-1}

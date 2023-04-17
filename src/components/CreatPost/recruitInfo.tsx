@@ -1,44 +1,66 @@
-import {
-  Dispatch,
-  MutableRefObject,
-  ReactElement,
-  SetStateAction,
-  useState,
-} from "react";
+import { Dispatch, MutableRefObject, SetStateAction, useState } from "react";
 
+import { JobData } from "@/api/infoAPI";
+import { OptionType } from "../common/OptionList/selectedCard";
 import RecruitCard from "./recruitCard";
 
 type RecruitInfoProps = {
   recruitInfo: MutableRefObject<string[][] | null>;
   recruitNum: MutableRefObject<number | null>;
+  initialInfo?: string[][];
+  jobOptions: JobData;
   myWork: string;
   setMyWork: Dispatch<SetStateAction<string>>;
-  workList: string[];
-  setWorkList: Dispatch<SetStateAction<string[]>>;
+  workList: (OptionType | undefined)[];
+  setWorkList: Dispatch<SetStateAction<(OptionType | undefined)[]>>;
   setRecruitInfoError: Dispatch<SetStateAction<string>>;
 };
 export default function RecruitInfo({
   recruitInfo,
   recruitNum,
+  initialInfo,
+  jobOptions,
   myWork,
   setMyWork,
   workList,
   setWorkList,
   setRecruitInfoError,
 }: RecruitInfoProps) {
-  const [infoComp, setInfoComp] = useState<ReactElement[]>([
-    <RecruitCard
-      key={0}
-      index={0}
-      recruitInfo={recruitInfo}
-      recruitNum={recruitNum}
-      setWorkList={setWorkList}
-      setRecruitInfoError={setRecruitInfoError}
-    />,
-  ]);
+  const initialInfoComp = !initialInfo
+    ? [
+        <RecruitCard
+          key={0}
+          jobOptions={jobOptions}
+          index={0}
+          recruitInfo={recruitInfo}
+          recruitNum={recruitNum}
+          setWorkList={setWorkList}
+          setRecruitInfoError={setRecruitInfoError}
+        />,
+      ]
+    : initialInfo.map((info, index) => {
+        return (
+          <RecruitCard
+            key={index}
+            index={index}
+            pField={info[0]}
+            pSubField={info[1]}
+            pCount={Number(info[2])}
+            recruitInfo={recruitInfo}
+            recruitNum={recruitNum}
+            jobOptions={jobOptions}
+            setWorkList={setWorkList}
+            isModifiable={false}
+            setRecruitInfoError={setRecruitInfoError}
+          />
+        );
+      });
+  const [infoComp, setInfoComp] = useState<JSX.Element[] | null>(
+    initialInfoComp
+  );
 
   const addInfoComp = () => {
-    if (!recruitInfo.current || !recruitNum.current) return;
+    if (!recruitInfo.current || !recruitNum.current || !infoComp) return;
 
     if (recruitNum.current >= 10) {
       setRecruitInfoError("인원을 10명 이상 추가할 수 없습니다!");
@@ -58,6 +80,7 @@ export default function RecruitInfo({
       infoComp.concat(
         <RecruitCard
           key={index}
+          jobOptions={jobOptions}
           index={index}
           recruitInfo={recruitInfo}
           recruitNum={recruitNum}
@@ -69,7 +92,12 @@ export default function RecruitInfo({
   };
 
   const deleteInfoComp = () => {
-    if (!recruitInfo.current || !recruitNum.current || infoComp.length < 2)
+    if (
+      !recruitInfo.current ||
+      !recruitNum.current ||
+      !infoComp ||
+      infoComp.length < (initialInfo ? initialInfo.length + 1 : 2)
+    )
       return;
 
     const popedInfo = recruitInfo.current.pop();
@@ -79,7 +107,7 @@ export default function RecruitInfo({
     setInfoComp(newCompList);
 
     // 내 담당 분야 설정이 삭제될 분야일 경우 설정을 초기화 시킨다.
-    if (workList[workList.length - 1] === myWork) {
+    if (workList[workList.length - 1]?.title === myWork) {
       setMyWork("");
     }
 

@@ -1,31 +1,25 @@
-import { useRouter } from "next/router";
-
-import { useAppDispatch } from "@/store/hooks";
+import { MemberAPI } from "@/api/memberAPI";
 import { setIsLoginModalOpen } from "@/store/app/appSlice";
+import { useAppDispatch } from "@/store/hooks";
+
 import { LoginButtonProps } from "../login";
 
 export default function NaverLogin({ isLoginMode }: LoginButtonProps) {
-  const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const onLoginClicked = () => {
-    if (isLoginMode) {
-      dispatch(setIsLoginModalOpen(false));
-    } else {
-      router.push("/register");
+  const onLoginClicked = async () => {
+    MemberAPI.login("naver");
 
-      document.documentElement.style.overflowY = "auto";
-
-      dispatch(setIsLoginModalOpen(false));
-    }
+    // console.log(res);
+    dispatch(setIsLoginModalOpen(false));
   };
 
   return (
     <button
       type="button"
       className="mb-4 p-4 w-full h-12 flex justify-center items-center rounded-md 
-      text-sm font-semibold text-white bg-green-600
-      hover:bg-gray-50 hover:text-green-600 hover:border hover:border-green-600
+      text-sm font-semibold text-green-600 bg-white border border-green-600
+      hover:bg-green-600 hover:text-white
       transition-all ease-in duration-100"
       onClick={onLoginClicked}
     >

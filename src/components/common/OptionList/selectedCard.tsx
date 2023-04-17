@@ -1,18 +1,27 @@
 import { Dispatch, SetStateAction } from "react";
 
-type SelectedCardProps = {
+export type OptionType = {
+  id: number;
   title: string;
-  selectedOptions: string[];
-  setSelectedOption: Dispatch<SetStateAction<string[]>>;
+};
+
+type SelectedCardProps = {
+  id: number;
+  title: string;
+  selectedOptions: OptionType[];
+  setSelectedOption: Dispatch<SetStateAction<OptionType[]>>;
 };
 
 export default function SelectedCard({
+  id,
   title,
   selectedOptions,
   setSelectedOption,
 }: SelectedCardProps) {
   const deleteOption = () => {
-    setSelectedOption(selectedOptions.filter((option) => option !== title));
+    setSelectedOption(
+      selectedOptions.filter((option) => option.title !== title)
+    );
   };
 
   return (
@@ -35,7 +44,7 @@ export default function SelectedCard({
           strokeLinejoin="round"
           d="M6 18L18 6M6 6l12 12"
         />
-      </svg>{" "}
+      </svg>
     </div>
   );
 }

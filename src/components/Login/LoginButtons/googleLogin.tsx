@@ -1,13 +1,27 @@
+import { MemberAPI } from "@/api/memberAPI";
+import { setIsLoginModalOpen } from "@/store/app/appSlice";
+import { useAppDispatch } from "@/store/hooks";
+
 import { LoginButtonProps } from "../login";
 
 export default function GoogleLogin({ isLoginMode }: LoginButtonProps) {
+  const dispatch = useAppDispatch();
+
+  const onLoginClicked = async () => {
+    MemberAPI.login("google");
+
+    // console.log(res);
+    dispatch(setIsLoginModalOpen(false));
+  };
+
   return (
     <button
       type="button"
       className="mb-4 p-4 w-full h-12 flex justify-center items-center rounded-md 
-      text-sm font-semibold text-gray-900 bg-white 
-      hover:bg-gray-900 hover:text-white border border-gray-900
+      text-sm font-semibold text-gray-900 bg-white border-gray-900
+      hover:bg-gray-900 hover:text-white border 
       transition-all ease-in duration-100"
+      onClick={onLoginClicked}
     >
       <svg
         className="mr-auto h-5 w-5 text-inherit"

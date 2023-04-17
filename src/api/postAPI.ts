@@ -1,4 +1,16 @@
-import HttpRequest from "./httpRequest";
+export type PostData = {
+  id: number;
+  likes: number;
+  location: string;
+  memberLike: boolean;
+  postCategory: string;
+  postJobTotal: number;
+  postStatus: string;
+  skills: string[];
+  thumbImageUrl: string;
+  title: string;
+  userApplyPass: number;
+};
 
 export type GetPostData = {
   content: PostData[];
@@ -20,30 +32,18 @@ export type GetPostData = {
   totalPages: number;
 };
 
-export type PostData = {
-  id: number;
-  likes: number;
-  location: string;
-  memberLike: boolean;
-  postCategory: string;
-  postJobTotal: number;
-  postStatus: string;
-  skills: string[];
-  thumbImageUrl: string;
-  title: string;
-  userApplyPass: number;
-};
-
-// /posts?memberId=3&category=project&region=2,3&jobs=1,2&status=모집중
 export const PostAPI = {
-  getPosts: (url: string) => {
-    return HttpRequest.get(url).then((res) => {
-      if (res.status !== 200) {
-        const error = new Error();
-        throw error;
-      }
-
-      return res.data;
-    });
+  getPostURL: (
+    memberId: number,
+    isStudy: boolean = true,
+    locations: number[],
+    jobs: number[],
+    showHiring: boolean
+  ) => {
+    return `/posts?memberId=${memberId}&postCategory=${
+      isStudy ? "STUDY" : "PROJECT"
+    }${locations.length > 0 ? `&regions=${locations.join(",")}` : ""}${
+      jobs.length > 0 ? `&jobs=${jobs.join(",")}` : ""
+    }${showHiring ? "&postStatus=HIRING" : ""}`;
   },
 };

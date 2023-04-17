@@ -1,11 +1,14 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 import SingleSelectOption from "./singleSelectOption";
+import { OptionType } from "./selectedCard";
 
 type SingleSelectListProps = {
   title: string;
-  options: string[];
+  placeholder?: string;
+  options: (OptionType | undefined)[];
   setSelectedOption: Dispatch<SetStateAction<string>>;
+  setSubOption?: Dispatch<SetStateAction<string>>;
   isValidate?: string;
   validate?: () => boolean;
   isModifiable?: boolean;
@@ -13,8 +16,10 @@ type SingleSelectListProps = {
 
 export default function SingleSelectList({
   title,
+  placeholder = "미지정",
   options,
   setSelectedOption,
+  setSubOption,
   isValidate = "",
   validate,
   isModifiable = true,
@@ -26,16 +31,19 @@ export default function SingleSelectList({
   }, [title, validate]);
 
   const renderOptions = options.map((option, index) => {
-    const isSelected = option === title;
+    if (option) {
+      const isSelected = option.title === title;
 
-    return (
-      <SingleSelectOption
-        key={index}
-        title={option}
-        isSelected={isSelected}
-        setSelectedOption={setSelectedOption}
-      />
-    );
+      return (
+        <SingleSelectOption
+          key={index}
+          title={option.title}
+          isSelected={isSelected}
+          setSelectedOption={setSelectedOption}
+          setSubOption={setSubOption}
+        />
+      );
+    }
   });
 
   return (
@@ -56,7 +64,7 @@ export default function SingleSelectList({
       >
         <span className="w-full flex items-center">
           <span className="ml-3 block truncate">
-            {title ? title : "미지정"}
+            {title ? title : placeholder}
           </span>
         </span>
 
@@ -72,7 +80,7 @@ export default function SingleSelectList({
               d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z"
               clipRule="evenodd"
             />
-          </svg>{" "}
+          </svg>
         </span>
       </button>
 
